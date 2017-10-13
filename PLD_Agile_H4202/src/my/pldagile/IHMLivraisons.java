@@ -4,6 +4,13 @@
  * and open the template in the editor.
  */
 package my.pldagile;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.File;
+import java.io.IOException;
+import java.awt.Desktop;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -40,6 +47,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         ChargerLivraison = new javax.swing.JButton();
         CalculerTournee = new javax.swing.JButton();
         Map = new javax.swing.JPanel();
+        feuillederoute = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -78,20 +86,40 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 {null, null, null}
             },
             new String [] {
-                "Livraison", "Depart", "Arrivee"
+                "Livraison", "Depart", "Arrivée"
             }
         ));
         jScrollPane2.setViewportView(listslivraisons);
 
         Valider.setText("Valider");
+        Valider.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ValiderActionPerformed(evt);
+            }
+        });
 
         Annuler.setText("Annuler");
+        Annuler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AnnulerActionPerformed(evt);
+            }
+        });
 
         jScrollPane3.setViewportView(FichierLivraison);
 
         ChargerLivraison.setText("Charger Livraison");
+        ChargerLivraison.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ChargerLivraisonActionPerformed(evt);
+            }
+        });
 
-        CalculerTournee.setText("Calculer tournee");
+        CalculerTournee.setText("Calculer tournée");
+        CalculerTournee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CalculerTourneeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout MapLayout = new javax.swing.GroupLayout(Map);
         Map.setLayout(MapLayout);
@@ -103,6 +131,13 @@ public class IHMLivraisons extends javax.swing.JDialog {
             MapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 313, Short.MAX_VALUE)
         );
+
+        feuillederoute.setText("Generer feuille de route");
+        feuillederoute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                feuillederouteActionPerformed(evt);
+            }
+        });
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -141,19 +176,20 @@ public class IHMLivraisons extends javax.swing.JDialog {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(feuillederoute, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(ChargerPlan))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(97, 97, 97)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ChargerPlan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -172,7 +208,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(19, 19, 19)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(feuillederoute, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -180,7 +218,60 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
     private void ChargerPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChargerPlanActionPerformed
         // TODO add your handling code here:
+        String fplan= FichierPlan.getText();
+        
     }//GEN-LAST:event_ChargerPlanActionPerformed
+
+    private void ChargerLivraisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChargerLivraisonActionPerformed
+        // TODO add your handling code here:
+        String flivraison= FichierLivraison.getText();
+       
+    }//GEN-LAST:event_ChargerLivraisonActionPerformed
+
+    private void CalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CalculerTourneeActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_CalculerTourneeActionPerformed
+   
+    private void ValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValiderActionPerformed
+        // TODO add your handling code here:
+   
+    }//GEN-LAST:event_ValiderActionPerformed
+
+    private void AnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnnulerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AnnulerActionPerformed
+    private static final String FILENAME = "L:\\Documents\\TestFile\\FeuilleDeRoute.txt";
+    private void feuillederouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_feuillederouteActionPerformed
+        // TODO add your handling code here:
+             BufferedWriter bw = null;
+	FileWriter fw = null;
+	try {
+            String content = "This is the content to write into file\n";
+            fw = new FileWriter(FILENAME);
+            bw = new BufferedWriter(fw);
+            bw.write(content);
+            System.out.println("Done");
+            } catch (IOException e) {
+		e.printStackTrace();
+            } finally {
+		try {
+		if (bw != null)	bw.close();
+		if (fw != null)	fw.close();
+		} catch (IOException ex) {
+		ex.printStackTrace();
+		}
+            }
+        File file = new File(FILENAME);
+        Desktop desktop = Desktop.getDesktop();
+        if(Desktop.isDesktopSupported()){
+                 try {
+                     desktop.open(file);
+                 } catch (IOException ex) {
+                     Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+        }
+    }//GEN-LAST:event_feuillederouteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -233,6 +324,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private javax.swing.JTextPane FichierPlan;
     private javax.swing.JPanel Map;
     private javax.swing.JButton Valider;
+    private javax.swing.JButton feuillederoute;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

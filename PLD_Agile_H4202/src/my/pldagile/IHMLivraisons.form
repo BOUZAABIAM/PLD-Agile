@@ -78,6 +78,11 @@
                       <Component id="ChargerPlan" min="-2" pref="113" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="feuillederoute" min="-2" pref="214" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -86,15 +91,10 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
-                      <Component id="ChargerPlan" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="22" max="-2" attributes="0"/>
-                  </Group>
+              <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="ChargerPlan" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
@@ -121,7 +121,9 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="52" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="feuillederoute" pref="35" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -159,7 +161,7 @@
               <Table columnCount="3" rowCount="18">
                 <Column editable="true" title="Livraison" type="java.lang.Object"/>
                 <Column editable="true" title="Depart" type="java.lang.Object"/>
-                <Column editable="true" title="Arrivee" type="java.lang.Object"/>
+                <Column editable="true" title="Arriv&#xe9;e" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -192,11 +194,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Valider"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ValiderActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="Annuler">
       <Properties>
         <Property name="text" type="java.lang.String" value="Annuler"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AnnulerActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane3">
       <AuxValues>
@@ -213,11 +221,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Charger Livraison"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ChargerLivraisonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="CalculerTournee">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Calculer tournee"/>
+        <Property name="text" type="java.lang.String" value="Calculer tourn&#xe9;e"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CalculerTourneeActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="Map">
 
@@ -234,5 +248,13 @@
         </DimensionLayout>
       </Layout>
     </Container>
+    <Component class="javax.swing.JButton" name="feuillederoute">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Generer feuille de route"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="feuillederouteActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>
