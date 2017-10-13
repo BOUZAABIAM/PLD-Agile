@@ -3,8 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package my.pldagile;
-
+package Vue;
+import java.io.*;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.jdom2.*;
+import org.jdom2.input.SAXBuilder;
 /**
  *
  * @author carhiliuc
@@ -29,6 +34,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -41,6 +48,12 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("jLabel1");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("jLabel2");
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -55,8 +68,16 @@ public class IHMLivraisons extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(126, 126, 126)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(126, 126, 126)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)))
                 .addContainerGap(232, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -64,14 +85,43 @@ public class IHMLivraisons extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(141, 141, 141)
                 .addComponent(jButton1)
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addContainerGap(142, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        try {
+            File inputFile = new File("planLyonPetit.xml");
+            SAXBuilder saxBuilder = new SAXBuilder();
+            Document document = saxBuilder.build(inputFile);
+            List<Element> classElement = document.getRootElement().getChildren();
+            String name = classElement.get(1).getName();
+            Attribute IDattribute =  classElement.get(1).getAttribute("id");
+            Attribute xattribute =  classElement.get(1).getAttribute("x");
+            Attribute yattribute =  classElement.get(1).getAttribute("y");
+            String label = IDattribute.getValue()+" "+
+                            xattribute.getValue()+" "+
+                            yattribute.getValue()+" "+ name;
+            String name2 = classElement.get(360).getName();
+            Attribute destination =  classElement.get(360).getAttribute("destination");
+            Attribute longueur =  classElement.get(360).getAttribute("longueur");
+            Attribute nomRue =  classElement.get(360).getAttribute("nomRue");
+            Attribute origine =  classElement.get(360).getAttribute("origine");
+            String label2 = destination.getValue()+" "+
+                            longueur.getValue()+" "+
+                            nomRue.getValue()+" "+
+                            origine.getValue()+" "+ name2;
+            jLabel1.setText(label);
+            jLabel2.setText(label2);
+        } catch (JDOMException | IOException ex) {
+            Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -118,6 +168,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
