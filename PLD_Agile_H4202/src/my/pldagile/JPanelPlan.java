@@ -63,6 +63,7 @@ public class JPanelPlan extends JPanel {
         double paramMax = Math.max(paramLargeur, paramHauteur);
 
         for (Intersection inter : intersections) {
+            gc.setColor(Color.BLUE);
             int xC = (int) Math.round(((inter.getX() - minX) / paramMax) - 5 / 2);
             int yC = (int) Math.round(((inter.getY() - minY) / paramMax) - 5 / 2);
             gc.fillOval(xC, yC, 5, 5);
@@ -70,6 +71,7 @@ public class JPanelPlan extends JPanel {
 
         for (Intersection origine : intersections) {
             gc.setStroke(new BasicStroke(2));
+            gc.setColor(Color.WHITE);
             int x1 = (int) Math.round((origine.getX() - minX) / paramMax);
             int y1 = (int) Math.round((origine.getY() - minY) / paramMax);
             for (Troncon section : origine.getTroncons()) {
