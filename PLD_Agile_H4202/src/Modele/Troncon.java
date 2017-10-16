@@ -4,23 +4,37 @@
  * and open the template in the editor.
  */
 package Modele;
-/**
- *
- * @author carhiliuc
- */
-public class Troncon {
-    
-    private Intersection origine;
-    private Intersection destination;
-    private float longueur;
-    private String nomRue;
 
-    public Troncon(Intersection origine, Intersection destination, float longueur, String nomRue) {
-        this.origine = origine;
-        this.destination = destination;
-        this.longueur = longueur;
-        this.nomRue = nomRue;
-    }
-    
-    
+import Modele.Intersection;
+
+public class Troncon {
+private String nomRue;
+private Intersection destination,origine;
+private double longueur;
+
+public Troncon(String nomRue, Intersection destination, Intersection origine, double longueur) {
+	super();
+	this.nomRue = nomRue;
+	this.destination = destination;
+	this.origine = origine;
+	this.longueur = longueur;
+}
+
+public String getNomRue() {
+	return nomRue;
+}
+
+
+public Intersection getDestination() {
+	return destination;
+}
+
+public Intersection getOrigine() {
+	return origine;
+}
+
+public double getLongueur() {
+	return longueur;
+}
+
 }

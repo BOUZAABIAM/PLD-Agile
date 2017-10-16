@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package my.pldagile;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.File;
@@ -11,6 +12,39 @@ import java.io.IOException;
 import java.awt.Desktop;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javafx.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javafx.fxml.FXML;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
+import Modele.Plan;
+import Modele.Intersection;
+import Modele.Troncon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -48,6 +82,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         CalculerTournee = new javax.swing.JButton();
         Map = new javax.swing.JPanel();
         feuillederoute = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -139,6 +174,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setText("jLabel1");
+
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
 
         jMenu1.setText("File");
@@ -172,21 +209,25 @@ public class IHMLivraisons extends javax.swing.JDialog {
                                 .addComponent(Valider, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(Annuler, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(feuillederoute, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(85, 85, 85)))
+                        .addGap(85, 85, 85))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(97, 97, 97)
+                .addGap(26, 26, 26)
+                .addComponent(jLabel1)
+                .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(ChargerPlan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
@@ -217,60 +258,132 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ChargerPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChargerPlanActionPerformed
-        // TODO add your handling code here:
-        String fplan= FichierPlan.getText();
+        JFileChooser xml_map = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "*.xml");
+        xml_map.setFileFilter(filter);
+        Plan plandDeVille = null;
         
+        
+        if(xml_map.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = xml_map.getSelectedFile();
+            jLabel1.setText(selectedFile.getName());
+            try {
+                plandDeVille = getPlan(selectedFile);
+            } catch (IOException | SAXException | ParserConfigurationException ex) {
+                Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+            }
+         /*   Stage stage = new Stage();
+            stage.setTitle("Optima - DisplayMap");
+            Group root = new Group();
+            Canvas canvas = new Canvas(800, 800);
+            GraphicsContext gc = canvas.getGraphicsContext2D();
+            drawPlan(gc, plandDeVille);
+            root.getChildren().add(canvas);
+            stage.setScene(new Scene(root));
+            stage.show();*/
+            
+        }
+
     }//GEN-LAST:event_ChargerPlanActionPerformed
+    public void drawPlan(GraphicsContext gc, Plan plan) {
+        gc.setFill(Color.BLACK);
+        List<Troncon> troncons = plan.getTroncon();
+        for (Troncon section : troncons) {
+            gc.setLineWidth(2);
+            gc.setStroke(Color.GREY);
+            gc.strokeLine(section.getOrigine().getX(), section.getOrigine().getY(),
+                    section.getDestination().getX(), section.getDestination().getY());
+        }
+
+        List<Intersection> intersections = plan.getIntersection();
+        for (Intersection inter : intersections) {
+            gc.fillOval(inter.getX() - 8 / 2, inter.getY() - 8 / 2,
+                    8, 8);
+        }
+    }
 
     private void ChargerLivraisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChargerLivraisonActionPerformed
         // TODO add your handling code here:
-        String flivraison= FichierLivraison.getText();
-       
+        String flivraison = FichierLivraison.getText();
+
     }//GEN-LAST:event_ChargerLivraisonActionPerformed
 
     private void CalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CalculerTourneeActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_CalculerTourneeActionPerformed
-   
+
     private void ValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValiderActionPerformed
         // TODO add your handling code here:
-   
+
     }//GEN-LAST:event_ValiderActionPerformed
 
     private void AnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnnulerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_AnnulerActionPerformed
-    private static final String FILENAME = "L:\\Documents\\TestFile\\FeuilleDeRoute.txt";
-    private void feuillederouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_feuillederouteActionPerformed
-        // TODO add your handling code here:
-             BufferedWriter bw = null;
-	FileWriter fw = null;
-	try {
-            String content = "This is the content to write into file\n";
-            fw = new FileWriter(FILENAME);
-            bw = new BufferedWriter(fw);
-            bw.write(content);
-            System.out.println("Done");
-            } catch (IOException e) {
-		e.printStackTrace();
-            } finally {
-		try {
-		if (bw != null)	bw.close();
-		if (fw != null)	fw.close();
-		} catch (IOException ex) {
-		ex.printStackTrace();
-		}
-            }
-        File file = new File(FILENAME);
-        Desktop desktop = Desktop.getDesktop();
-        if(Desktop.isDesktopSupported()){
-                 try {
-                     desktop.open(file);
-                 } catch (IOException ex) {
-                     Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
-                 }
+    public void newIntersection(Element element, Map<Long, Intersection> intersections) {
+
+        long id;
+        double x;
+        double y;
+        id = Long.parseLong(element.getAttribute("id"));
+        x = Double.parseDouble(element.getAttribute("x")) / 60;
+        y = Double.parseDouble(element.getAttribute("y")) / 60;
+        Intersection intersection = new Intersection(id, x, y);
+
+        intersections.put(id, intersection);
+    }
+
+    private Troncon getTroncon(Element element, Map<Long, Intersection> intersections,
+            Collection<Troncon> streetSections) {
+        Long idIntersectionStart;
+        Long idIntersectionEnd;
+        double longueur;
+
+        idIntersectionStart = Long.parseLong(element.getAttribute("origine"));
+        idIntersectionEnd = Long.parseLong(element.getAttribute("destination"));
+        longueur = Double.parseDouble(element.getAttribute("longueur"));
+
+        String rueNom = element.getAttribute("nomRue");
+
+        Intersection origine = intersections.get(idIntersectionStart);
+        Intersection destination = intersections.get(idIntersectionEnd);
+
+        Troncon troncon = new Troncon(rueNom, destination, origine, longueur);
+        //Two street sections begin at the same intersection and end at the same intersection
+
+        return troncon;
+    }
+
+    public Plan getPlan(File xmlFile) throws IOException, SAXException, ParserConfigurationException {
+        Map<Long, Intersection> intersections = new TreeMap<Long, Intersection>();
+        ArrayList<Troncon> troncons = new ArrayList<Troncon>();
+
+        Document mapDocument = null;
+        try {
+            mapDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile);
+        } catch (IOException e) {
+            throw e;
         }
+
+        NodeList nList = mapDocument.getElementsByTagName("noeud");
+
+        for (int i = 0; i < nList.getLength(); i++) {
+            newIntersection((Element) nList.item(i), intersections);
+        }
+
+        NodeList streetSectionList = mapDocument.getElementsByTagName("troncon");
+
+        for (int i = 0; i < streetSectionList.getLength(); i++) {
+            troncons.add(getTroncon((Element) streetSectionList.item(i), intersections, troncons));
+        }
+
+        return new Plan(intersections.values(), troncons);
+
+    }
+
+    private void feuillederouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_feuillederouteActionPerformed
+
     }//GEN-LAST:event_feuillederouteActionPerformed
 
     /**
@@ -325,6 +438,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private javax.swing.JPanel Map;
     private javax.swing.JButton Valider;
     private javax.swing.JButton feuillederoute;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
