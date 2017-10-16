@@ -52,6 +52,7 @@ public class XMLJDOMParser {
                     
                 }
                 Plan p = new Plan (intersectionsMap, listeTroncons);
+                return p;
             }
         } catch (JDOMException | IOException ex) {
             Logger.getLogger(XMLJDOMParser.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,3 +60,4 @@ public class XMLJDOMParser {
         */
     }
 }
+    
