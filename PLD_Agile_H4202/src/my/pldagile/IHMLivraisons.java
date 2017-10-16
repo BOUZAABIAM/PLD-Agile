@@ -46,6 +46,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import Modele.Plan;
 import Modele.Intersection;
+import Modele.XMLParser;
 import Modele.Troncon;
 import java.awt.BasicStroke;
 import javax.swing.JFileChooser;
@@ -288,7 +289,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
             File selectedFile = xml_map.getSelectedFile();
             jFieldFichierPlan.setText(selectedFile.getName());
             try {
-                plandDeVille = getPlan(selectedFile);
+                XMLParser parser = new XMLParser();
+                plandDeVille = parser.getPlan(selectedFile);
             } catch (IOException | SAXException | ParserConfigurationException ex) {
                 Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -299,8 +301,26 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonChargerPlanActionPerformed
 
     private void jButtonChargerLivraisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerLivraisonActionPerformed
-        // TODO add your handling code here:
+        JFileChooser xml_DL = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
+        xml_DL.setFileFilter(filter);
+        //nouvelle classe DemandeLivraison ?
+        //DemandeLivraison dl = null;
         
+        
+        if(xml_DL.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = xml_DL.getSelectedFile();
+            jFieldFichierLivraison.setText(selectedFile.getName());
+            /*try {
+                XMLParser parser = new XMLParser();
+                //à faire : getDL
+                dl = parser.getDL(selectedFile);
+            } catch (IOException | SAXException | ParserConfigurationException ex) {
+                Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //faire des trucs avec la DL        
+        */
+        }
 
     }//GEN-LAST:event_jButtonChargerLivraisonActionPerformed
 
@@ -317,59 +337,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
-
-    public Plan getPlan(File xmlFile) throws IOException, SAXException, ParserConfigurationException {
-        Map<Long, Intersection> intersections = new TreeMap<Long, Intersection>();
-        ArrayList<Troncon> troncons = new ArrayList<Troncon>();
-
-        Document mapDocument = null;
-        try {
-            mapDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile);
-        } catch (IOException e) {
-            throw e;
-        }
-
-        NodeList nList = mapDocument.getElementsByTagName("noeud");
-
-        for (int i = 0; i < nList.getLength(); i++) {
-            long id;
-            double x;
-            double y;
-            Element element = (Element) nList.item(i);
-            
-            id = Long.parseLong(element.getAttribute("id"));
-            x = (Double.parseDouble(element.getAttribute("x")));
-            y = (Double.parseDouble(element.getAttribute("y")));
-            Intersection intersection = new Intersection(id, x, y);
-
-            intersections.put(id, intersection);
-        }
-
-        NodeList streetSectionList = mapDocument.getElementsByTagName("troncon");
-
-        for (int i = 0; i < streetSectionList.getLength(); i++) {
-            Long idIntersectionStart;
-            Long idIntersectionEnd;
-            double longueur;
-            String rueNom;
-            Element element = (Element) streetSectionList.item(i);
-
-            idIntersectionStart = Long.parseLong(element.getAttribute("origine"));
-            idIntersectionEnd = Long.parseLong(element.getAttribute("destination"));
-            longueur = Double.parseDouble(element.getAttribute("longueur"));
-
-            rueNom = element.getAttribute("nomRue");
-
-            Troncon troncon = new Troncon(rueNom, idIntersectionEnd, idIntersectionStart, longueur);
-            Intersection origine = intersections.get(idIntersectionStart);
-
-            origine.addTroncon(troncon);
-            
-        }
-
-        return new Plan(intersections.values());
-
-    }
 
     private void jButtonFeuilleDeRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFeuilleDeRouteActionPerformed
 

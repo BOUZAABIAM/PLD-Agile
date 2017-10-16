@@ -69,7 +69,7 @@ public class JPanelPlan extends JPanel {
             } 
         }
         
-//trouver taille effective du jPanel à la place de 500 530
+        //trouver taille effective du jPanel à la place de 500 530, ou cacher les valeurs
         double paramLargeur = (maxX - minX)/500;
         double paramHauteur = (maxY - minY)/530;
         double paramMax = Math.max(paramLargeur,paramHauteur);

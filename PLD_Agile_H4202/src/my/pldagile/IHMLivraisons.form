@@ -69,18 +69,13 @@
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <Component id="jButtonCalculerTournee" min="-2" pref="155" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jButtonCalculerTournee" min="-2" pref="155" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jButtonValider" min="-2" pref="125" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jButtonAnnuler" pref="145" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="jScrollPane2" pref="437" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="jButtonValider" min="-2" pref="125" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButtonAnnuler" pref="145" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="jScrollPane2" pref="437" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="157" max="-2" attributes="0"/>
                       <Component id="jButtonFeuilleDeRoute" min="-2" pref="164" max="-2" attributes="0"/>
