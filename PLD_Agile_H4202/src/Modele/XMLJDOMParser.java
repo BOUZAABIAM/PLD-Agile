@@ -7,16 +7,16 @@ package Modele;
 import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.jdom2.*;
-import org.jdom2.input.SAXBuilder;
+//import java.util.logging.Logger;
+//import org.jdom2.*;
+//import org.jdom2.input.SAXBuilder;
 /**
  *
  * @author carhiliuc
  */
 public class XMLJDOMParser {
     public void parsePlan(String chemin){
-
+/*
         try {
             File inputFile = new File(chemin);
             SAXBuilder saxBuilder = new SAXBuilder();
@@ -56,6 +56,6 @@ public class XMLJDOMParser {
         } catch (JDOMException | IOException ex) {
             Logger.getLogger(XMLJDOMParser.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        */
     }
 }
