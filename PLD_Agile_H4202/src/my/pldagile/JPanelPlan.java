@@ -81,11 +81,11 @@ public class JPanelPlan extends JPanel {
         }
 
 
-        for (Intersection inter : intersections) {
-            for(Troncon section : inter.getTroncons()){
+        for (Intersection origine : intersections) {
+            for(Troncon section : origine.getTroncons()){
                 gc.setStroke(new BasicStroke(2));
-                int x1 = (int) Math.round((inter.getX() - minX) / paramMax);
-                int y1 = (int) Math.round((inter.getY() - minY) / paramMax);
+                int x1 = (int) Math.round((origine.getX() - minX) / paramMax);
+                int y1 = (int) Math.round((origine.getY() - minY) / paramMax);
     //ça devrait marcher, section.getDestination()est bien un long, je sais pas pk il pense que c'est un int
                 Intersection destination = intersections.get(section.getDestination());
                 int x2 = (int) Math.round((destination.getX() - minX) / paramMax);
