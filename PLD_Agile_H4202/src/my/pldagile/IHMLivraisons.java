@@ -5,50 +5,17 @@
  */
 package my.pldagile;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.File;
-import java.io.IOException;
-import java.awt.Desktop;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.awt.Graphics;
-import java.awt.*;
-import java.awt.geom.Line2D;
-import javax.swing.*;
 
-import javafx.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Stage;
 import Modele.Plan;
-import Modele.Intersection;
 import Modele.XMLParser;
-import Modele.Troncon;
-import java.awt.BasicStroke;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -283,9 +250,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
         xml_map.setFileFilter(filter);
         Plan plandDeVille = null;
-        
-        
-        if(xml_map.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+
+        if (xml_map.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File selectedFile = xml_map.getSelectedFile();
             jFieldFichierPlan.setText(selectedFile.getName());
             try {
@@ -295,7 +261,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
             }
             jPanelPlanMap.setPlan(plandDeVille);
-            jPanelPlanMap.repaint();            
+            jPanelPlanMap.repaint();
         }
 
     }//GEN-LAST:event_jButtonChargerPlanActionPerformed
@@ -306,9 +272,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
         xml_DL.setFileFilter(filter);
         //nouvelle classe DemandeLivraison ?
         //DemandeLivraison dl = null;
-        
-        
-        if(xml_DL.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+
+        if (xml_DL.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File selectedFile = xml_DL.getSelectedFile();
             jFieldFichierLivraison.setText(selectedFile.getName());
             /*try {
@@ -319,7 +284,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
             }
             //faire des trucs avec la DL        
-        */
+             */
         }
 
     }//GEN-LAST:event_jButtonChargerLivraisonActionPerformed

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Modele;
+
 import java.io.*;
 import java.util.*;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -12,6 +13,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
 /**
  *
  * @author carhiliuc
@@ -20,8 +22,7 @@ public class XMLParser {
 
     public XMLParser() {
     }
-    
-    
+
     public Plan getPlan(File xmlFile) throws IOException, SAXException, ParserConfigurationException {
         Map<Long, Intersection> intersections = new TreeMap<Long, Intersection>();
 
@@ -39,7 +40,7 @@ public class XMLParser {
             double x;
             double y;
             Element element = (Element) nList.item(i);
-            
+
             id = Long.parseLong(element.getAttribute("id"));
             x = (Double.parseDouble(element.getAttribute("x")));
             y = (Double.parseDouble(element.getAttribute("y")));
@@ -67,11 +68,10 @@ public class XMLParser {
             Intersection origine = intersections.get(idIntersectionStart);
 
             origine.addTroncon(troncon);
-            
+
         }
 
         return new Plan(intersections.values());
     }
-    
+
 }
-    

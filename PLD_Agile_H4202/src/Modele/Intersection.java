@@ -45,5 +45,5 @@ public class Intersection {
     public String toString() {
         return "Intersection{" + "id=" + id + ", x=" + x + ", y=" + y + ", troncons=" + troncons + '}';
     }
-    
+
 }
