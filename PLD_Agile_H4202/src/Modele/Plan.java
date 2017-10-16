@@ -48,4 +48,12 @@ public List<Troncon> getTroncon() {
     }
     return listStreetSection;
 }
+
+    @Override
+    public String toString() {
+        return "Plan{" + "intersections=" + intersections + ", troncons=" + troncons + '}';
+    }
+
+   
+       
 }
