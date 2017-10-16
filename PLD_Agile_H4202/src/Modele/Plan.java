@@ -53,6 +53,8 @@ public List<Troncon> getTroncon() {
     public String toString() {
         return "Plan{" + "intersections=" + intersections + ", troncons=" + troncons + '}';
     }
+
+   
     
        
 }
