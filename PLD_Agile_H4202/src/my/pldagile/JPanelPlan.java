@@ -69,26 +69,29 @@ public class JPanelPlan extends JPanel {
             } 
         }
         
-//trouver taille effective du jPanel à la place de 559 545
-        double paramLargeur = (maxX - minX)/559;
-        double paramHauteur = (maxY - minY)/545;
+//trouver taille effective du jPanel à la place de 500 530
+        double paramLargeur = (maxX - minX)/500;
+        double paramHauteur = (maxY - minY)/530;
         double paramMax = Math.max(paramLargeur,paramHauteur);
+        
         for (Intersection inter : intersections) {
             int xC = (int) Math.round(((inter.getX() - minX) / paramMax) - 5 / 2);
             int yC = (int) Math.round(((inter.getY() - minY) / paramMax) - 5 / 2);
-            gc.fillOval(xC, yC,
-                    5, 5);
+            gc.fillOval(xC, yC, 5, 5);
         }
 
-        java.util.List<Troncon> troncons = lePlan.getTroncon();
-        for (Troncon section : troncons) {
-            gc.setStroke(new BasicStroke(2));
-            //gc.setStroke(Color.GREY);
-            int x1 = (int) Math.round((section.getOrigine().getX() - minX) / paramMax);
-            int y1 = (int) Math.round((section.getOrigine().getY() - minY) / paramMax);
-            int x2 = (int) Math.round((section.getDestination().getX() - minX) / paramMax);
-            int y2 = (int) Math.round((section.getDestination().getY() - minY) / paramMax);
-            gc.drawLine(x1, y1, x2, y2);
+
+        for (Intersection inter : intersections) {
+            for(Troncon section : inter.getTroncons()){
+                gc.setStroke(new BasicStroke(2));
+                int x1 = (int) Math.round((inter.getX() - minX) / paramMax);
+                int y1 = (int) Math.round((inter.getY() - minY) / paramMax);
+    //ça devrait marcher, section.getDestination()est bien un long, je sais pas pk il pense que c'est un int
+                Intersection destination = intersections.get(section.getDestination());
+                int x2 = (int) Math.round((destination.getX() - minX) / paramMax);
+                int y2 = (int) Math.round((destination.getY() - minY) / paramMax);
+                gc.drawLine(x1, y1, x2, y2);
+            }
         }
 
     }

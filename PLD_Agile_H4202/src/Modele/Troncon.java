@@ -9,10 +9,10 @@ import Modele.Intersection;
 
 public class Troncon {
 private String nomRue;
-private Intersection destination,origine;
+private long destination,origine;
 private double longueur;
 
-public Troncon(String nomRue, Intersection destination, Intersection origine, double longueur) {
+public Troncon(String nomRue, long destination, long origine, double longueur) {
 	super();
 	this.nomRue = nomRue;
 	this.destination = destination;
@@ -25,11 +25,11 @@ public String getNomRue() {
 }
 
 
-public Intersection getDestination() {
+public long getDestination() {
 	return destination;
 }
 
-public Intersection getOrigine() {
+public long getOrigine() {
 	return origine;
 }
 

@@ -87,7 +87,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonCalculerTournee = new javax.swing.JButton();
         jPanelPlanMap = new my.pldagile.JPanelPlan();
         jButtonFeuilleDeRoute = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelTitre = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -102,8 +102,13 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }
         });
 
+        jFieldFichierPlan.setEditable(false);
+        jFieldFichierPlan.setBackground(javax.swing.UIManager.getDefaults().getColor("EditorPane.disabledBackground"));
+        jFieldFichierPlan.setAutoscrolls(false);
+        jFieldFichierPlan.setEnabled(false);
         jScrollPane1.setViewportView(jFieldFichierPlan);
 
+        jTableLivraisons.setAutoCreateColumnsFromModel(false);
         jTableLivraisons.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -145,6 +150,10 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }
         });
 
+        jFieldFichierLivraison.setEditable(false);
+        jFieldFichierLivraison.setBackground(javax.swing.UIManager.getDefaults().getColor("ComboBox.disabledBackground"));
+        jFieldFichierLivraison.setAutoscrolls(false);
+        jFieldFichierLivraison.setEnabled(false);
         jScrollPane3.setViewportView(jFieldFichierLivraison);
 
         jButtonChargerLivraison.setText("Charger Livraison");
@@ -161,17 +170,17 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }
         });
 
-        jPanelPlanMap.setBackground(new java.awt.Color(153, 255, 153));
+        jPanelPlanMap.setBackground(new java.awt.Color(192, 226, 151));
 
         javax.swing.GroupLayout jPanelPlanMapLayout = new javax.swing.GroupLayout(jPanelPlanMap);
         jPanelPlanMap.setLayout(jPanelPlanMapLayout);
         jPanelPlanMapLayout.setHorizontalGroup(
             jPanelPlanMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
         );
         jPanelPlanMapLayout.setVerticalGroup(
             jPanelPlanMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 545, Short.MAX_VALUE)
+            .addGap(0, 530, Short.MAX_VALUE)
         );
 
         jButtonFeuilleDeRoute.setText("Generer feuille de route");
@@ -181,7 +190,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }
         });
 
-        jLabel1.setText("jLabel1");
+        jLabelTitre.setFont(new java.awt.Font("Elephant", 0, 36)); // NOI18N
+        jLabelTitre.setText(" Système de livraison");
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -198,58 +208,60 @@ public class IHMLivraisons extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 15, Short.MAX_VALUE)
+                        .addComponent(jPanelPlanMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanelPlanMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButtonAnnuler, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(157, 157, 157)
-                                .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonAnnuler, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(157, 157, 157)
+                        .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(317, 317, 317)
+                .addComponent(jLabelTitre)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1)
-                .addGap(57, 57, 57)
+                .addGap(28, 28, 28)
+                .addComponent(jLabelTitre)
+                .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelPlanMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanelPlanMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
@@ -274,7 +286,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         
         if(xml_map.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File selectedFile = xml_map.getSelectedFile();
-            jLabel1.setText(selectedFile.getName());
+            jFieldFichierPlan.setText(selectedFile.getName());
             try {
                 plandDeVille = getPlan(selectedFile);
             } catch (IOException | SAXException | ParserConfigurationException ex) {
@@ -305,39 +317,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
-    public void newIntersection(Element element, Map<Long, Intersection> intersections) {
-
-        long id;
-        double x;
-        double y;
-        id = Long.parseLong(element.getAttribute("id"));
-        x = (Double.parseDouble(element.getAttribute("x")));
-        y = (Double.parseDouble(element.getAttribute("y")));
-        Intersection intersection = new Intersection(id, x, y);
-
-        intersections.put(id, intersection);
-    }
-
-    private Troncon getTroncon(Element element, Map<Long, Intersection> intersections,
-            Collection<Troncon> streetSections) {
-        Long idIntersectionStart;
-        Long idIntersectionEnd;
-        double longueur;
-
-        idIntersectionStart = Long.parseLong(element.getAttribute("origine"));
-        idIntersectionEnd = Long.parseLong(element.getAttribute("destination"));
-        longueur = Double.parseDouble(element.getAttribute("longueur"));
-
-        String rueNom = element.getAttribute("nomRue");
-
-        Intersection origine = intersections.get(idIntersectionStart);
-        Intersection destination = intersections.get(idIntersectionEnd);
-
-        Troncon troncon = new Troncon(rueNom, destination, origine, longueur);
-        //Two street sections begin at the same intersection and end at the same intersection
-
-        return troncon;
-    }
 
     public Plan getPlan(File xmlFile) throws IOException, SAXException, ParserConfigurationException {
         Map<Long, Intersection> intersections = new TreeMap<Long, Intersection>();
@@ -353,16 +332,42 @@ public class IHMLivraisons extends javax.swing.JDialog {
         NodeList nList = mapDocument.getElementsByTagName("noeud");
 
         for (int i = 0; i < nList.getLength(); i++) {
-            newIntersection((Element) nList.item(i), intersections);
+            long id;
+            double x;
+            double y;
+            Element element = (Element) nList.item(i);
+            
+            id = Long.parseLong(element.getAttribute("id"));
+            x = (Double.parseDouble(element.getAttribute("x")));
+            y = (Double.parseDouble(element.getAttribute("y")));
+            Intersection intersection = new Intersection(id, x, y);
+
+            intersections.put(id, intersection);
         }
 
         NodeList streetSectionList = mapDocument.getElementsByTagName("troncon");
 
         for (int i = 0; i < streetSectionList.getLength(); i++) {
-            troncons.add(getTroncon((Element) streetSectionList.item(i), intersections, troncons));
+            Long idIntersectionStart;
+            Long idIntersectionEnd;
+            double longueur;
+            String rueNom;
+            Element element = (Element) streetSectionList.item(i);
+
+            idIntersectionStart = Long.parseLong(element.getAttribute("origine"));
+            idIntersectionEnd = Long.parseLong(element.getAttribute("destination"));
+            longueur = Double.parseDouble(element.getAttribute("longueur"));
+
+            rueNom = element.getAttribute("nomRue");
+
+            Troncon troncon = new Troncon(rueNom, idIntersectionEnd, idIntersectionStart, longueur);
+            Intersection origine = intersections.get(idIntersectionStart);
+
+            origine.addTroncon(troncon);
+            
         }
 
-        return new Plan(intersections.values(), troncons);
+        return new Plan(intersections.values());
 
     }
 
@@ -423,7 +428,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private javax.swing.JButton jButtonValider;
     private javax.swing.JTextPane jFieldFichierLivraison;
     private javax.swing.JTextPane jFieldFichierPlan;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelTitre;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
