@@ -15,18 +15,12 @@ public class Plan {
         this.intersections.put(intersection.getId(), intersection);
     }
 
-    public Plan(Iterable<Intersection> intersections) {
-        this.intersections = new TreeMap<Long, Intersection>();
-
-        for (Intersection intersection : intersections) {
-            this.addIntersection(intersection);
-        }
+    public Plan(Map<Long, Intersection> intersections) {
+        this.intersections = intersections;
     }
 
-    public List<Intersection> getIntersection() {
-        List<Intersection> listIntersection = new ArrayList<Intersection>();
-        listIntersection.addAll(this.intersections.values());
-        return listIntersection;
+    public Map<Long, Intersection> getIntersection() {
+        return intersections;
     }
 
     @Override

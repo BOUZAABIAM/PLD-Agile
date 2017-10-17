@@ -15,6 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import Modele.Plan;
+import Modele.DemandeLivraison;
 import Modele.XMLParser;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -56,6 +57,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jPanelPlanMap = new my.pldagile.JPanelPlan();
         jButtonFeuilleDeRoute = new javax.swing.JButton();
         jLabelTitre = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -79,30 +81,34 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jTableLivraisons.setAutoCreateColumnsFromModel(false);
         jTableLivraisons.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Livraison", "Depart", "Arrivée"
+                "Adresse", "Durée"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(jTableLivraisons);
+        if (jTableLivraisons.getColumnModel().getColumnCount() > 0) {
+            jTableLivraisons.getColumnModel().getColumn(0).setResizable(false);
+            jTableLivraisons.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         jButtonValider.setText("Valider");
         jButtonValider.addActionListener(new java.awt.event.ActionListener() {
@@ -161,6 +167,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jLabelTitre.setFont(new java.awt.Font("Elephant", 0, 36)); // NOI18N
         jLabelTitre.setText(" Système de livraison");
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setText("Livraisons");
+
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
 
         jMenu1.setText("File");
@@ -189,10 +198,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
                         .addComponent(jScrollPane1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -200,12 +208,16 @@ public class IHMLivraisons extends javax.swing.JDialog {
                                 .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonAnnuler, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(157, 157, 157)
-                        .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(157, 157, 157)
+                                .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(165, 165, 165))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(317, 317, 317)
                 .addComponent(jLabelTitre)
@@ -218,8 +230,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 .addComponent(jLabelTitre)
                 .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
+                    .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -260,6 +273,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
             } catch (IOException | SAXException | ParserConfigurationException ex) {
                 Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
             }
+            planActuel = plandDeVille;
             jPanelPlanMap.setPlan(plandDeVille);
             jPanelPlanMap.repaint();
         }
@@ -267,26 +281,29 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonChargerPlanActionPerformed
 
     private void jButtonChargerLivraisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerLivraisonActionPerformed
-        JFileChooser xml_DL = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
-        xml_DL.setFileFilter(filter);
-        //nouvelle classe DemandeLivraison ?
-        //DemandeLivraison dl = null;
+        if (planActuel != null){
+            JFileChooser xml_DL = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
+            xml_DL.setFileFilter(filter);
+            DemandeLivraison dl = null;
 
-        if (xml_DL.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = xml_DL.getSelectedFile();
-            jFieldFichierLivraison.setText(selectedFile.getName());
-            /*try {
-                XMLParser parser = new XMLParser();
-                //à faire : getDL
-                dl = parser.getDL(selectedFile);
-            } catch (IOException | SAXException | ParserConfigurationException ex) {
-                Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            //faire des trucs avec la DL        
-             */
+            if (xml_DL.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = xml_DL.getSelectedFile();
+                jFieldFichierLivraison.setText(selectedFile.getName());
+                try {
+                    XMLParser parser = new XMLParser();
+                    dl = parser.getDL(selectedFile, planActuel);
+                } catch (IOException | SAXException | ParserConfigurationException ex) {
+                    Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                DLActuelle = dl;    
+                jPanelPlanMap.setPlan(planActuel);
+                jPanelPlanMap.setDL(DLActuelle);
+                jPanelPlanMap.repaint();
+
+            }  
         }
-
     }//GEN-LAST:event_jButtonChargerLivraisonActionPerformed
 
     private void jButtonCalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculerTourneeActionPerformed
@@ -348,9 +365,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }
         });
     }
+    
+    private Plan planActuel;
+    private DemandeLivraison DLActuelle;
     // /!\ IMPORTANT : changer private javax.swing.JPanel jPanelPlanMap; en private JPanelPlan jPanelPlanMap;
     // netBeans va essayer de le changer
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnnuler;
     private javax.swing.JButton jButtonCalculerTournee;
@@ -360,6 +379,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private javax.swing.JButton jButtonValider;
     private javax.swing.JTextPane jFieldFichierLivraison;
     private javax.swing.JTextPane jFieldFichierPlan;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelTitre;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

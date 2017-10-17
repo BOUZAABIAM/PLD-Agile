@@ -75,9 +75,21 @@ public class XMLParser {
 
         return new Plan(intersections);
     }
-
- public DemandeLivraison getDL(File xmlFile, Plan plan) throws IOException, SAXException, ParserConfigurationException {
-     System.out.println("getDL");
+    
+    private String goodTimeForm(String time){
+        String newTime = time;
+        int prec = -1;    
+        for (int i = 0; i < newTime.length(); i++){
+            if (newTime.charAt(i) == ':' && ((i - prec) < 3)){
+                    prec = i;
+                    newTime = newTime.substring(0, i-2) + 0 + newTime.substring(i-2, newTime.length());
+             
+            }
+        }
+        return newTime;
+    }
+    
+    public DemandeLivraison getDL(File xmlFile, Plan plan) throws IOException, SAXException, ParserConfigurationException {
         Map<Long, Livraison> livraisons = new TreeMap<Long, Livraison>();
         Intersection entrepot = null;
         Time heureDepart = null;
@@ -101,16 +113,9 @@ public class XMLParser {
             entrepot = plan.getIntersection().get(idAdresse);
             
             time = element.getAttribute("heureDepart");
-            String newTime = time;
-            int prec = -1;    
-            for (int j = 0; j < newTime.length(); j++){
-                if (newTime.charAt(j) == ':' && ((j - prec) < 3)){
-                        prec = j;
-                        newTime = newTime.substring(0, j-2) + 0 + newTime.substring(j-2, newTime.length());
-
-                }
-            }
-            heureDepart = Time.valueOf(newTime);
+            //goodTimeForm générait une erreur, ça a l'air de larcher comma ça
+            //String newTime = goodTimeForm(time);
+            heureDepart = Time.valueOf(time);
         }
 
         NodeList livr = mapDocument.getElementsByTagName("livraison");
@@ -128,14 +133,14 @@ public class XMLParser {
             
             duree = Integer.parseInt(element.getAttribute("duree"));
             
-//            debutPlage = element.getAttribute("debutPlage");
-//            finPlage = element.getAttribute("finPlage");
-//            
-//            if(debutPlage.equals("")||finPlage.equals("")){
+            debutPlage = element.getAttribute("debutPlage");
+            finPlage = element.getAttribute("finPlage");
+            
+            if(debutPlage.isEmpty()||finPlage.isEmpty()){
                 livraison = new Livraison(adresse, duree);
-//            }else{
-//                livraison = new Livraison(adresse, duree, debutPlage, finPlage);
-//            }
+            }else{
+                livraison = new Livraison(adresse, duree, debutPlage, finPlage);
+            }
             
             livraisons.put(id, livraison);
         }
