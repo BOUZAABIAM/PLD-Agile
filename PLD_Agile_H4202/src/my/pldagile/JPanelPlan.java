@@ -80,14 +80,14 @@ public class JPanelPlan extends JPanel {
                 //int y1 = (int) Math.round((origine.getY() - minY) / paramMax);
                 //ça devrait marcher, section.getDestination()est bien un long, je sais pas pk il pense que c'est un int
                 //Intersection destination = intersections.get(section.getDestination());
-                long idDestination =section.getDestination();
-                for (Intersection destination : intersections) {
-                    if(destination.getId()==idDestination){
+                 Intersection destination =section.getDestination();
+                
                         int x2 = (int) Math.round((destination.getX() - minX) / paramMax);
                         int y2 = (int) Math.round((destination.getY() - minY) / paramMax);
-                        gc.drawLine(x1, y1, x2, y2);}}
+                        gc.drawLine(x1, y1, x2, y2);
             }
         }
+                 
 
     }
 
