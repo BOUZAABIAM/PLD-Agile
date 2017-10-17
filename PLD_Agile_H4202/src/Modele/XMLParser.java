@@ -63,9 +63,10 @@ public class XMLParser {
             longueur = Double.parseDouble(element.getAttribute("longueur"));
 
             rueNom = element.getAttribute("nomRue");
-
-            Troncon troncon = new Troncon(rueNom, idIntersectionEnd, idIntersectionStart, longueur);
             Intersection origine = intersections.get(idIntersectionStart);
+            
+            Troncon troncon = new Troncon(rueNom, intersections.get(idIntersectionEnd), origine, longueur);
+            
 
             origine.addTroncon(troncon);
 
