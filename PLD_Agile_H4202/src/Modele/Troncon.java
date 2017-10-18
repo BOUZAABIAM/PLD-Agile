@@ -32,7 +32,9 @@ public class Troncon {
         return origine;
     }
 
-  
+    public int getDuree() {
+        return (int) longueur;
+    }
 
     public double getLongueur() {
         return longueur;

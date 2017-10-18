@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package my.pldagile;
+package Vue;
 
 import Modele.DemandeLivraison;
 import Modele.Livraison;
@@ -125,6 +125,7 @@ public class JPanelPlan extends JPanel {
                 gc.fillOval(xC, yC, 10, 10); 
             }
         }
+        
                  
 
     }
