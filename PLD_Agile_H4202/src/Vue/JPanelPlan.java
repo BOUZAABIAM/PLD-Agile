@@ -37,7 +37,7 @@ public class JPanelPlan extends JPanel {
     public void setDL(DemandeLivraison laDL) {
         this.laDL = laDL;
     }
-    //fait la rotation d'un point(x,y) d'une angle de Pi/2 autour de centre de coordonnees (xc,yc)
+    //fait la rotation d'un point(x,y) d'une angle de -Pi/2 autour de centre de coordonnees (xc,yc)
      public int[] rotationPoint(int x, int y,int xc,int yc){
          int coordonnees[]={x,y};
          coordonnees[0]= y - yc +xc;
@@ -81,7 +81,7 @@ public class JPanelPlan extends JPanel {
         double paramLargeur = (maxX - minX) / 500;
         double paramHauteur = (maxY - minY) / 530;
         double paramMax = Math.max(paramLargeur, paramHauteur);
-        //Coordonnees de centre de rotation
+        //Coordonnees du centre de rotation
         int coordonnees[];
         int xCentre=(int)Math.round((((maxX / 2 + minX / 2)-minX)/(paramMax )));
         int yCentre=(int)Math.round((((maxY / 2 + minY / 2)-minY)/(paramMax )));
