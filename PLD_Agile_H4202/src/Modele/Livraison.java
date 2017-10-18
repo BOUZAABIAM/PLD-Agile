@@ -20,10 +20,10 @@ public class Livraison {
     public Livraison(Intersection adresse, int duree, String debutPlage, String finPlage) {
         this.adresse = adresse;
         this.duree = duree;
-        String dPlage = goodTimeForm(debutPlage);
-        String fPlage = goodTimeForm(finPlage);
-        this.debutPlage = Time.valueOf(dPlage);
-        this.finPlage = Time.valueOf(fPlage);
+        //String dPlage = goodTimeForm(debutPlage);
+        //String fPlage = goodTimeForm(finPlage);
+        this.debutPlage = Time.valueOf(debutPlage);
+        this.finPlage = Time.valueOf(finPlage);
     }
 
     public Livraison(Intersection adresse, int duree) {
@@ -46,12 +46,12 @@ public class Livraison {
             if (newTime.charAt(i) == ':' && ((i - prec) < 3)){
                     prec = i;
                     newTime = newTime.substring(0, i-2) + 0 + newTime.substring(i-2, newTime.length());
-             
             }
         }
         return newTime;
     }
 
+     
     public Intersection getAdresse() {
         return adresse;
     }

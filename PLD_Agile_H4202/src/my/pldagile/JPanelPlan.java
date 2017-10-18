@@ -80,13 +80,14 @@ public class JPanelPlan extends JPanel {
         double paramMax = Math.max(paramLargeur, paramHauteur);
         double sym=(maxX+minX)/2;
         int symX =(int)(((sym-minX)/paramMax )- 6 / 2);
-                //dessine les intersections
+        
+        //dessine les intersections
         for (Intersection inter : intersections) {
             gc.setColor(Color.BLUE);
-            int xC = (int) Math.round(((inter.getX() - minX) / paramMax) - 6 / 2);
+            int xC = (int) Math.round(((inter.getX() - minX) / paramMax) - 1 / 2);
             xC=symAxiale(xC,symX);
-            int yC = (int) Math.round(((inter.getY() - minY) / paramMax) - 6 / 2);
-            gc.fillOval(xC, yC, 6, 6);
+            int yC = (int) Math.round(((inter.getY() - minY) / paramMax) - 1 / 2);
+            gc.fillOval(xC, yC, 1, 1);
         }
 
         //dessine les tronçons
@@ -106,15 +107,14 @@ public class JPanelPlan extends JPanel {
             gc.drawLine(x1, y1, x2, y2);
             }
         }
-        
-        // c'est peut être pas terrible de faire ça avec un if, j'aimerai faire 
-        //une deuxième méthode, et une 3e pour dessiner la tournée
         if (laDL != null){
+            //dessine l'entrepot
             gc.setColor(Color.BLACK);
             int xEntrepot = (int) Math.round(((laDL.getEntrepot().getX() - minX) / paramMax) - 10 / 2);
             int yEntrepot = (int) Math.round(((laDL.getEntrepot().getY() - minY) / paramMax) - 10 / 2);
             gc.fillOval(xEntrepot, yEntrepot, 10, 10); 
 
+            //dessine les livraisons
             java.util.List<Livraison> livraisons  = new ArrayList<Livraison>();
             livraisons.addAll(laDL.getLivraison().values());
             for (Livraison livr : livraisons) {           
