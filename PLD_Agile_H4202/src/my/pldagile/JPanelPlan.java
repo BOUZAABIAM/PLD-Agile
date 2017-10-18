@@ -37,6 +37,10 @@ public class JPanelPlan extends JPanel {
     public void setDL(DemandeLivraison laDL) {
         this.laDL = laDL;
     }
+     public int symAxiale(int x, int sym){
+         if(x>=sym){x=x-2*(x-sym);}else{x=x+2*(sym-x);}
+         return x;
+            }
 
     public void drawPlan(Graphics g, Plan lePlan) {
         if (lePlan == null) {
@@ -74,11 +78,13 @@ public class JPanelPlan extends JPanel {
         double paramLargeur = (maxX - minX) / 500;
         double paramHauteur = (maxY - minY) / 530;
         double paramMax = Math.max(paramLargeur, paramHauteur);
-
-        //dessine les intersections
+        double sym=(maxX+minX)/2;
+        int symX =(int)(((sym-minX)/paramMax )- 6 / 2);
+                //dessine les intersections
         for (Intersection inter : intersections) {
             gc.setColor(Color.BLUE);
             int xC = (int) Math.round(((inter.getX() - minX) / paramMax) - 6 / 2);
+            xC=symAxiale(xC,symX);
             int yC = (int) Math.round(((inter.getY() - minY) / paramMax) - 6 / 2);
             gc.fillOval(xC, yC, 6, 6);
         }
@@ -88,12 +94,14 @@ public class JPanelPlan extends JPanel {
             gc.setStroke(new BasicStroke(2));
             gc.setColor(Color.WHITE);
             int x1 = (int) Math.round((origine.getX() - minX) / paramMax);
+             x1=symAxiale(x1,symX);
             int y1 = (int) Math.round((origine.getY() - minY) / paramMax);
             for (Troncon section : origine.getTroncons()) {
 
             Intersection destination =section.getDestination();
 
             int x2 = (int) Math.round((destination.getX() - minX) / paramMax);
+             x2=symAxiale(x2,symX);
             int y2 = (int) Math.round((destination.getY() - minY) / paramMax);
             gc.drawLine(x1, y1, x2, y2);
             }
@@ -112,6 +120,7 @@ public class JPanelPlan extends JPanel {
             for (Livraison livr : livraisons) {           
                 gc.setColor(Color.RED);
                 int xC = (int) Math.round(((livr.getAdresse().getX() - minX) / paramMax) - 10 / 2);
+                 xC=symAxiale(xC,symX);
                 int yC = (int) Math.round(((livr.getAdresse().getY() - minY) / paramMax) - 10 / 2);
                 gc.fillOval(xC, yC, 10, 10); 
             }
