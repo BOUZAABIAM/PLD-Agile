@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -179,11 +180,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 {null, null, null, null}
             },
             new String [] {
-                "Adresse", "Duree", "Titre 3", "Titre 4"
+                "Adresse", "Duree", "départ prévuese", "heures d’arrivée"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Long.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Long.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -281,7 +282,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+   
     private void jButtonChargerPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerPlanActionPerformed
         JFileChooser xml_map = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
@@ -303,7 +304,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_jButtonChargerPlanActionPerformed
-
+    
     private void jButtonChargerLivraisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerLivraisonActionPerformed
         if (planActuel != null){
             JFileChooser xml_DL = new JFileChooser();
@@ -328,15 +329,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 Set set = dl.getLivraison().entrySet();
                 Collection<Livraison> livraisoncollection = dl.getLivraison().values();
                 int indexRow=0;
-                /*Iterator i = set.iterator();
-                while(i.hasNext()) {
-                    Map.Entry livraison = (Map.Entry)i.next();  
-                    Class<?> l = livraison.getValue().getClass(); 
-                    Object obj = livraison.getValue();
-                    jTableLivraisons.getModel().setValueAt(obj.toString(), indexRow, 0);
-                    jTableLivraisons.getModel().setValueAt(obj.toString(), indexRow, 1);
-                    indexRow++;
-                }*/
+                
                 for(Livraison livraison :livraisoncollection ){
                     jTableLivraisons.getModel().setValueAt(livraison.getAdresse().getId(), indexRow, 0);
                     jTableLivraisons.getModel().setValueAt(livraison.getDuree(), indexRow, 1);
@@ -347,7 +340,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }  
         }
     }//GEN-LAST:event_jButtonChargerLivraisonActionPerformed
-
+    
     private void jButtonCalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculerTourneeActionPerformed
         // TODO add your handling code here:
 
@@ -359,7 +352,22 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) jTableLivraisons.getModel();
+        int rowCount = model.getRowCount();
+        String setvide="";
+        for (int i = 0; i < rowCount ; i++){
+            jTableLivraisons.getModel().setValueAt(setvide, i, 0);
+            jTableLivraisons.getModel().setValueAt(setvide, i, 1);
+            jTableLivraisons.getModel().setValueAt(setvide, i, 2);
+            jTableLivraisons.getModel().setValueAt(setvide, i, 3);
+                    
+        }
+        DLActuelle=null;
+        jPanelPlanMap.setPlan(planActuel);
+        jPanelPlanMap.setDL(DLActuelle);
+        jPanelPlanMap.repaint();
+        
+        
     }//GEN-LAST:event_jButtonAnnulerActionPerformed
 
     private void jButtonFeuilleDeRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFeuilleDeRouteActionPerformed

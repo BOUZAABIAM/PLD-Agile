@@ -285,8 +285,8 @@
               <Table columnCount="4" rowCount="32">
                 <Column editable="true" title="Adresse" type="java.lang.Long"/>
                 <Column editable="true" title="Duree" type="java.lang.Integer"/>
-                <Column editable="true" title="Titre 3" type="java.lang.Object"/>
-                <Column editable="true" title="Titre 4" type="java.lang.Object"/>
+                <Column editable="true" title="d&#xe9;part pr&#xe9;vuese" type="java.lang.String"/>
+                <Column editable="true" title="heures d&#x2019;arriv&#xe9;e" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
