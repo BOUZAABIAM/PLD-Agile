@@ -25,7 +25,6 @@ import java.util.Set;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import tsp.*;
 
 /**
  *
@@ -106,6 +105,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jScrollPane3.setViewportView(jFieldFichierLivraison);
 
         jButtonChargerLivraison.setText("Charger Livraison");
+        jButtonChargerLivraison.setEnabled(false);
         jButtonChargerLivraison.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonChargerLivraisonActionPerformed(evt);
@@ -113,6 +113,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         });
 
         jButtonCalculerTournee.setText("Calculer tournée");
+        jButtonCalculerTournee.setEnabled(false);
         jButtonCalculerTournee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCalculerTourneeActionPerformed(evt);
@@ -244,7 +245,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                         .addContainerGap()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                        .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 134, Short.MAX_VALUE)
                         .addGap(28, 28, 28)
                         .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(61, 61, 61)
@@ -311,6 +312,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
             planActuel = plandDeVille;
             jPanelPlanMap.setPlan(plandDeVille);
             jPanelPlanMap.repaint();
+            jButtonChargerLivraison.setEnabled(true);
         }
         
 
@@ -339,6 +341,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 jPanelPlanMap.repaint();
                 
                 annulerDL();
+                jButtonCalculerTournee.setEnabled(true);
                 
                 Collection<Livraison> livraisoncollection = dl.getLivraison().values();
                 int indexRow=0;
@@ -421,6 +424,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                     
         }
         DLActuelle=null; 
+        jButtonCalculerTournee.setEnabled(false);
     }
     private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
         annulerDL(); 
@@ -493,7 +497,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-   private JPanelPlan jPanelPlanMap;
+    private JPanelPlan jPanelPlanMap;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
