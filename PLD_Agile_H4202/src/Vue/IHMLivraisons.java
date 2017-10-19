@@ -53,7 +53,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jFieldFichierPlan = new javax.swing.JTextPane();
         jButtonValider = new javax.swing.JButton();
-        jButtonAnnuler = new javax.swing.JButton();
+        jButtonViderDL = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jFieldFichierLivraison = new javax.swing.JTextPane();
         jButtonChargerLivraison = new javax.swing.JButton();
@@ -64,6 +64,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableLivraisons = new javax.swing.JTable();
+        jButtonModifier = new javax.swing.JButton();
+        jButtonAnnulerModif = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -91,10 +93,10 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }
         });
 
-        jButtonAnnuler.setText("Annuler");
-        jButtonAnnuler.addActionListener(new java.awt.event.ActionListener() {
+        jButtonViderDL.setText("Vider Demande de Livraison");
+        jButtonViderDL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAnnulerActionPerformed(evt);
+                jButtonViderDLActionPerformed(evt);
             }
         });
 
@@ -202,6 +204,10 @@ public class IHMLivraisons extends javax.swing.JDialog {
         });
         jScrollPane4.setViewportView(jTableLivraisons);
 
+        jButtonModifier.setText("Modifier");
+
+        jButtonAnnulerModif.setText("Annuler");
+
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
 
         jMenu1.setText("File");
@@ -224,7 +230,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(56, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanelPlanMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -240,23 +246,27 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 .addComponent(jLabelTitre)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonViderDL, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 134, Short.MAX_VALUE)
-                        .addGap(28, 28, 28)
-                        .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61)
-                        .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
-                        .addComponent(jButtonAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(766, 766, 766)
+                        .addGap(168, 168, 168)
                         .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(197, 197, 197)))
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, 0)
+                        .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonModifier)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonAnnulerModif)
+                        .addGap(46, 46, 46))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,18 +286,23 @@ public class IHMLivraisons extends javax.swing.JDialog {
                         .addComponent(jLabel1)
                         .addGap(11, 11, 11)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButtonValider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonAnnuler, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonChargerLivraison)))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonModifier)
+                                .addComponent(jButtonAnnulerModif)
+                                .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonViderDL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -426,12 +441,12 @@ public class IHMLivraisons extends javax.swing.JDialog {
         DLActuelle=null; 
         jButtonCalculerTournee.setEnabled(false);
     }
-    private void jButtonAnnulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerActionPerformed
+    private void jButtonViderDLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViderDLActionPerformed
         annulerDL(); 
         jPanelPlanMap.setPlan(planActuel);
         jPanelPlanMap.setDL(DLActuelle);
         jPanelPlanMap.repaint();
-    }//GEN-LAST:event_jButtonAnnulerActionPerformed
+    }//GEN-LAST:event_jButtonViderDLActionPerformed
 
     private void jButtonFeuilleDeRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFeuilleDeRouteActionPerformed
 
@@ -484,12 +499,14 @@ public class IHMLivraisons extends javax.swing.JDialog {
     // /!\ IMPORTANT : changer private javax.swing.JPanel jPanelPlanMap; en private JPanelPlan jPanelPlanMap;
     // netBeans va essayer de le changer
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAnnuler;
+    private javax.swing.JButton jButtonAnnulerModif;
     private javax.swing.JButton jButtonCalculerTournee;
     private javax.swing.JButton jButtonChargerLivraison;
     private javax.swing.JButton jButtonChargerPlan;
     private javax.swing.JButton jButtonFeuilleDeRoute;
+    private javax.swing.JButton jButtonModifier;
     private javax.swing.JButton jButtonValider;
+    private javax.swing.JButton jButtonViderDL;
     private javax.swing.JTextPane jFieldFichierLivraison;
     private javax.swing.JTextPane jFieldFichierPlan;
     private javax.swing.JLabel jLabel1;
