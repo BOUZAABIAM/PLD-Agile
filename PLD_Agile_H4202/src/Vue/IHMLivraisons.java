@@ -1,6 +1,4 @@
-
 package Vue;
-
 import Modele.CalculTournee;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +14,8 @@ import Modele.DemandeLivraison;
 import Modele.Intersection;
 import Modele.Livraison;
 import Modele.XMLParser;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
@@ -258,7 +259,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
                         .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
                         .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonModifier)
@@ -294,12 +294,12 @@ public class IHMLivraisons extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jButtonModifier)
-                                .addComponent(jButtonAnnulerModif)
-                                .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jButtonAnnulerModif))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonViderDL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -313,9 +313,21 @@ public class IHMLivraisons extends javax.swing.JDialog {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
         xml_map.setFileFilter(filter);
         Plan plandDeVille = null;
-
+        String exception="";
+        JOptionPane jop; // fenetre d'alerte
         if (xml_map.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File selectedFile = xml_map.getSelectedFile();
+            
+            //Vérifier le format du fichier xml ou non
+            if(filter.accept(selectedFile)==false){
+                exception = "Format Fichier Plan Incorrect !";
+                jFieldFichierPlan.setText(exception);
+                jop = new JOptionPane();
+                jop.showMessageDialog(null, exception, "Attention", JOptionPane.WARNING_MESSAGE);
+                
+                return;
+            }
+            
             jFieldFichierPlan.setText(selectedFile.getName());
             try {
                 XMLParser parser = new XMLParser();
@@ -339,9 +351,18 @@ public class IHMLivraisons extends javax.swing.JDialog {
             FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
             xml_DL.setFileFilter(filter);
             DemandeLivraison dl = null;
-
+            String exception="";
+            JOptionPane jop; // fenetre d'alerte
             if (xml_DL.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 File selectedFile = xml_DL.getSelectedFile();
+                
+                if(filter.accept(selectedFile)==false){
+                   exception = "Format Fichier Livraison Incorrect !";
+                   jFieldFichierPlan.setText(exception);
+                   jop = new JOptionPane();
+                   jop.showMessageDialog(null, exception, "Attention", JOptionPane.WARNING_MESSAGE);
+                   return;
+                }
                 jFieldFichierLivraison.setText(selectedFile.getName());
                 try {
                     XMLParser parser = new XMLParser();
