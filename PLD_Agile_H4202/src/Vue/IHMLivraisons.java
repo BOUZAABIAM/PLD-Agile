@@ -452,7 +452,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
         }
         
         Intersection[] sol = new Intersection[nbSommet];
-        for (int i = 0; i < nbSommet; i++){
+        sol[0] = DLActuelle.getEntrepot();
+        for (int i = 1; i < nbSommet; i++){
             if ((entrep + i) < nbSommet){
                 sol[i] = livraisons.get(solution[entrep+i]).getAdresse();
 //                System.out.println(solution[entrep+i]);
