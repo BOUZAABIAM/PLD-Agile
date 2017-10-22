@@ -98,7 +98,6 @@ public class CalculTournee {
     }
     
     public int[][] graphLivraison(){
-       System.out.println(entrepot);
        Intersection[] intersectionsLivraisons = new Intersection[livraisons.size()+1];
        int[][] matriceLivraison = new int[intersectionsLivraisons.length][intersectionsLivraisons.length];
        
