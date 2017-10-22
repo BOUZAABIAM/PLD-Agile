@@ -20,9 +20,9 @@ import java.util.*;
  */
 public class JPanelPlan extends JPanel {
 
-    public Plan lePlan;
-    public DemandeLivraison laDL;
-
+    private Plan lePlan;
+    private DemandeLivraison laDL;
+    private Intersection[] laSolution;
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -36,6 +36,10 @@ public class JPanelPlan extends JPanel {
     
     public void setDL(DemandeLivraison laDL) {
         this.laDL = laDL;
+    }
+    
+    public void setSolution(Intersection[] solution) {
+        this.laSolution = solution;
     }
     //fait la rotation d'un point(x,y) d'une angle de -Pi/2 autour de centre de coordonnees (xc,yc)
      public int[] rotationPoint(int x, int y,int xc,int yc){
@@ -135,6 +139,18 @@ public class JPanelPlan extends JPanel {
             }
         }
         
+        if (laSolution != null){
+            System.out.println("dans le if");
+            for (Intersection inter : laSolution){
+                gc.setColor(Color.YELLOW);
+                int xEntrepot = (int) Math.round(((inter.getX() - minX) / paramMax));
+                int yEntrepot = (int) Math.round(((inter.getY() - minY) / paramMax));
+                coordonnees=rotationPoint(xEntrepot,yEntrepot,xCentre,yCentre);
+                xEntrepot= coordonnees[0]-translation[0];
+                yEntrepot= coordonnees[1]-translation[1];
+                gc.fillOval(xEntrepot, yEntrepot, 15, 15); 
+            }
+        }
                  
 
     }
