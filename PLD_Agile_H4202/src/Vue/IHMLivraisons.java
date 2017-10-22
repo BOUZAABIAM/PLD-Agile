@@ -26,7 +26,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import tsp.*;
+//import tsp.*;
 
 /**
  *
@@ -371,13 +371,13 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 } catch (IOException | SAXException | ParserConfigurationException ex) {
                     Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                annulerDL();
                 
                 DLActuelle = dl;    
                 jPanelPlanMap.setPlan(planActuel);
                 jPanelPlanMap.setDL(DLActuelle);
                 jPanelPlanMap.repaint();
                 
-                annulerDL();
                 jButtonCalculerTournee.setEnabled(true);
                 
                 Collection<Livraison> livraisoncollection = dl.getLivraison().values();
@@ -429,6 +429,16 @@ public class IHMLivraisons extends javax.swing.JDialog {
 //        
 //        CalculTournee calcul =  new CalculTournee(livraisons, intersections, DLActuelle.getEntrepot());
 //        int[][] tab = calcul.graphLivraison();
+//        
+//        int t = tab.length;
+//        for(int m = 0; m < t; m++){
+//            System.out.print("m = " + m +" /");
+//            for(int n = 0; n < t; n++){
+//              System.out.print(tab[m][n] + ", ");
+//            }
+//            System.out.println(" ");
+//        }
+//        
 //        int tpsLimite = 100000000;
 //        int nbSommet = livraisons.size()+1;
 //        TSP tsp = new TSP1();
@@ -437,15 +447,15 @@ public class IHMLivraisons extends javax.swing.JDialog {
 //        for (int i=0; i<nbSommet-1; i++){
 //            duree[i] = 1;
 //        }
+//
+//        System.out.println(nbSommet);
 //        tsp.chercheSolution(tpsLimite, nbSommet, tab, duree);
 //        int[] solution = new int[livraisons.size()+1];
 //        for (int j = 0; j<nbSommet; j++){
 //            solution[j] = tsp.getMeilleureSolution(j);
 //             System.out.println(solution[j]);
 //        }
-//        
-//       
-        
+//   
     }//GEN-LAST:event_jButtonCalculerTourneeActionPerformed
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
