@@ -52,16 +52,17 @@ public class JPanelPlan extends JPanel {
 
         Graphics2D gc = (Graphics2D) g;
 
-        java.util.List<Intersection> intersections  = new ArrayList<Intersection>();
-        intersections.addAll(lePlan.getIntersection().values());
+        Map<Long, Intersection> intersections = lePlan.getIntersection();
+        Map.Entry<Long,Intersection> first = intersections.entrySet().iterator().next();
+        Intersection value=first.getValue();
+        double minX = value.getX();
+        double minY = value.getY();
 
-        double minX = intersections.get(0).getX();
-        double minY = intersections.get(0).getY();
+        double maxX = value.getX();
+        double maxY = value.getY();
 
-        double maxX = intersections.get(0).getX();
-        double maxY = intersections.get(0).getY();
-
-        for (Intersection inter : intersections) {
+        for (Map.Entry<Long, Intersection> entry : intersections.entrySet()) {
+            Intersection inter = entry.getValue();
             if (inter.getX() <= minX) {
                 minX = inter.getX();
                 if (inter.getY() <= minY) {
@@ -87,19 +88,10 @@ public class JPanelPlan extends JPanel {
         int yCentre=(int)Math.round((((maxY / 2 + minY / 2)-minY)/(paramMax )));
         // Vecteur de translation OT : O(0,0) et T(xT,yT)
         int translation[]=rotationPoint((int) Math.round((maxX-minX)/paramMax),0,xCentre,yCentre);
-        //dessine les intersections
-        for (Intersection inter : intersections) {
-            gc.setColor(Color.BLUE);
-            int xC = (int) Math.round(((inter.getX() - minX) / paramMax));
-            int yC = (int) Math.round(((inter.getY() - minY) / paramMax));
-            coordonnees=rotationPoint(xC,yC,xCentre,yCentre);
-            xC= coordonnees[0]-translation[0];
-            yC= coordonnees[1]-translation[1];
-            gc.fillOval(xC, yC, 1, 1);
-        }
 
         //dessine les tronçons
-        for (Intersection origine : intersections) {
+        for (Map.Entry<Long, Intersection> entry : intersections.entrySet()) {
+            Intersection origine = entry.getValue();
             gc.setStroke(new BasicStroke(2));
             gc.setColor(Color.WHITE);
             int x1 = (int) Math.round((origine.getX() - minX) / paramMax);
@@ -130,9 +122,9 @@ public class JPanelPlan extends JPanel {
             gc.fillOval(xEntrepot, yEntrepot, 10, 10); 
 
             //dessine les livraisons
-            java.util.List<Livraison> livraisons  = new ArrayList<Livraison>();
-            livraisons.addAll(laDL.getLivraison().values());
-            for (Livraison livr : livraisons) {           
+            Map<Long, Livraison> livraisons = laDL.getLivraison();
+            for (Map.Entry<Long, Livraison> entry : livraisons.entrySet()) {
+                Livraison livr = entry.getValue();
                 gc.setColor(Color.RED);
                 int xC = (int) Math.round(((livr.getAdresse().getX() - minX) / paramMax));
                 int yC = (int) Math.round(((livr.getAdresse().getY() - minY) / paramMax));

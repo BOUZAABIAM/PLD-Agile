@@ -51,7 +51,6 @@ public class Livraison {
         return newTime;
     }
 
-     
     public Intersection getAdresse() {
         return adresse;
     }
@@ -83,7 +82,10 @@ public class Livraison {
     public void setFinPlage(Time finPlage) {
         this.finPlage = finPlage;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Livraison{" + "adresse=" + adresse + ", duree=" + duree + ", debutPlage=" + debutPlage + ", finPlage=" + finPlage + '}';
+    }
     
 }
