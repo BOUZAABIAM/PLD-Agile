@@ -26,7 +26,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-//import tsp.*;
+import tsp.*;
 
 /**
  *
@@ -421,16 +421,16 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonChargerLivraisonActionPerformed
     
     private void jButtonCalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculerTourneeActionPerformed
-//        java.util.List<Livraison> livraisons  = new ArrayList<Livraison>();
-//        livraisons.addAll(DLActuelle.getLivraison().values());
-//        
-//        java.util.List<Intersection> intersections  = new ArrayList<Intersection>();
-//        intersections.addAll(planActuel.getIntersection().values());
-//        
-//        CalculTournee calcul =  new CalculTournee(livraisons, intersections, DLActuelle.getEntrepot());
-//        int[][] tab = calcul.graphLivraison();
-//        
-//        int t = tab.length;
+        java.util.List<Livraison> livraisons  = new ArrayList<Livraison>();
+        livraisons.addAll(DLActuelle.getLivraison().values());
+        
+        java.util.List<Intersection> intersections  = new ArrayList<Intersection>();
+        intersections.addAll(planActuel.getIntersection().values());
+        
+        CalculTournee calcul =  new CalculTournee(livraisons, intersections, DLActuelle.getEntrepot());
+        int[][] tab = calcul.graphLivraison();
+        
+        int t = tab.length;
 //        for(int m = 0; m < t; m++){
 //            System.out.print("m = " + m +" /");
 //            for(int n = 0; n < t; n++){
@@ -438,24 +438,39 @@ public class IHMLivraisons extends javax.swing.JDialog {
 //            }
 //            System.out.println(" ");
 //        }
-//        
-//        int tpsLimite = 100000000;
-//        int nbSommet = livraisons.size()+1;
-//        TSP tsp = new TSP1();
-//        //A CHANGER
-//        int[] duree = new int[nbSommet-1];
-//        for (int i=0; i<nbSommet-1; i++){
-//            duree[i] = 1;
-//        }
-//
-//        System.out.println(nbSommet);
-//        tsp.chercheSolution(tpsLimite, nbSommet, tab, duree);
-//        int[] solution = new int[livraisons.size()+1];
-//        for (int j = 0; j<nbSommet; j++){
-//            solution[j] = tsp.getMeilleureSolution(j);
-//             System.out.println(solution[j]);
-//        }
-//   
+        
+        int tpsLimite = 100000000;
+        int nbSommet = livraisons.size()+1;
+        TSP tsp = new TSP1();
+        //A CHANGER
+        int[] duree = new int[nbSommet];
+        for (int i=0; i<nbSommet; i++){
+            duree[i] = 1;
+        }
+
+        System.out.println(nbSommet);
+        tsp.chercheSolution(tpsLimite, nbSommet, tab, duree);
+        int[] solution = new int[nbSommet];
+        for (int j = 0; j<nbSommet; j++){
+            solution[j] = tsp.getMeilleureSolution(j);
+//            System.out.println(solution[j]);
+        }
+        
+        int entrep = 0;
+        while(solution[entrep] != (nbSommet-1)){
+            entrep++;
+        }
+        
+        Intersection[] sol = new Intersection[nbSommet];
+        for (int i = 0; i < nbSommet; i++){
+            if ((entrep + i) < nbSommet){
+                sol[i] = intersections.get(solution[entrep+i]);
+//                System.out.println(solution[entrep+i]);
+            } else {
+                sol[i] = intersections.get(solution[entrep+i-nbSommet]);
+//                System.out.println(solution[entrep+i-nbSommet]);
+            }
+        }
     }//GEN-LAST:event_jButtonCalculerTourneeActionPerformed
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
