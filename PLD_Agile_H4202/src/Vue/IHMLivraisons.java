@@ -26,6 +26,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import tsp.*;
 
 /**
  *
@@ -429,7 +430,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
 //        CalculTournee calcul =  new CalculTournee(livraisons, intersections, DLActuelle.getEntrepot());
 //        int[][] tab = calcul.graphLivraison();
 //        int tpsLimite = 100000000;
-//        int nbSommet = intersections.size()+1;
+//        int nbSommet = livraisons.size()+1;
 //        TSP tsp = new TSP1();
 //        //A CHANGER
 //        int[] duree = new int[nbSommet-1];
@@ -437,9 +438,13 @@ public class IHMLivraisons extends javax.swing.JDialog {
 //            duree[i] = 1;
 //        }
 //        tsp.chercheSolution(tpsLimite, nbSommet, tab, duree);
-//        for (int j = 0; j<nbSommet, j++){
-//            
+//        int[] solution = new int[livraisons.size()+1];
+//        for (int j = 0; j<nbSommet; j++){
+//            solution[j] = tsp.getMeilleureSolution(j);
+//             System.out.println(solution[j]);
 //        }
+//        
+//       
         
     }//GEN-LAST:event_jButtonCalculerTourneeActionPerformed
 
