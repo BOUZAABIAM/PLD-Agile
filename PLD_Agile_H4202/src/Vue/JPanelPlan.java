@@ -23,13 +23,8 @@ public class JPanelPlan extends JPanel {
     private Plan lePlan;
     private DemandeLivraison laDL;
     private Intersection[] laSolution;
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        drawPlan(g, lePlan);
-
-    }
-
+    private java.util.List<Intersection> leChemin;
+    
     public void setPlan(Plan lePlan) {
         this.lePlan = lePlan;
     }
@@ -41,6 +36,18 @@ public class JPanelPlan extends JPanel {
     public void setSolution(Intersection[] solution) {
         this.laSolution = solution;
     }
+    
+    public void setChemin(java.util.List<Intersection> chemin) {
+        this.leChemin = chemin;
+    }
+    
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        drawPlan(g, lePlan);
+
+    }
+
     //fait la rotation d'un point(x,y) d'une angle de -Pi/2 autour de centre de coordonnees (xc,yc)
      public int[] rotationPoint(int x, int y,int xc,int yc){
          int coordonnees[]={x,y};
@@ -83,23 +90,23 @@ public class JPanelPlan extends JPanel {
         }
 
         //trouver taille effective du jPanel à la place de 500 530, ou cacher les valeurs
-        double paramLargeur = (maxX - minX) / 500;
-        double paramHauteur = (maxY - minY) / 530;
+        double paramLargeur = (maxX - minX) / 525;
+        double paramHauteur = (maxY - minY) / 445;
         double paramMax = Math.max(paramLargeur, paramHauteur);
         //Coordonnees du centre de rotation
         int coordonnees[];
-        int xCentre=(int)Math.round((((maxX / 2 + minX / 2)-minX)/(paramMax )));
-        int yCentre=(int)Math.round((((maxY / 2 + minY / 2)-minY)/(paramMax )));
+        int xCentre=(int)Math.round((((maxX / 2 + minX / 2)-minX)/(paramLargeur )));
+        int yCentre=(int)Math.round((((maxY / 2 + minY / 2)-minY)/(paramHauteur )));
         // Vecteur de translation OT : O(0,0) et T(xT,yT)
-        int translation[]=rotationPoint((int) Math.round((maxX-minX)/paramMax),0,xCentre,yCentre);
+        int translation[]=rotationPoint((int) Math.round((maxX-minX)/paramLargeur),0,xCentre,yCentre);
 
         //dessine les tronçons
         for (Map.Entry<Long, Intersection> entry : intersections.entrySet()) {
             Intersection origine = entry.getValue();
             gc.setStroke(new BasicStroke(2));
-            gc.setColor(Color.WHITE);
-            int x1 = (int) Math.round((origine.getX() - minX) / paramMax);
-            int y1 = (int) Math.round((origine.getY() - minY) / paramMax);
+            gc.setColor(Color.GRAY);
+            int x1 = (int) Math.round((origine.getX() - minX) / paramLargeur);
+            int y1 = (int) Math.round((origine.getY() - minY) / paramHauteur);
             coordonnees=rotationPoint(x1,y1,xCentre,yCentre);
             x1= coordonnees[0]-translation[0];
             y1= coordonnees[1]-translation[1];
@@ -107,8 +114,8 @@ public class JPanelPlan extends JPanel {
 
             Intersection destination =section.getDestination();
 
-            int x2 = (int) Math.round((destination.getX() - minX) / paramMax);
-            int y2 = (int) Math.round((destination.getY() - minY) / paramMax);
+            int x2 = (int) Math.round((destination.getX() - minX) / paramLargeur);
+            int y2 = (int) Math.round((destination.getY() - minY) / paramHauteur);
             coordonnees=rotationPoint(x2,y2,xCentre,yCentre);
             x2= coordonnees[0]-translation[0];
             y2= coordonnees[1]-translation[1];
@@ -118,8 +125,8 @@ public class JPanelPlan extends JPanel {
         if (laDL != null){
             //dessine l'entrepot
             gc.setColor(Color.BLACK);
-            int xEntrepot = (int) Math.round(((laDL.getEntrepot().getX() - minX) / paramMax));
-            int yEntrepot = (int) Math.round(((laDL.getEntrepot().getY() - minY) / paramMax));
+            int xEntrepot = (int) Math.round(((laDL.getEntrepot().getX() - minX) / paramLargeur));
+            int yEntrepot = (int) Math.round(((laDL.getEntrepot().getY() - minY) / paramHauteur));
              coordonnees=rotationPoint(xEntrepot,yEntrepot,xCentre,yCentre);
                 xEntrepot= coordonnees[0]-translation[0];
                 yEntrepot= coordonnees[1]-translation[1];
@@ -130,8 +137,8 @@ public class JPanelPlan extends JPanel {
             for (Map.Entry<Long, Livraison> entry : livraisons.entrySet()) {
                 Livraison livr = entry.getValue();
                 gc.setColor(Color.RED);
-                int xC = (int) Math.round(((livr.getAdresse().getX() - minX) / paramMax));
-                int yC = (int) Math.round(((livr.getAdresse().getY() - minY) / paramMax));
+                int xC = (int) Math.round(((livr.getAdresse().getX() - minX) / paramLargeur));
+                int yC = (int) Math.round(((livr.getAdresse().getY() - minY) / paramHauteur));
                 coordonnees=rotationPoint(xC,yC,xCentre,yCentre);
                 xC= coordonnees[0]-translation[0];
                 yC= coordonnees[1]-translation[1];
@@ -143,12 +150,21 @@ public class JPanelPlan extends JPanel {
 
             for (Intersection inter : laSolution){
                 gc.setColor(Color.YELLOW);
-                int xEntrepot = (int) Math.round(((inter.getX() - minX) / paramMax));
-                int yEntrepot = (int) Math.round(((inter.getY() - minY) / paramMax));
+                int xEntrepot = (int) Math.round(((inter.getX() - minX) / paramLargeur));
+                int yEntrepot = (int) Math.round(((inter.getY() - minY) / paramHauteur));
                 coordonnees=rotationPoint(xEntrepot,yEntrepot,xCentre,yCentre);
                 xEntrepot= coordonnees[0]-translation[0];
                 yEntrepot= coordonnees[1]-translation[1];
                 gc.fillOval(xEntrepot-5, yEntrepot-5, 10, 10); 
+            }
+            for (Intersection etapes : leChemin){
+                gc.setColor(Color.YELLOW);
+                int xEntrepot = (int) Math.round(((etapes.getX() - minX) / paramMax));
+                int yEntrepot = (int) Math.round(((etapes.getY() - minY) / paramMax));
+                coordonnees=rotationPoint(xEntrepot,yEntrepot,xCentre,yCentre);
+                xEntrepot= coordonnees[0]-translation[0];
+                yEntrepot= coordonnees[1]-translation[1];
+                gc.fillOval(xEntrepot-4, yEntrepot-4, 8, 8); 
             }
         }
                  

@@ -22,34 +22,9 @@ public class CalculTournee {
         this.livraisons = livraisons;
         this.intersections = intersections;
         this.entrepot = entrepot;
-        this.pred = new int[livraisons.size()][intersections.size()];
+        this.pred = new int[livraisons.size()+1][intersections.size()];
     }
 
-         
-
-    
-/*    public LinkedList< Pair<Intersection, Double> >[] graphVille(){
-        int nombreIntersections = this.intersections.size();
-        LinkedList< Pair<Intersection, Double> >[] graph = (LinkedList< Pair<Intersection, Double> >[]) new LinkedList[nombreIntersections];
-        
-        for (int i = 0; i < graph.length; ++i) {
-            graph[i] = new LinkedList<>();
-            Intersection intersection = intersections.get(i);
-            List<Troncon> liste = intersection.getTroncons();
-            graph[i].add(new Pair<>(intersection, 0.0));
-            for (int j = 0; j < liste.size(); j++){
-                graph[i].add(new Pair<>(liste.get(i).getDestination(), liste.get(i).getLongueur()));
-            }
-        }        
-        return graph;
-    }
-    
-    private double calculDureeChemin(Intersection intersection1, Intersection intersection2, LinkedList< Pair<Intersection, Double> >[] graph){
-        
-    return 0;
-    }
-*/
-    
     private int[] calculDuree(Intersection depart, Intersection[] intersectionLivraison, int indexDepart){
         
         Intersection[] gris = new Intersection[intersections.size()];
@@ -127,7 +102,7 @@ public class CalculTournee {
     
     public List<Intersection> getChemin(int depart, int arrive){
         
-        if ((depart > 0) && (depart < livraisons.size()+1) && (arrive > 0) && (arrive < livraisons.size()+1)){
+        if ((depart >= 0) && (depart < livraisons.size()+1) && (arrive >= 0) && (arrive < livraisons.size()+1)){
             Intersection intersectionDepart;
             Intersection intersectionArrive;
             
@@ -147,16 +122,16 @@ public class CalculTournee {
             LinkedList<Intersection> trajet = new LinkedList<Intersection>();
             
             int indexDepart = intersectionDepart.getIndex();
-            int indexArrive = intersectionArrive.getIndex();
             
             trajet.add(intersectionArrive);
-            while(trajet.get(0).getIndex()  != depart){
+            while(trajet.get(0).getIndex()  != indexDepart){
                 trajet.addFirst(intersections.get(pred[depart][trajet.get(0).getIndex()]));
             }                    
             
             return trajet;
         } else {
-            System.err.println("Attention, les nombres dans le getChemin ne correspond pas a des livraisons");
+            System.err.println("Attention, les nombres dans le getChemin ne correspondent pas avec les livraisons :");
+            System.err.println("Dimension tableau livraison : " + (livraisons.size()+1) + ", données fournies : " + depart + ", " + arrive);
             return null;
         }
         

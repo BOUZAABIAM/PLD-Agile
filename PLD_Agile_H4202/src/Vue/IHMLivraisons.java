@@ -13,6 +13,7 @@ import Modele.Plan;
 import Modele.DemandeLivraison;
 import Modele.Intersection;
 import Modele.Livraison;
+import Modele.Troncon;
 import Modele.XMLParser;
 import java.awt.Color;
 import java.awt.Font;
@@ -454,7 +455,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
         tsp.chercheSolution(tpsLimite, nbSommet, tab, duree);
         
-        //Obtenir la solution en solution
+        //Obtenir la solution dans solution
         int[] solution = new int[nbSommet];
         for (int j = 0; j<nbSommet; j++){
             solution[j] = tsp.getMeilleureSolution(j);
@@ -468,6 +469,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         }
         
         //Obtenir la solution en intersection
+        List<Intersection> chemin = new ArrayList<Intersection>();
         Intersection[] sol = new Intersection[nbSommet];
         sol[0] = DLActuelle.getEntrepot();
         for (int i = 1; i < nbSommet; i++){
@@ -478,13 +480,21 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 sol[i] = livraisons.get(solution[entrep+i-nbSommet]).getAdresse();
 //                System.out.println(solution[entrep+i-nbSommet]);
             }
+            if (i>0){
+                List<Intersection> etapes = calcul.getChemin(solution[i-1], solution[i]);
+                chemin.addAll(etapes);
+            }
         }
         solutionActuelle = sol;
+        cheminActuel = chemin;
         
         // Affichage de la solution
         jPanelPlanMap.setSolution(solutionActuelle);
         jPanelPlanMap.repaint();
         
+                
+                
+                
         //réorganise le tableau
         DefaultTableModel model = (DefaultTableModel) jTableLivraisons.getModel();
         int rowCount = model.getRowCount();
@@ -508,6 +518,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                         intersection.getTroncons().get(0).getNomRue() + 
                                 " (" + intersection.getId() + ")", 0, 1);
             }else{
+                jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
                 String nomRue = livraison.getAdresse().getTroncons().get(0).getNomRue();
                 Long idAdresse = livraison.getAdresse().getId();
                 jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
@@ -618,6 +629,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private Plan planActuel;
     private DemandeLivraison DLActuelle;
     private Intersection[] solutionActuelle;
+    private List<Intersection> cheminActuel;
     // /!\ IMPORTANT : changer private javax.swing.JPanel jPanelPlanMap; en private JPanelPlan jPanelPlanMap;
     // netBeans va essayer de le changer
     // Variables declaration - do not modify//GEN-BEGIN:variables
