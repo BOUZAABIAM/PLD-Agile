@@ -123,7 +123,7 @@ public class JPanelPlan extends JPanel {
              coordonnees=rotationPoint(xEntrepot,yEntrepot,xCentre,yCentre);
                 xEntrepot= coordonnees[0]-translation[0];
                 yEntrepot= coordonnees[1]-translation[1];
-            gc.fillOval(xEntrepot, yEntrepot, 10, 10); 
+            gc.fillOval(xEntrepot-4, yEntrepot-4, 8, 8); 
 
             //dessine les livraisons
             Map<Long, Livraison> livraisons = laDL.getLivraison();
@@ -135,12 +135,12 @@ public class JPanelPlan extends JPanel {
                 coordonnees=rotationPoint(xC,yC,xCentre,yCentre);
                 xC= coordonnees[0]-translation[0];
                 yC= coordonnees[1]-translation[1];
-                gc.fillOval(xC, yC, 10, 10); 
+                gc.fillOval(xC-4, yC-4, 8, 8); 
             }
         }
         
         if (laSolution != null){
-            System.out.println("dans le if");
+
             for (Intersection inter : laSolution){
                 gc.setColor(Color.YELLOW);
                 int xEntrepot = (int) Math.round(((inter.getX() - minX) / paramMax));
@@ -148,7 +148,7 @@ public class JPanelPlan extends JPanel {
                 coordonnees=rotationPoint(xEntrepot,yEntrepot,xCentre,yCentre);
                 xEntrepot= coordonnees[0]-translation[0];
                 yEntrepot= coordonnees[1]-translation[1];
-                gc.fillOval(xEntrepot, yEntrepot, 15, 15); 
+                gc.fillOval(xEntrepot-5, yEntrepot-5, 10, 10); 
             }
         }
                  
