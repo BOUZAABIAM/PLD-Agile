@@ -88,6 +88,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jFieldFichierPlan.setEnabled(false);
         jScrollPane1.setViewportView(jFieldFichierPlan);
 
+        jButtonValider.setEnabled(false);
         jButtonValider.setText("Valider");
         jButtonValider.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,6 +139,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         );
 
         jButtonFeuilleDeRoute.setText("Generer feuille de route");
+        jButtonFeuilleDeRoute.setEnabled(false);
         jButtonFeuilleDeRoute.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonFeuilleDeRouteActionPerformed(evt);
@@ -206,8 +208,10 @@ public class IHMLivraisons extends javax.swing.JDialog {
         });
         jScrollPane4.setViewportView(jTableLivraisons);
 
+        jButtonModifier.setEnabled(false);
         jButtonModifier.setText("Modifier");
 
+        jButtonAnnulerModif.setEnabled(false);
         jButtonAnnulerModif.setText("Annuler");
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
@@ -485,11 +489,14 @@ public class IHMLivraisons extends javax.swing.JDialog {
         }
         DLActuelle=null; 
         jButtonCalculerTournee.setEnabled(false);
+        solutionActuelle=null;
+        
     }
     private void jButtonViderDLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViderDLActionPerformed
         annulerDL(); 
         jPanelPlanMap.setPlan(planActuel);
         jPanelPlanMap.setDL(DLActuelle);
+        jPanelPlanMap.setSolution(solutionActuelle);
         jPanelPlanMap.repaint();
     }//GEN-LAST:event_jButtonViderDLActionPerformed
 
