@@ -431,30 +431,37 @@ public class IHMLivraisons extends javax.swing.JDialog {
         java.util.List<Intersection> intersections  = new ArrayList<Intersection>();
         intersections.addAll(planActuel.getIntersection().values());
         
+        //Création de calcul tournée
         CalculTournee calcul =  new CalculTournee(livraisons, intersections, DLActuelle.getEntrepot());
         int[][] tab = calcul.graphLivraison();
 
         int tpsLimite = 100000000;
         int nbSommet = livraisons.size()+1;
         TSP tsp = new TSP1();
-        //A CHANGER
+        
+        //Initialiser le tableau des durees
         int[] duree = new int[nbSommet];
-        for (int i=0; i<nbSommet; i++){
-            duree[i] = 1;
+        for (int i=0; i<nbSommet-1; i++){
+            duree[i] = livraisons.get(i).getDuree();
         }
+        duree[nbSommet-1] = 0;
 
         tsp.chercheSolution(tpsLimite, nbSommet, tab, duree);
+        
+        //Obtenir la solution en solution
         int[] solution = new int[nbSommet];
         for (int j = 0; j<nbSommet; j++){
             solution[j] = tsp.getMeilleureSolution(j);
 //            System.out.println(solution[j]);
         }
         
+        //Bouger circulairement pour avoir l'entrepot au debut
         int entrep = 0;
         while(solution[entrep] != (nbSommet-1)){
             entrep++;
         }
         
+        //Obtenir la solution en intersection
         Intersection[] sol = new Intersection[nbSommet];
         sol[0] = DLActuelle.getEntrepot();
         for (int i = 1; i < nbSommet; i++){
@@ -467,6 +474,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }
         }
         solutionActuelle = sol;
+        
+        // Affichage de la solution
         jPanelPlanMap.setSolution(solutionActuelle);
         jPanelPlanMap.repaint();
     }//GEN-LAST:event_jButtonCalculerTourneeActionPerformed
