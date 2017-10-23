@@ -25,6 +25,8 @@ public class CalculTournee {
         this.pred = new int[livraisons.size()+1][intersections.size()];
     }
 
+
+    
     private int[] calculDuree(Intersection depart, Intersection[] intersectionLivraison, int indexDepart){
         
         Intersection[] gris = new Intersection[intersections.size()];
