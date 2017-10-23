@@ -435,8 +435,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         java.util.List<Livraison> livraisons  = new ArrayList<Livraison>();
         livraisons.addAll(DLActuelle.getLivraison().values());
         
-        java.util.List<Intersection> intersections  = new ArrayList<Intersection>();
-        intersections.addAll(planActuel.getIntersection().values());
+        java.util.List<Intersection> intersections  = planActuel.getIntersectionsList();
         
         //Création de calcul tournée
         CalculTournee calcul =  new CalculTournee(livraisons, intersections, DLActuelle.getEntrepot());

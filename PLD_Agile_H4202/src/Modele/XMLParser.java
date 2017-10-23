@@ -26,6 +26,7 @@ public class XMLParser {
 
     public Plan getPlan(File xmlFile) throws IOException, SAXException, ParserConfigurationException {
         Map<Long, Intersection> intersections = new TreeMap<Long, Intersection>();
+        List<Intersection> intersectionsList = new LinkedList<Intersection>();
 
         Document mapDocument = null;
         try {
@@ -45,8 +46,9 @@ public class XMLParser {
             id = Long.parseLong(element.getAttribute("id"));
             x = (Double.parseDouble(element.getAttribute("x")));
             y = (Double.parseDouble(element.getAttribute("y")));
-            Intersection intersection = new Intersection(id, x, y);
-
+            Intersection intersection = new Intersection(id, x, y, i);
+            
+            intersectionsList.add(intersection);
             intersections.put(id, intersection);
         }
 
@@ -73,7 +75,7 @@ public class XMLParser {
 
         }
 
-        return new Plan(intersections);
+        return new Plan(intersections, intersectionsList);
     }
     
     private String goodTimeForm(String time){
@@ -110,7 +112,7 @@ public class XMLParser {
             Element element = (Element) entrepots.item(i);
 
             idAdresse = Long.parseLong(element.getAttribute("adresse"));
-            entrepot = plan.getIntersection().get(idAdresse);
+            entrepot = plan.getIntersectionsMap().get(idAdresse);
             
             time = element.getAttribute("heureDepart");
             //goodTimeForm générait une erreur, ça a l'air de larcher comma ça
@@ -129,7 +131,7 @@ public class XMLParser {
             Element element = (Element) livr.item(i);
 
             id = Long.parseLong(element.getAttribute("adresse"));
-            Intersection adresse = plan.getIntersection().get(id);
+            Intersection adresse = plan.getIntersectionsMap().get(id);
             
             duree = Integer.parseInt(element.getAttribute("duree"));
             

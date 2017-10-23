@@ -56,7 +56,7 @@ public class JPanelPlan extends JPanel {
 
         Graphics2D gc = (Graphics2D) g;
 
-        Map<Long, Intersection> intersections = lePlan.getIntersection();
+        Map<Long, Intersection> intersections = lePlan.getIntersectionsMap();
         Map.Entry<Long,Intersection> first = intersections.entrySet().iterator().next();
         Intersection value=first.getValue();
         double minX = value.getX();
