@@ -88,6 +88,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jFieldFichierPlan.setEnabled(false);
         jScrollPane1.setViewportView(jFieldFichierPlan);
 
+        jButtonValider.setEnabled(false);
         jButtonValider.setText("Valider");
         jButtonValider.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,6 +139,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         );
 
         jButtonFeuilleDeRoute.setText("Generer feuille de route");
+        jButtonFeuilleDeRoute.setEnabled(false);
         jButtonFeuilleDeRoute.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonFeuilleDeRouteActionPerformed(evt);
@@ -152,48 +154,48 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
         jTableLivraisons.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Adresse", "Duree", "Debut Plage", "Fin Plage"
+                "N°", "Adresse", "Duree", "Debut Plage", "Fin Plage"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, true, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -204,10 +206,17 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        jTableLivraisons.getColumnModel().getColumn(1).setPreferredWidth(10);
+        jTableLivraisons.getColumnModel().getColumn(1).setPreferredWidth(200);
+        jTableLivraisons.getColumnModel().getColumn(2).setPreferredWidth(70);
+        jTableLivraisons.getColumnModel().getColumn(3).setPreferredWidth(50);
+        jTableLivraisons.getColumnModel().getColumn(4).setPreferredWidth(50);
         jScrollPane4.setViewportView(jTableLivraisons);
 
+        jButtonModifier.setEnabled(false);
         jButtonModifier.setText("Modifier");
 
+        jButtonAnnulerModif.setEnabled(false);
         jButtonAnnulerModif.setText("Annuler");
 
         jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
@@ -381,16 +390,18 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 jButtonCalculerTournee.setEnabled(true);
                 
                 Collection<Livraison> livraisoncollection = dl.getLivraison().values();
-                int indexRow=0;
-                jTableLivraisons.getColumnModel().getColumn(0).setPreferredWidth(200);
-                jTableLivraisons.getColumnModel().getColumn(1).setPreferredWidth(80);
-                jTableLivraisons.getColumnModel().getColumn(2).setPreferredWidth(50);
-                jTableLivraisons.getColumnModel().getColumn(3).setPreferredWidth(50);
+                
+                jTableLivraisons.getModel().setValueAt("E", 0, 0);
+                jTableLivraisons.getModel().setValueAt(
+                        dl.getEntrepot().getTroncons().get(0).getNomRue() + 
+                                " (" + dl.getEntrepot().getId() + ")", 0, 1);
+                
+                int indexRow=1;
                 for(Livraison livraison :livraisoncollection ){
-                    
+                    jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
                     String nomRue = livraison.getAdresse().getTroncons().get(0).getNomRue();
                     Long idAdresse = livraison.getAdresse().getId();
-                    jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 0);
+                    jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
                     
                     String dureeFormatee = "";
                     int seconds = livraison.getDuree() % 60;
@@ -407,11 +418,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
                     if(seconds >0){
                         dureeFormatee += seconds + "s";
                     }
-                    jTableLivraisons.getModel().setValueAt(dureeFormatee, indexRow, 1);
+                    jTableLivraisons.getModel().setValueAt(dureeFormatee, indexRow, 2);
                     
                     if (livraison.getDebutPlage() != null){
-                        jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 2);
-                        jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 3);
+                        jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 3);
+                        jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 4);
                     }
                     
                     indexRow++;
@@ -473,6 +484,59 @@ public class IHMLivraisons extends javax.swing.JDialog {
         // Affichage de la solution
         jPanelPlanMap.setSolution(solutionActuelle);
         jPanelPlanMap.repaint();
+        
+        //réorganise le tableau
+        DefaultTableModel model = (DefaultTableModel) jTableLivraisons.getModel();
+        int rowCount = model.getRowCount();
+        String setvide="";
+        for (int i = 0; i < rowCount ; i++){
+            jTableLivraisons.getModel().setValueAt(setvide, i, 0);
+            jTableLivraisons.getModel().setValueAt(setvide, i, 1);
+            jTableLivraisons.getModel().setValueAt(setvide, i, 2);
+            jTableLivraisons.getModel().setValueAt(setvide, i, 3);
+            jTableLivraisons.getModel().setValueAt(setvide, i, 4);
+                    
+        }
+        int indexRow=0;
+        System.out.println(DLActuelle);
+        for(Intersection intersection : sol ){
+            Livraison livraison = DLActuelle.getLivraison().get(intersection.getId());
+            
+            if(livraison == null){
+                jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
+                jTableLivraisons.getModel().setValueAt(
+                        intersection.getTroncons().get(0).getNomRue() + 
+                                " (" + intersection.getId() + ")", 0, 1);
+            }else{
+                String nomRue = livraison.getAdresse().getTroncons().get(0).getNomRue();
+                Long idAdresse = livraison.getAdresse().getId();
+                jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
+
+                String dureeFormatee = "";
+                int seconds = livraison.getDuree() % 60;
+                int totalMinutes = livraison.getDuree() / 60;
+                int minutes = totalMinutes % 60;
+                int hours = totalMinutes / 60;
+
+                if(hours >0){
+                    dureeFormatee += hours + "h ";
+                }
+                if(minutes >0){
+                    dureeFormatee += minutes + "min ";
+                }
+                if(seconds >0){
+                    dureeFormatee += seconds + "s";
+                }
+                jTableLivraisons.getModel().setValueAt(dureeFormatee, indexRow, 2);
+
+                if (livraison.getDebutPlage() != null){
+                    jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 3);
+                    jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 4);
+                }
+            }
+            indexRow++;
+        }
+
     }//GEN-LAST:event_jButtonCalculerTourneeActionPerformed
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
@@ -489,15 +553,19 @@ public class IHMLivraisons extends javax.swing.JDialog {
             jTableLivraisons.getModel().setValueAt(setvide, i, 1);
             jTableLivraisons.getModel().setValueAt(setvide, i, 2);
             jTableLivraisons.getModel().setValueAt(setvide, i, 3);
+            jTableLivraisons.getModel().setValueAt(setvide, i, 4);
                     
         }
         DLActuelle=null; 
         jButtonCalculerTournee.setEnabled(false);
+        solutionActuelle=null;
+        
     }
     private void jButtonViderDLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViderDLActionPerformed
         annulerDL(); 
         jPanelPlanMap.setPlan(planActuel);
         jPanelPlanMap.setDL(DLActuelle);
+        jPanelPlanMap.setSolution(solutionActuelle);
         jPanelPlanMap.repaint();
     }//GEN-LAST:event_jButtonViderDLActionPerformed
 
