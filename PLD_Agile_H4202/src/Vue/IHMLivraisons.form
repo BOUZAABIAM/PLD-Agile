@@ -191,6 +191,9 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonValiderActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jButtonValider.setEnabled(false);"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonViderDL">
       <Properties>
@@ -271,6 +274,9 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonFeuilleDeRouteActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButtonFeuilleDeRoute.setEnabled(false);"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelTitre">
       <Properties>
@@ -297,16 +303,22 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="jTableLivraisons">
           <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="32">
-                <Column editable="true" title="Adresse" type="java.lang.String"/>
-                <Column editable="true" title="Duree" type="java.lang.Integer"/>
-                <Column editable="true" title="Debut Plage" type="java.lang.String"/>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="jTableLivraisons.getColumnModel().getColumn(1).setPreferredWidth(10);&#xa;jTableLivraisons.getColumnModel().getColumn(1).setPreferredWidth(200);&#xa;jTableLivraisons.getColumnModel().getColumn(2).setPreferredWidth(70);&#xa;jTableLivraisons.getColumnModel().getColumn(3).setPreferredWidth(50);&#xa;jTableLivraisons.getColumnModel().getColumn(4).setPreferredWidth(50);">
+              <Table columnCount="5" rowCount="32">
+                <Column editable="false" title="N&#xb0;" type="java.lang.Object"/>
+                <Column editable="false" title="Adresse" type="java.lang.String"/>
+                <Column editable="false" title="Duree" type="java.lang.Integer"/>
+                <Column editable="false" title="Debut Plage" type="java.lang.String"/>
                 <Column editable="false" title="Fin Plage" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -340,11 +352,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Modifier"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jButtonModifier.setEnabled(false);"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonAnnulerModif">
       <Properties>
         <Property name="text" type="java.lang.String" value="Annuler"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jButtonAnnulerModif.setEnabled(false);"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
