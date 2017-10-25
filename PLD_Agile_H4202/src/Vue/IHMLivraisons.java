@@ -15,10 +15,10 @@ import Modele.Intersection;
 import Modele.Livraison;
 import Modele.Troncon;
 import Modele.XMLParser;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
+//import com.itextpdf.text.Document;
+//import com.itextpdf.text.DocumentException;
+//import com.itextpdf.text.pdf.PdfPTable;
+//import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.FileNotFoundException;
@@ -33,8 +33,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import tsp.*;
-
+//import tsp.*;
+ 
 /**
  *
  * @author carhiliuc
@@ -134,17 +134,18 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }
         });
 
-        jPanelPlanMap.setBackground(new java.awt.Color(192, 226, 151));
+        jPanelPlanMap.setBackground(new java.awt.Color(153, 153, 153));
+        jPanelPlanMap.setPreferredSize(new java.awt.Dimension(551, 530));
 
         javax.swing.GroupLayout jPanelPlanMapLayout = new javax.swing.GroupLayout(jPanelPlanMap);
         jPanelPlanMap.setLayout(jPanelPlanMapLayout);
         jPanelPlanMapLayout.setHorizontalGroup(
             jPanelPlanMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGap(0, 551, Short.MAX_VALUE)
         );
         jPanelPlanMapLayout.setVerticalGroup(
             jPanelPlanMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 459, Short.MAX_VALUE)
+            .addGap(0, 530, Short.MAX_VALUE)
         );
 
         jButtonFeuilleDeRoute.setText("Generer feuille de route");
@@ -340,7 +341,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                                 .addComponent(jButtonSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -580,9 +581,18 @@ public class IHMLivraisons extends javax.swing.JDialog {
         Intersection deux = planActuel.getIntersectionsMap().get((long)2);
         Intersection cinq = planActuel.getIntersectionsMap().get((long)5);
         Intersection quatre = planActuel.getIntersectionsMap().get((long)4);
-
-        //Troncon troncon = new Troncon("A", intersections.get(idIntersectionEnd), origine, longueur);
-       
+        
+        List<Intersection>inter = new ArrayList<Intersection>();
+        inter.add(un);
+        inter.add(deux);
+        inter.add(cinq);
+        inter.add(quatre);
+        inter.add(un);
+        
+        cheminActuel = inter;
+        jPanelPlanMap.setChemin(cheminActuel);
+        jPanelPlanMap.repaint();
+        
         jButtonModifier.setEnabled(true);
         jButtonAjouter.setVisible(true);
         jButtonAjouter.setEnabled(false);
@@ -626,31 +636,30 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonViderDLActionPerformed
 
     private void jButtonFeuilleDeRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFeuilleDeRouteActionPerformed
-                try {
-            Document doc = new Document();
-            PdfWriter.getInstance(doc, new FileOutputStream("table.pdf"));
-            doc.open();
-            PdfPTable pdfTable = new PdfPTable(jTableLivraisons.getColumnCount());
-            //adding table headers
-            for (int i = 0; i < jTableLivraisons.getColumnCount(); i++) {
-                pdfTable.addCell(jTableLivraisons.getColumnName(i));
-            }
-            //extracting data from the JTable and inserting it to PdfPTable
-            for (int rows = 0; rows < jTableLivraisons.getRowCount() - 1; rows++) {
-                for (int cols = 0; cols < jTableLivraisons.getColumnCount(); cols++) {
-                    pdfTable.addCell(jTableLivraisons.getModel().getValueAt(rows, cols).toString());
-
-                }
-            }
-            doc.add(pdfTable);
-            doc.close();
-            System.out.println("done");
-        } catch (DocumentException ex) {
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    
+//                try {
+//            Document doc = new Document();
+//            PdfWriter.getInstance(doc, new FileOutputStream("table.pdf"));
+//            doc.open();
+//            PdfPTable pdfTable = new PdfPTable(jTableLivraisons.getColumnCount());
+//            //adding table headers
+//            for (int i = 0; i < jTableLivraisons.getColumnCount(); i++) {
+//                pdfTable.addCell(jTableLivraisons.getColumnName(i));
+//            }
+//            //extracting data from the JTable and inserting it to PdfPTable
+//            for (int rows = 0; rows < jTableLivraisons.getRowCount() - 1; rows++) {
+//                for (int cols = 0; cols < jTableLivraisons.getColumnCount(); cols++) {
+//                    pdfTable.addCell(jTableLivraisons.getModel().getValueAt(rows, cols).toString());
+//
+//                }
+//            }
+//            doc.add(pdfTable);
+//            doc.close();
+//            System.out.println("done");
+//        } catch (DocumentException ex) {
+//        } catch (FileNotFoundException ex) 
+//        }
+//
+//     
     }//GEN-LAST:event_jButtonFeuilleDeRouteActionPerformed
 
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
@@ -701,13 +710,12 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
-    }
+    } 
     
     private Plan planActuel;
     private DemandeLivraison DLActuelle;
     private Intersection[] solutionActuelle;
-    //private List<Intersection> cheminActuel;
-    private List<Troncon>cheminActuel;
+    private List<Intersection>cheminActuel;
     // /!\ IMPORTANT : changer private javax.swing.JPanel jPanelPlanMap; en private JPanelPlan jPanelPlanMap;
     // netBeans va essayer de le changer
     // Variables declaration - do not modify//GEN-BEGIN:variables
