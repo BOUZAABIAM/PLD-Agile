@@ -150,6 +150,7 @@ public class JPanelPlan extends JPanel {
 
             for (int i =0; i< leChemin.size()-1; i++) {
                 gc.setColor(Color.YELLOW);
+                // proporionel
                 gc.setStroke(new BasicStroke(6));
                 Intersection origineT = leChemin.get(i);
                 Intersection destinationT = leChemin.get(i+1);
@@ -168,7 +169,7 @@ public class JPanelPlan extends JPanel {
                 gc.drawLine(x1, y1, x2, y2);
                
             }
-            for (Intersection inter : leChemin) {
+            for (Intersection inter : laSolution) {
                 gc.setColor(Color.RED);
                 int xEntrepot = (int) Math.round(((inter.getX() - minX) / paramLargeur));
                 int yEntrepot = (int) Math.round(((inter.getY() - minY) / paramHauteur));
