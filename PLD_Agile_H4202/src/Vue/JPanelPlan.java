@@ -104,7 +104,7 @@ public class JPanelPlan extends JPanel {
         for (Map.Entry<Long, Intersection> entry : intersections.entrySet()) {
             Intersection origine = entry.getValue();
             gc.setStroke(new BasicStroke(2));
-            gc.setColor(Color.GRAY);
+            gc.setColor(Color.BLACK);
             int x1 = (int) Math.round((origine.getX() - minX) / paramLargeur);
             int y1 = (int) Math.round((origine.getY() - minY) / paramHauteur);
             coordonnees=rotationPoint(x1,y1,xCentre,yCentre);
@@ -124,7 +124,7 @@ public class JPanelPlan extends JPanel {
         }
         if (laDL != null){
             //dessine l'entrepot
-            gc.setColor(Color.BLACK);
+            gc.setColor(Color.RED);
             int xEntrepot = (int) Math.round(((laDL.getEntrepot().getX() - minX) / paramLargeur));
             int yEntrepot = (int) Math.round(((laDL.getEntrepot().getY() - minY) / paramHauteur));
              coordonnees=rotationPoint(xEntrepot,yEntrepot,xCentre,yCentre);
@@ -136,7 +136,7 @@ public class JPanelPlan extends JPanel {
             Map<Long, Livraison> livraisons = laDL.getLivraison();
             for (Map.Entry<Long, Livraison> entry : livraisons.entrySet()) {
                 Livraison livr = entry.getValue();
-                gc.setColor(Color.RED);
+                gc.setColor(Color.BLUE);
                 int xC = (int) Math.round(((livr.getAdresse().getX() - minX) / paramLargeur));
                 int yC = (int) Math.round(((livr.getAdresse().getY() - minY) / paramHauteur));
                 coordonnees=rotationPoint(xC,yC,xCentre,yCentre);
