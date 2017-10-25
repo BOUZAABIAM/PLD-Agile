@@ -92,7 +92,7 @@ public class JPanelPlan extends JPanel {
         //trouver taille effective du jPanel à la place de 500 530, ou cacher les valeurs
         double paramLargeur = (maxX - minX) / 525;
         double paramHauteur = (maxY - minY) / 445;
-        double paramMax = Math.max(paramLargeur, paramHauteur);
+        
         //Coordonnees du centre de rotation
         int coordonnees[];
         int xCentre=(int)Math.round((((maxX / 2 + minX / 2)-minX)/(paramLargeur )));
