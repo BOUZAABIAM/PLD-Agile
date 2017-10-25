@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<reseau>
+<noeud id="1" x="0" y="0"/>
+<noeud id="2" x="1" y="0"/>
+<noeud id="3" x="2" y="0"/>
+<noeud id="4" x="0" y="1"/>
+<noeud id="5" x="1" y="1"/>
+<noeud id="6" x="2" y="1"/>
+<noeud id="7" x="0" y="2"/>
+<noeud id="8" x="1" y="2"/>
+<noeud id="9" x="2" y="2"/>
+<troncon destination="2" longueur="1" nomRue="Avenue des Frères Lumière" origine="1"/>
+<troncon destination="3" longueur="1" nomRue="Boulevard Jean XXIII" origine="2"/>
+<troncon destination="4" longueur="1" nomRue="Place d'Arsonval" origine="1"/>
+<troncon destination="5" longueur="1" nomRue="Cours Albert Thomas" origine="2"/>
+<troncon destination="6" longueur="1" nomRue="Rue Professeur Louis Roche" origine="3"/>
+<troncon destination="5" longueur="1" nomRue="Rue de Montbrillant" origine="4"/>
+<troncon destination="6" longueur="1" nomRue="Rue Professeur Louis Roche" origine="5"/>
+<troncon destination="7" longueur="1" nomRue="Rue Jeanne d'Arc" origine="4"/>
+<troncon destination="8" longueur="1" nomRue="Rue Amiral Courbet" origine="7"/>
+<troncon destination="9" longueur="1" nomRue="Rue Charles Richard" origine="8"/>
+<troncon destination="8" longueur="1" nomRue="Rue Guy" origine="5"/>
+<troncon destination="9" longueur="1" nomRue="Rue du Docteur Bonhomme" origine="6"/>
+<troncon destination="1" longueur="1" nomRue="Avenue des Frères Lumière" origine="2"/>
+<troncon destination="2" longueur="1" nomRue="Boulevard Jean XXIII" origine="3"/>
+<troncon destination="1" longueur="1" nomRue="Place d'Arsonval" origine="4"/>
+<troncon destination="2" longueur="1" nomRue="Cours Albert Thomas" origine="5"/>
+<troncon destination="3" longueur="1" nomRue="Rue Professeur Louis Roche" origine="6"/>
+<troncon destination="4" longueur="1" nomRue="Rue de Montbrillant" origine="5"/>
+<troncon destination="5" longueur="1" nomRue="Rue Professeur Louis Roche" origine="6"/>
+<troncon destination="4" longueur="1" nomRue="Rue Jeanne d'Arc" origine="7"/>
+<troncon destination="7" longueur="1" nomRue="Rue Amiral Courbet" origine="8"/>
+<troncon destination="8" longueur="1" nomRue="Rue Charles Richard" origine="9"/>
+<troncon destination="5" longueur="1" nomRue="Rue Guy" origine="8"/>
+<troncon destination="6" longueur="1" nomRue="Rue du Docteur Bonhomme" origine="9"/>
+</reseau>
+
