@@ -15,8 +15,14 @@ import Modele.Intersection;
 import Modele.Livraison;
 import Modele.Troncon;
 import Modele.XMLParser;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -389,6 +395,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 jPanelPlanMap.repaint();
                 
                 jButtonCalculerTournee.setEnabled(true);
+                jButtonFeuilleDeRoute.setEnabled(true);
                 
                 Collection<Livraison> livraisoncollection = dl.getLivraison().values();
                 
@@ -581,7 +588,31 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonViderDLActionPerformed
 
     private void jButtonFeuilleDeRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFeuilleDeRouteActionPerformed
+                try {
+            Document doc = new Document();
+            PdfWriter.getInstance(doc, new FileOutputStream("table.pdf"));
+            doc.open();
+            PdfPTable pdfTable = new PdfPTable(jTableLivraisons.getColumnCount());
+            //adding table headers
+            for (int i = 0; i < jTableLivraisons.getColumnCount(); i++) {
+                pdfTable.addCell(jTableLivraisons.getColumnName(i));
+            }
+            //extracting data from the JTable and inserting it to PdfPTable
+            for (int rows = 0; rows < jTableLivraisons.getRowCount() - 1; rows++) {
+                for (int cols = 0; cols < jTableLivraisons.getColumnCount(); cols++) {
+                    pdfTable.addCell(jTableLivraisons.getModel().getValueAt(rows, cols).toString());
 
+                }
+            }
+            doc.add(pdfTable);
+            doc.close();
+            System.out.println("done");
+        } catch (DocumentException ex) {
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    
     }//GEN-LAST:event_jButtonFeuilleDeRouteActionPerformed
 
     /**
