@@ -33,7 +33,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-//import tsp.*;
+import tsp.*;
  
 /**
  *
@@ -513,12 +513,27 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 List<Intersection> etapes = calcul.getChemin(solution[i-1], solution[i]);
                 chemin.addAll(etapes);
             }
-        }
+        }*/
+        Intersection un = planActuel.getIntersectionsMap().get((long)1);
+        Intersection deux = planActuel.getIntersectionsMap().get((long)2);
+        Intersection cinq = planActuel.getIntersectionsMap().get((long)5);
+        Intersection quatre = planActuel.getIntersectionsMap().get((long)4);
+        
+        List<Intersection>inter = new ArrayList<Intersection>();
+        inter.add(un);
+        inter.add(deux);
+        inter.add(cinq);
+        inter.add(quatre);
+        inter.add(un);
+        Intersection[] sol = new Intersection[2];
+        sol[0] = un;
+        sol[1] = cinq;
+        cheminActuel = inter;
         solutionActuelle = sol;
-        cheminActuel = chemin;
         
         // Affichage de la solution
         jPanelPlanMap.setSolution(solutionActuelle);
+        jPanelPlanMap.setChemin(cheminActuel);
         jPanelPlanMap.repaint();
         
                 
@@ -575,23 +590,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 }
             }
             indexRow++;
-        }*/
+        }
 
-        Intersection un = planActuel.getIntersectionsMap().get((long)1);
-        Intersection deux = planActuel.getIntersectionsMap().get((long)2);
-        Intersection cinq = planActuel.getIntersectionsMap().get((long)5);
-        Intersection quatre = planActuel.getIntersectionsMap().get((long)4);
-        
-        List<Intersection>inter = new ArrayList<Intersection>();
-        inter.add(un);
-        inter.add(deux);
-        inter.add(cinq);
-        inter.add(quatre);
-        inter.add(un);
-        
-        cheminActuel = inter;
-        jPanelPlanMap.setChemin(cheminActuel);
-        jPanelPlanMap.repaint();
         
         jButtonModifier.setEnabled(true);
         jButtonAjouter.setVisible(true);
