@@ -59,12 +59,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private void initComponents() {
 
         jButtonChargerPlan = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jFieldFichierPlan = new javax.swing.JTextPane();
         jButtonValider = new javax.swing.JButton();
         jButtonViderDL = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jFieldFichierLivraison = new javax.swing.JTextPane();
         jButtonChargerLivraison = new javax.swing.JButton();
         jButtonCalculerTournee = new javax.swing.JButton();
         jPanelPlanMap = new Vue.JPanelPlan();
@@ -94,12 +90,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }
         });
 
-        jFieldFichierPlan.setEditable(false);
-        jFieldFichierPlan.setBackground(javax.swing.UIManager.getDefaults().getColor("EditorPane.disabledBackground"));
-        jFieldFichierPlan.setAutoscrolls(false);
-        jFieldFichierPlan.setEnabled(false);
-        jScrollPane1.setViewportView(jFieldFichierPlan);
-
         jButtonValider.setVisible(false);
         jButtonValider.setText("Valider");
         jButtonValider.addActionListener(new java.awt.event.ActionListener() {
@@ -114,12 +104,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 jButtonViderDLActionPerformed(evt);
             }
         });
-
-        jFieldFichierLivraison.setEditable(false);
-        jFieldFichierLivraison.setBackground(javax.swing.UIManager.getDefaults().getColor("ComboBox.disabledBackground"));
-        jFieldFichierLivraison.setAutoscrolls(false);
-        jFieldFichierLivraison.setEnabled(false);
-        jScrollPane3.setViewportView(jFieldFichierLivraison);
 
         jButtonChargerLivraison.setText("Charger Livraison");
         jButtonChargerLivraison.setEnabled(false);
@@ -294,9 +278,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
                                 .addGap(654, 654, 654)
                                 .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(155, 155, 155)
+                                .addComponent(jButtonViderDL)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30)
                                 .addComponent(jButtonModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -310,15 +294,13 @@ public class IHMLivraisons extends javax.swing.JDialog {
                         .addComponent(jButtonAnnulerModif)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButtonViderDL)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jScrollPane1))
-                                .addComponent(jPanelPlanMap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanelPlanMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(29, 29, 29)
@@ -340,10 +322,10 @@ public class IHMLivraisons extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelTitre)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))
-                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(3, 3, 3)
                         .addComponent(jPanelPlanMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -355,22 +337,19 @@ public class IHMLivraisons extends javax.swing.JDialog {
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonViderDL, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(11, 11, 11)
+                        .addComponent(jButtonViderDL, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButtonModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButtonAnnulerModif, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButtonAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButtonSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonAnnulerModif, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -390,14 +369,12 @@ public class IHMLivraisons extends javax.swing.JDialog {
             //Vérifier le format du fichier xml ou non
             if(filter.accept(selectedFile)==false){
                 exception = "Format Fichier Plan Incorrect !";
-                jFieldFichierPlan.setText(exception);
                 jop = new JOptionPane();
                 jop.showMessageDialog(null, exception, "Attention", JOptionPane.WARNING_MESSAGE);
                 
                 return;
             }
             
-            jFieldFichierPlan.setText(selectedFile.getName());
             try {
                 XMLParser parser = new XMLParser();
                 plandDeVille = parser.getPlan(selectedFile);
@@ -427,12 +404,10 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 
                 if(filter.accept(selectedFile)==false){
                    exception = "Format Fichier Livraison Incorrect !";
-                   jFieldFichierPlan.setText(exception);
                    jop = new JOptionPane();
                    jop.showMessageDialog(null, exception, "Attention", JOptionPane.WARNING_MESSAGE);
                    return;
                 }
-                jFieldFichierLivraison.setText(selectedFile.getName());
                 try {
                     XMLParser parser = new XMLParser();
                     dl = parser.getDL(selectedFile, planActuel);
@@ -787,8 +762,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private javax.swing.JButton jButtonSupprimer;
     private javax.swing.JButton jButtonValider;
     private javax.swing.JButton jButtonViderDL;
-    private javax.swing.JTextPane jFieldFichierLivraison;
-    private javax.swing.JTextPane jFieldFichierPlan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelTitre;
@@ -796,9 +769,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private JPanelPlan jPanelPlanMap;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTableLivraisons;
     private javax.swing.JTextArea jTextAreaMessage;
