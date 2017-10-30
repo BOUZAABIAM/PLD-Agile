@@ -17,7 +17,7 @@ public class Intersection {
     private List<Troncon> troncons;
     private int d;
     private Intersection pred;
-    private int predIndex;
+    private int predIndex = -1;
     private int couleur;
 
     public Intersection(long id, double x, double y, int index) {
@@ -96,10 +96,19 @@ public class Intersection {
         
     public void relacher(int newD, Intersection pred){
         if (newD < d){
+//            System.out.println("relacher");
+//            System.out.println("Element courant " + this);
+//            System.out.println("Duree courante " + d);
+//            System.out.println("Nouvelle duree " + newD);
             this.d = newD;
             this.pred = pred; 
-            this.predIndex = this.pred.getPredIndex();
+            this.predIndex = this.pred.getIndex();                    
+//            System.out.println("Le predeceseur " + this.pred);
+//            System.out.println("L'index de predecesseur " + this.predIndex);
+//            System.out.println();
+            
         }
+           
         
     }
     
@@ -113,6 +122,11 @@ public class Intersection {
                 arrive.setCouleur(1);
             }
             if (arrive.getCouleur() != 2){
+//                System.out.println("relacherSucc");
+//                System.out.println("duree " + d);
+//                System.out.println("element courant " +this);
+//                System.out.println("element arrive de troncon que n'est pas noir " + arrive);
+//                System.out.println();
                 arrive.relacher(d+troncon.getDuree(), this);
             }
         }

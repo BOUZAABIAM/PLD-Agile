@@ -492,7 +492,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonChargerLivraisonActionPerformed
     
     private void jButtonCalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculerTourneeActionPerformed
-       /* java.util.List<Livraison> livraisons  = new ArrayList<Livraison>();
+        java.util.List<Livraison> livraisons  = new ArrayList<Livraison>();
         livraisons.addAll(DLActuelle.getLivraison().values());
         
         java.util.List<Intersection> intersections  = planActuel.getIntersectionsList();
@@ -543,34 +543,34 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 List<Intersection> etapes = calcul.getChemin(solution[i-1], solution[i]);
                 chemin.addAll(etapes);
             }
-        }*/
-        Intersection un = planActuel.getIntersectionsMap().get((long)1);
-        Intersection deux = planActuel.getIntersectionsMap().get((long)2);
-        Intersection trois = planActuel.getIntersectionsMap().get((long)3);
-        Intersection quatre = planActuel.getIntersectionsMap().get((long)4);
-        Intersection cinq = planActuel.getIntersectionsMap().get((long)5);
-        Intersection six = planActuel.getIntersectionsMap().get((long)6);
+        }
+//        Intersection un = planActuel.getIntersectionsMap().get((long)1);
+//        Intersection deux = planActuel.getIntersectionsMap().get((long)2);
+//        Intersection trois = planActuel.getIntersectionsMap().get((long)3);
+//        Intersection quatre = planActuel.getIntersectionsMap().get((long)4);
+//        Intersection cinq = planActuel.getIntersectionsMap().get((long)5);
+//        Intersection six = planActuel.getIntersectionsMap().get((long)6);
         
-        List<Intersection>inter = new ArrayList<Intersection>();
-        inter.add(un);
-        inter.add(quatre);
-        inter.add(cinq);
-        inter.add(six);
-        inter.add(trois);
-        inter.add(deux);
-        inter.add(un);
-        Intersection[] sol = new Intersection[3];
-        sol[0] = un;
-        sol[1] = cinq;
-        sol[2] = six;
-        cheminActuel = inter;
-        //entrepot est l'intersection de depart et d'arrive
-        solutionActuelle = sol;
-        //entrepot apparait qu'une fois
+//        List<Intersection>inter = new ArrayList<Intersection>();
+//        inter.add(un);
+//        inter.add(quatre);
+//        inter.add(cinq);
+//        inter.add(six);
+//        inter.add(trois);
+//        inter.add(deux);
+//        inter.add(un);
+//        Intersection[] sol = new Intersection[3];
+//        sol[0] = un;
+//        sol[1] = cinq;
+//        sol[2] = six;
+//        cheminActuel = inter;
+//        //entrepot est l'intersection de depart et d'arrive
+//        solutionActuelle = sol;
+//        //entrepot apparait qu'une fois
         
         // Affichage de la solution
-        jPanelPlanMap.setSolution(solutionActuelle);
-        jPanelPlanMap.setChemin(cheminActuel);
+        jPanelPlanMap.setSolution(sol);
+        jPanelPlanMap.setChemin(chemin);
         jPanelPlanMap.repaint();
         
                 

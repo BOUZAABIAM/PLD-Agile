@@ -71,13 +71,16 @@ public class CalculTournee {
         
         int[] d = new int[intersectionLivraison.length];
         for (int i = 0; i < intersectionLivraison.length; i++){
-            d[i] = intersectionLivraison[i].getD();            
+            d[i] = intersectionLivraison[i].getD(); 
+            System.out.print(d[i] + "  ");
         } 
+        System.out.println();
         
         for (int i = 0; i < intersections.size(); i++){
             pred[indexDepart][i] = intersections.get(i).getPredIndex();
+//            System.out.println(intersections.get(i).getPredIndex());
         }
-        
+//        this.affichePrec();
         return d;
     }
     
@@ -102,8 +105,18 @@ public class CalculTournee {
        return matriceLivraison;
     } 
     
+    public void affichePrec(){
+        for (int i = 0; i < pred.length; i++){
+            for (int j = 0; j < pred[0].length; j++){
+                System.out.print(pred[i][j] + "  ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+    
     public List<Intersection> getChemin(int depart, int arrive){
-        
+        this.affichePrec();
         if ((depart >= 0) && (depart < livraisons.size()+1) && (arrive >= 0) && (arrive < livraisons.size()+1)){
             Intersection intersectionDepart;
             Intersection intersectionArrive;
@@ -116,20 +129,34 @@ public class CalculTournee {
             
             if (arrive == livraisons.size()){
                 intersectionArrive = entrepot;
-            } else {
-                intersectionArrive = livraisons.get(depart).getAdresse();
+            } else {                
+                intersectionArrive = livraisons.get(arrive).getAdresse();
             }
             
                         
             LinkedList<Intersection> trajet = new LinkedList<Intersection>();
             
             int indexDepart = intersectionDepart.getIndex();
+            int indexArrive = intersectionArrive.getIndex();
             
             trajet.add(intersectionArrive);
-            while(trajet.get(0).getIndex()  != indexDepart){
-                trajet.addFirst(intersections.get(pred[depart][trajet.get(0).getIndex()]));
-            }                    
+            System.out.println(trajet);
+            System.out.println("Depart " + depart);
+            System.out.println("Arrive " + arrive);
+            System.out.println("Index Depart" + indexDepart);
+            System.out.println("Index Arrive" + indexArrive);
             
+            int colonne=trajet.get(0).getIndex();
+            while(pred[depart][colonne]  != indexDepart){             
+                System.out.println("Dernier intersection ajoute " + colonne);                
+                System.out.println();
+                
+                trajet.addFirst(intersections.get(pred[depart][colonne]));
+                colonne = trajet.get(0).getIndex();
+            }       
+            trajet.addFirst(intersections.get(pred[depart][colonne]));
+            colonne = trajet.get(0).getIndex();
+            trajet.add(intersectionArrive);
             return trajet;
         } else {
             System.err.println("Attention, les nombres dans le getChemin ne correspondent pas avec les livraisons :");
