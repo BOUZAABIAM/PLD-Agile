@@ -146,7 +146,7 @@ public class JPanelPlan extends JPanel {
             }
         }
 
-        if (leChemin != null) {
+        if ((leChemin != null) && (laSolution != null)) {
 
             for (int i =0; i< leChemin.size()-1; i++) {
                 gc.setColor(Color.YELLOW);
@@ -170,6 +170,7 @@ public class JPanelPlan extends JPanel {
                
             }
             for (Intersection inter : laSolution) {
+                System.out.println(inter.getId());
                 gc.setColor(Color.RED);
                 int xEntrepot = (int) Math.round(((inter.getX() - minX) / paramLargeur));
                 int yEntrepot = (int) Math.round(((inter.getY() - minY) / paramHauteur));

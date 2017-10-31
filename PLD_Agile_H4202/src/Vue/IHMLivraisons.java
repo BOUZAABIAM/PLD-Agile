@@ -638,10 +638,10 @@ public class IHMLivraisons extends javax.swing.JDialog {
             jTableLivraisons.getModel().setValueAt(setvide, i, 4);
                     
         }
-        DLActuelle=null; 
-        jButtonCalculerTournee.setEnabled(false);
+        DLActuelle=null;
         solutionActuelle=null;
-        
+        jButtonCalculerTournee.setEnabled(false);
+         
     }
     private void jButtonViderDLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViderDLActionPerformed
         annulerDL(); 
