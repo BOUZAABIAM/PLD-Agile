@@ -469,12 +469,49 @@ public class IHMLivraisons extends javax.swing.JDialog {
     
     private void jButtonCalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculerTourneeActionPerformed
       
-      
-        //Obtenir la solution en intersection
-        planActuel.calculSolutionTSP1();
-        List<Intersection> chemin = planActuel.getChemin();
-        List<Intersection> sol = planActuel.getSolution();
+        //Création de calcul tournée
+        planActuel.setDL(DLActuelle);
+        int[][] tab = planActuel.graphLivraison();
+
+        int tpsLimite = 100000000;
+        int nbSommet = tab.length;
+        TSP tsp = new TSP1();
         
+        //Initialiser le tableau des durees
+        int[] duree = planActuel.getDuree();
+
+        tsp.chercheSolution(tpsLimite, nbSommet, tab, duree);
+        
+        //Obtenir la solution dans solution
+        int[] solution = new int[nbSommet];
+        for (int j = 0; j<nbSommet; j++){
+            solution[j] = tsp.getMeilleureSolution(j);
+//            System.out.println(solution[j]);
+        }
+        
+        //Bouger circulairement pour avoir l'entrepot au debut
+        int entrep = 0;
+        while(solution[entrep] != (nbSommet-1)){
+            entrep++;
+        }
+        
+        //Obtenir la solution en intersection
+        List<Intersection> chemin = new ArrayList<Intersection>();
+        Intersection[] sol = new Intersection[nbSommet];
+        sol[0] = DLActuelle.getEntrepot();
+        for (int i = 1; i < nbSommet; i++){
+            if ((entrep + i) < nbSommet){
+                sol[i] = planActuel.getAdresseDeLivraison(solution[entrep+i]);
+//                System.out.println(solution[entrep+i]);
+            } else {
+                sol[i] = planActuel.getAdresseDeLivraison(solution[entrep+i-nbSommet]);
+//                System.out.println(solution[entrep+i-nbSommet]);
+            }
+            if (i>0){
+                List<Intersection> etapes = planActuel.getChemin(solution[i-1], solution[i]);
+                chemin.addAll(etapes);
+            }
+        }
 //        Intersection un = planActuel.getIntersectionsMap().get((long)1);
 //        Intersection deux = planActuel.getIntersectionsMap().get((long)2);
 //        Intersection trois = planActuel.getIntersectionsMap().get((long)3);
@@ -703,7 +740,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
     
     private Plan planActuel;
     private DemandeLivraison DLActuelle;
-    private List<Intersection> solutionActuelle;
+    private Intersection[] solutionActuelle;
     private List<Intersection>cheminActuel;
     // /!\ IMPORTANT : changer private javax.swing.JPanel jPanelPlanMap; en private JPanelPlan jPanelPlanMap;
     // netBeans va essayer de le changer

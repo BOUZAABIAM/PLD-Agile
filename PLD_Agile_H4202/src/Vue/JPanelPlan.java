@@ -22,7 +22,7 @@ public class JPanelPlan extends JPanel {
 
     private Plan lePlan;
     private DemandeLivraison laDL;
-    private java.util.List<Intersection> laSolution;
+    private Intersection[] laSolution;
     private java.util.List<Intersection> leChemin;
 
     public void setPlan(Plan lePlan) {
@@ -33,7 +33,7 @@ public class JPanelPlan extends JPanel {
         this.laDL = laDL;
     }
 
-    public void setSolution(java.util.List<Intersection> solution) {
+    public void setSolution(Intersection[] solution) {
         this.laSolution = solution;
     }
 
