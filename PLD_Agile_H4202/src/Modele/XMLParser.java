@@ -7,6 +7,7 @@ package Modele;
 
 import java.io.*;
 import java.sql.Time;
+import java.text.ParseException;
 import java.util.*;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,11 +21,19 @@ import org.xml.sax.SAXException;
  * @author carhiliuc
  */
 public class XMLParser {
+    
+    private static XMLParser instance = null;
 
     public XMLParser() {
     }
+    public static XMLParser getInstance() {
+    	if (instance == null) {
+    		instance = new XMLParser();
+    	}
+    	return instance;
+    }
 
-    public Plan getPlan(File xmlFile) throws IOException, SAXException, ParserConfigurationException {
+    public Plan getPlan(File xmlFile) throws IOException, SAXException, ParserConfigurationException,ParseException,ExceptionXML {
         Map<Long, Intersection> intersections = new TreeMap<Long, Intersection>();
         List<Intersection> intersectionsList = new LinkedList<Intersection>();
 
@@ -91,7 +100,7 @@ public class XMLParser {
         return newTime;
     }
     
-    public DemandeLivraison getDL(File xmlFile, Plan plan) throws IOException, SAXException, ParserConfigurationException {
+    public DemandeLivraison getDL(final File xmlFile, final Plan plan) throws IOException, SAXException, ParserConfigurationException,ParseException,ExceptionXML {
         Map<Long, Livraison> livraisons = new TreeMap<Long, Livraison>();
         Intersection entrepot = null;
         Time heureDepart = null;

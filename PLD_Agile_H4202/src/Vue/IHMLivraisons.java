@@ -10,9 +10,11 @@ import org.xml.sax.SAXException;
 
 import Modele.Plan;
 import Modele.DemandeLivraison;
+import Modele.ExceptionXML;
 import Modele.Intersection;
 import Modele.Livraison;
 import Modele.XMLParser;
+import java.text.ParseException;
 
 //import com.itextpdf.text.Document;
 //import com.itextpdf.text.DocumentException;
@@ -370,7 +372,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
             try {
                 XMLParser parser = new XMLParser();
                 plandDeVille = parser.getPlan(selectedFile);
-            } catch (IOException | SAXException | ParserConfigurationException ex) {
+            } catch (SAXException | ExceptionXML |ParserConfigurationException| IOException | ParseException ex) {
                 Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
             }
             annulerDL(); 
@@ -403,7 +405,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 try {
                     XMLParser parser = new XMLParser();
                     dl = parser.getDL(selectedFile, planActuel);
-                } catch (IOException | SAXException | ParserConfigurationException ex) {
+                } catch (SAXException | ExceptionXML |ParserConfigurationException| IOException | ParseException ex) {
                     Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 annulerDL();
