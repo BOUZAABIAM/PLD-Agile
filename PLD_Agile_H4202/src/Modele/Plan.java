@@ -6,6 +6,8 @@
 package Modele;
 
 import java.util.*;
+import tsp.TSP;
+import tsp.TSP1;
 
 public class Plan {
 
@@ -14,6 +16,8 @@ public class Plan {
     private List<Livraison> livraisons;
     private Intersection entrepot;
     private List<int[]> pred;
+    private List<Intersection> solution;
+    private List<Intersection> chemin;
    
     private void addIntersection(Intersection intersection) {
         this.intersections.put(intersection.getId(), intersection);
@@ -260,6 +264,58 @@ public class Plan {
             return null;
         }
     }
+    
+    public void calculSolutionTSP1(){
+        this.chemin = new ArrayList<Intersection>();
+        this.solution = new  ArrayList<Intersection>();
+
+        int tpsLimite = 100000000;
+        int nbSommet = livraisons.size()+1;
+        TSP tsp = new TSP1();
+        
+
+        tsp.chercheSolution(tpsLimite, nbSommet, this.graphLivraison(), this.getDuree());
+        
+        //Obtenir la solution dans solution
+        int[] solution = new int[nbSommet];
+        for (int j = 0; j<nbSommet; j++){
+            solution[j] = tsp.getMeilleureSolution(j);
+//          System.out.println(solution[j]);
+        }
+        
+        //Bouger circulairement pour avoir l'entrepot au debut
+        int entrep = 0;
+        while(solution[entrep] != (nbSommet-1)){
+            entrep++;
+        }
+        
+        //Obtenir la solution en intersection
+        Intersection[] sol = new Intersection[nbSommet];
+        sol[0] = entrepot;
+        for (int i = 1; i < nbSommet; i++){
+            if ((entrep + i) < nbSommet){
+                sol[i] = this.getAdresseDeLivraison(solution[entrep+i]);
+//                System.out.println(solution[entrep+i]);
+            } else {
+                sol[i] = this.getAdresseDeLivraison(solution[entrep+i-nbSommet]);
+//                System.out.println(solution[entrep+i-nbSommet]);
+            }
+            this.solution.add(sol[i]);
+            List<Intersection> etapes = this.getChemin(solution[i-1], solution[i]);
+            this.chemin.addAll(etapes);
+          
+        }
+            
+    }
+
+    public List<Intersection> getSolution() {
+        return solution;
+    }
+
+    public List<Intersection> getChemin() {
+        return chemin;
+    }
+    
     
     public Intersection getAdresseDeLivraison(int index){
         return livraisons.get(index).getAdresse();
