@@ -293,7 +293,6 @@ public class Plan {
         Intersection[] sol = new Intersection[nbSommet];
 
         sol[0] = entrepot;
-//        this.solution.add(sol[0]);
 
         for (int i = 1; i < nbSommet; i++){
             if ((entrep + i) < nbSommet){
@@ -303,9 +302,11 @@ public class Plan {
                 sol[i] = this.getAdresseDeLivraison(solution[entrep+i-nbSommet]);
 //                System.out.println(solution[entrep+i-nbSommet]);
             }
+            
             ArrayList<Intersection> etapes = new ArrayList();
-            etapes.add(sol[i]);
+
             etapes.addAll(this.getChemin(solution[i-1], solution[i]));
+            
             solution2.add(etapes);
         }
         this.solution2 = solution2;
