@@ -24,8 +24,6 @@ public class CalculTournee {
         this.entrepot = entrepot;
         this.pred = new int[livraisons.size()+1][intersections.size()];
     }
-
-
     
     private int[] calculDuree(Intersection depart, Intersection[] intersectionLivraison, int indexDepart){
         
@@ -73,9 +71,9 @@ public class CalculTournee {
         int[] d = new int[intersectionLivraison.length];
         for (int i = 0; i < intersectionLivraison.length; i++){
             d[i] = intersectionLivraison[i].getD(); 
-            System.out.print(d[i] + "  ");
+            //System.out.print(d[i] + "  ");
         } 
-        System.out.println();
+        //System.out.println();
         
         for (int i = 0; i < intersections.size(); i++){
             pred[indexDepart][i] = intersections.get(i).getPredIndex();
@@ -111,13 +109,13 @@ public class CalculTournee {
             for (int j = 0; j < pred[0].length; j++){
                 System.out.print(pred[i][j] + "  ");
             }
-            System.out.println();
+            //System.out.println();
         }
-        System.out.println();
+        //System.out.println();
     }
     
     public List<Intersection> getChemin(int depart, int arrive){
-        this.affichePrec();
+        //this.affichePrec();
         if ((depart >= 0) && (depart < livraisons.size()+1) && (arrive >= 0) && (arrive < livraisons.size()+1)){
             Intersection intersectionDepart;
             Intersection intersectionArrive;
@@ -133,8 +131,7 @@ public class CalculTournee {
             } else {                
                 intersectionArrive = livraisons.get(arrive).getAdresse();
             }
-            
-                        
+                                    
             LinkedList<Intersection> trajet = new LinkedList<Intersection>();
             
             int indexDepart = intersectionDepart.getIndex();
@@ -159,7 +156,6 @@ public class CalculTournee {
             System.err.println("Dimension tableau livraison : " + (livraisons.size()+1) + ", données fournies : " + depart + ", " + arrive);
             return null;
         }
-        
     }
     
 }
