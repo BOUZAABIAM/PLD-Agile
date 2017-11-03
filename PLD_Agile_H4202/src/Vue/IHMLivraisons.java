@@ -12,27 +12,19 @@ import Modele.Plan;
 import Modele.DemandeLivraison;
 import Modele.Intersection;
 import Modele.Livraison;
-import Modele.Troncon;
 import Modele.XMLParser;
+
 //import com.itextpdf.text.Document;
 //import com.itextpdf.text.DocumentException;
 //import com.itextpdf.text.pdf.PdfPTable;
 //import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.Color;
-import java.awt.Font;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
+
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import tsp.*;
  
 /**
  *
@@ -424,20 +416,27 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 jButtonCalculerTournee.setEnabled(true);
                 jButtonFeuilleDeRoute.setEnabled(true);
                 
+                //Remplissage du tableau
                 Collection<Livraison> livraisoncollection = dl.getLivraison().values();
                 
+                //1er ligne 1er colonne : entrepot
                 jTableLivraisons.getModel().setValueAt("E", 0, 0);
+                //1er ligne 2e colonne : adresse de l'entrepot
                 jTableLivraisons.getModel().setValueAt(
                         dl.getEntrepot().getTroncons().get(0).getNomRue() + 
                                 " (" + dl.getEntrepot().getId() + ")", 0, 1);
                 
                 int indexRow=1;
                 for(Livraison livraison :livraisoncollection ){
+                    //1er colonne : n°
                     jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
+                    
+                    //2e colonne : adresse
                     String nomRue = livraison.getAdresse().getTroncons().get(0).getNomRue();
                     Long idAdresse = livraison.getAdresse().getId();
                     jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
                     
+                    //3e colonne : durée
                     String dureeFormatee = "";
                     int seconds = livraison.getDuree() % 60;
                     int totalMinutes = livraison.getDuree() / 60;
@@ -456,10 +455,10 @@ public class IHMLivraisons extends javax.swing.JDialog {
                     jTableLivraisons.getModel().setValueAt(dureeFormatee, indexRow, 2);
                     
                     if (livraison.getDebutPlage() != null){
+                        //4e et 5e colonne : début et fin de plage
                         jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 3);
                         jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 4);
                     }
-                    
                     indexRow++;
                 }
             }  
@@ -478,7 +477,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jPanelPlanMap.setChemin(chemin);
         jPanelPlanMap.repaint();   
                 
-        //réorganise le tableau
+        //vide le tableau
         DefaultTableModel model = (DefaultTableModel) jTableLivraisons.getModel();
         int rowCount = model.getRowCount();
         String setvide="";
@@ -491,20 +490,28 @@ public class IHMLivraisons extends javax.swing.JDialog {
         }
         int indexRow=0;
         System.out.println(DLActuelle);
+        
         for(Intersection intersection : sol ){
             Livraison livraison = DLActuelle.getLivraison().get(intersection.getId());
             
+            //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
             if(livraison == null){
+                //1er colonne : E pour entrepot
                 jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
+                //2e colonne : adresse
                 jTableLivraisons.getModel().setValueAt(
                         intersection.getTroncons().get(0).getNomRue() + 
                                 " (" + intersection.getId() + ")", 0, 1);
             }else{
+                //1er colonne : n°
                 jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
+                
+                //2e colonne : adresse
                 String nomRue = livraison.getAdresse().getTroncons().get(0).getNomRue();
                 Long idAdresse = livraison.getAdresse().getId();
                 jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
 
+                //3e colonne : durée
                 String dureeFormatee = "";
                 int seconds = livraison.getDuree() % 60;
                 int totalMinutes = livraison.getDuree() / 60;
@@ -523,6 +530,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 jTableLivraisons.getModel().setValueAt(dureeFormatee, indexRow, 2);
 
                 if (livraison.getDebutPlage() != null){
+                    //4e et 5e colonne : début et fin de plage
                     jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 3);
                     jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 4);
                 }
