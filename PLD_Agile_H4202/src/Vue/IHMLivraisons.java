@@ -1,5 +1,4 @@
 package Vue;
-import Modele.CalculTournee;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -486,7 +485,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         int[] solution = new int[nbSommet];
         for (int j = 0; j<nbSommet; j++){
             solution[j] = tsp.getMeilleureSolution(j);
-//            System.out.println(solution[j]);
+//          System.out.println(solution[j]);
         }
         
         //Bouger circulairement pour avoir l'entrepot au debut
@@ -512,37 +511,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 chemin.addAll(etapes);
             }
         }
-//        Intersection un = planActuel.getIntersectionsMap().get((long)1);
-//        Intersection deux = planActuel.getIntersectionsMap().get((long)2);
-//        Intersection trois = planActuel.getIntersectionsMap().get((long)3);
-//        Intersection quatre = planActuel.getIntersectionsMap().get((long)4);
-//        Intersection cinq = planActuel.getIntersectionsMap().get((long)5);
-//        Intersection six = planActuel.getIntersectionsMap().get((long)6);
-        
-//        List<Intersection>inter = new ArrayList<Intersection>();
-//        inter.add(un);
-//        inter.add(quatre);
-//        inter.add(cinq);
-//        inter.add(six);
-//        inter.add(trois);
-//        inter.add(deux);
-//        inter.add(un);
-//        Intersection[] sol = new Intersection[3];
-//        sol[0] = un;
-//        sol[1] = cinq;
-//        sol[2] = six;
-//        cheminActuel = inter;
-//        //entrepot est l'intersection de depart et d'arrive
-//        solutionActuelle = sol;
-//        //entrepot apparait qu'une fois
         
         // Affichage de la solution
         jPanelPlanMap.setSolution(sol);
         jPanelPlanMap.setChemin(chemin);
-        jPanelPlanMap.repaint();
-        
-                
-                
+        jPanelPlanMap.repaint();   
                 
         //réorganise le tableau
         DefaultTableModel model = (DefaultTableModel) jTableLivraisons.getModel();
@@ -553,8 +526,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
             jTableLivraisons.getModel().setValueAt(setvide, i, 1);
             jTableLivraisons.getModel().setValueAt(setvide, i, 2);
             jTableLivraisons.getModel().setValueAt(setvide, i, 3);
-            jTableLivraisons.getModel().setValueAt(setvide, i, 4);
-                    
+            jTableLivraisons.getModel().setValueAt(setvide, i, 4);          
         }
         int indexRow=0;
         System.out.println(DLActuelle);
@@ -596,7 +568,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }
             indexRow++;
         }
-
         
         jButtonModifier.setEnabled(true);
         jButtonAjouter.setVisible(true);
@@ -607,7 +578,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonValider.setEnabled(false);
         jButtonAnnulerModif.setVisible(true);
         jButtonAnnulerModif.setEnabled(false);
-
     }//GEN-LAST:event_jButtonCalculerTourneeActionPerformed
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
@@ -622,13 +592,13 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private void annulerDL(){
         DefaultTableModel model = (DefaultTableModel) jTableLivraisons.getModel();
         int rowCount = model.getRowCount();
-        String setvide="";
+        String vide="";
         for (int i = 0; i < rowCount ; i++){
-            jTableLivraisons.getModel().setValueAt(setvide, i, 0);
-            jTableLivraisons.getModel().setValueAt(setvide, i, 1);
-            jTableLivraisons.getModel().setValueAt(setvide, i, 2);
-            jTableLivraisons.getModel().setValueAt(setvide, i, 3);
-            jTableLivraisons.getModel().setValueAt(setvide, i, 4);
+            jTableLivraisons.getModel().setValueAt(vide, i, 0);
+            jTableLivraisons.getModel().setValueAt(vide, i, 1);
+            jTableLivraisons.getModel().setValueAt(vide, i, 2);
+            jTableLivraisons.getModel().setValueAt(vide, i, 3);
+            jTableLivraisons.getModel().setValueAt(vide, i, 4);
                     
         }
         DLActuelle=null;
@@ -672,7 +642,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonFeuilleDeRouteActionPerformed
 
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jButtonAjouterActionPerformed
 
     private void jButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerActionPerformed
