@@ -15,7 +15,6 @@ public class Plan {
     private Intersection entrepot;
     private List<int[]> pred;
    
-
     private void addIntersection(Intersection intersection) {
         this.intersections.put(intersection.getId(), intersection);
         this.intersectionsList.add(intersection);
@@ -26,7 +25,6 @@ public class Plan {
         this.intersectionsList = intersectionsList;
     }
 
-    
     public Map<Long, Intersection> getIntersectionsMap() {
         return intersections;
     }
@@ -53,7 +51,6 @@ public class Plan {
        Intersection[] intersectionsLivraisons = new Intersection[livraisons.size()+1];
        int[][] matriceLivraison = new int[intersectionsLivraisons.length][intersectionsLivraisons.length];
        
-      
        for (int i = 0; i < (intersectionsLivraisons.length-1); i++){
            intersectionsLivraisons[i] = livraisons.get(i).getAdresse();
        }
@@ -69,6 +66,7 @@ public class Plan {
        
        return matriceLivraison;
     } 
+    
     /**
      * 
      * @param depart
@@ -115,8 +113,7 @@ public class Plan {
             for (Intersection intersection: nouveauGris){
                 gris[nbGris] = intersection;
                 nbGris++;
-            }           
-            
+            } 
         }
         
         int[] d = new int[intersectionLivraison.length];
@@ -124,7 +121,6 @@ public class Plan {
             d[i] = intersectionLivraison[i].getD(); 
             //System.out.print(d[i] + "  ");
         } 
-        //System.out.println();
         int[] pred = new int[intersectionsList.size()];
         for (int i = 0; i < intersectionsList.size(); i++){
             pred[i] = intersectionsList.get(i).getPredIndex();
@@ -138,7 +134,6 @@ public class Plan {
 //        this.affichePrec();
         return d;
     }
-    
       
     public void affichePrec(){
         for (int i = 0; i < pred.size(); i++){
@@ -174,17 +169,9 @@ public class Plan {
             int indexArrive = intersectionArrive.getIndex();
             
             trajet.add(intersectionArrive);
-//            System.out.println(trajet);
-//            System.out.println("Depart " + depart);
-//            System.out.println("Arrive " + arrive);
-//            System.out.println("Index Depart" + indexDepart);
-//            System.out.println("Index Arrive" + indexArrive);
             
             int colonne=trajet.get(0).getIndex();
-            while(pred.get(depart)[colonne]  != indexDepart){             
-//                System.out.println("Dernier intersection ajoute " + colonne);                
-//                System.out.println();
-                
+            while(pred.get(depart)[colonne]  != indexDepart){
                 trajet.addFirst(intersectionsList.get(pred.get(depart)[colonne]));
                 colonne = trajet.get(0).getIndex();
             }      
@@ -193,7 +180,6 @@ public class Plan {
             colonne = trajet.get(0).getIndex();
             trajet.add(intersectionArrive);
             return trajet;
-            
         } else {
             System.err.println("Attention, les nombres dans le getChemin ne correspondent pas avec les livraisons :");
             System.err.println("Dimension tableau livraison : " + (livraisons.size()+1) + ", données fournies : " + depart + ", " + arrive);
@@ -258,7 +244,6 @@ public class Plan {
                 System.err.println("Une des intersections donnees ne correspond pas a une livraison");
                 return Integer.MAX_VALUE;
             }
-           
         }
         return i;
     }
@@ -283,5 +268,4 @@ public class Plan {
     public String toString() {
         return "Plan{" + "intersections=" + intersections + '}';
     }
-
 }
