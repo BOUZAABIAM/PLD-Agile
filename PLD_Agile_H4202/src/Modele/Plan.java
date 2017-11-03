@@ -16,6 +16,7 @@ public class Plan {
     private List<Livraison> livraisons;
     private Intersection entrepot;
     private List<int[]> pred;
+    private List<ArrayList<Intersection>> solution2;
     private List<Intersection> solution;
     private List<Intersection> chemin;
    
@@ -210,7 +211,7 @@ public class Plan {
      * La premiere ligne a les indices dans la liste de livraisons de livraison a ajouter, livraison precent et livraison suivant.
      * La deuxieme ligne donne la duree entre les livraisons
      */
-    public int[][] addLivraison(Intersection precedent, Intersection suivant, Intersection livraisonAAjouter){
+    public void addLivraison(Intersection precedent, Intersection suivant, Intersection livraisonAAjouter){
         
         int[][] result = new int[2][3];
         
@@ -225,7 +226,6 @@ public class Plan {
         result[0][1] = this.getIndiceLivraisonParIntersection(precedent);
         result[0][2] = this.getIndiceLivraisonParIntersection(suivant);
         
-        return result;
     }
     
     public int getIndiceLivraisonParIntersection(Intersection intersection){
@@ -264,6 +264,52 @@ public class Plan {
             return null;
         }
     }
+
+    public void calculSolutionTSP2(){
+        
+        ArrayList<ArrayList<Intersection>> solution2 = new ArrayList<ArrayList<Intersection>>();
+        
+
+        int tpsLimite = 100000000;
+        int nbSommet = livraisons.size()+1;
+        TSP tsp = new TSP1();
+
+        tsp.chercheSolution(tpsLimite, nbSommet, this.graphLivraison(), this.getDuree());
+        
+        //Obtenir la solution dans solution
+        int[] solution = new int[nbSommet];
+        for (int j = 0; j<nbSommet; j++){
+            solution[j] = tsp.getMeilleureSolution(j);
+//          System.out.println(solution[j]);
+        }
+        
+        //Bouger circulairement pour avoir l'entrepot au debut
+        int entrep = 0;
+        while(solution[entrep] != (nbSommet-1)){
+            entrep++;
+        }
+        
+        //Obtenir la solution en intersection
+        Intersection[] sol = new Intersection[nbSommet];
+
+        sol[0] = entrepot;
+//        this.solution.add(sol[0]);
+
+        for (int i = 1; i < nbSommet; i++){
+            if ((entrep + i) < nbSommet){
+                sol[i] = this.getAdresseDeLivraison(solution[entrep+i]);
+//                System.out.println(solution[entrep+i]);
+            } else {
+                sol[i] = this.getAdresseDeLivraison(solution[entrep+i-nbSommet]);
+//                System.out.println(solution[entrep+i-nbSommet]);
+            }
+            ArrayList<Intersection> etapes = new ArrayList();
+            etapes.add(sol[i]);
+            etapes.addAll(this.getChemin(solution[i-1], solution[i]));
+            solution2.add(etapes);
+        }
+        this.solution2 = solution2;
+    }
     
     public void calculSolutionTSP1(){
         this.chemin = new ArrayList<Intersection>();
@@ -272,7 +318,6 @@ public class Plan {
         int tpsLimite = 100000000;
         int nbSommet = livraisons.size()+1;
         TSP tsp = new TSP1();
-        
 
         tsp.chercheSolution(tpsLimite, nbSommet, this.graphLivraison(), this.getDuree());
         
@@ -292,6 +337,7 @@ public class Plan {
         //Obtenir la solution en intersection
         Intersection[] sol = new Intersection[nbSommet];
         sol[0] = entrepot;
+        this.solution.add(sol[0]);
         for (int i = 1; i < nbSommet; i++){
             if ((entrep + i) < nbSommet){
                 sol[i] = this.getAdresseDeLivraison(solution[entrep+i]);
@@ -303,13 +349,15 @@ public class Plan {
             this.solution.add(sol[i]);
             List<Intersection> etapes = this.getChemin(solution[i-1], solution[i]);
             this.chemin.addAll(etapes);
-          
-        }
-            
+        }    
     }
 
     public List<Intersection> getSolution() {
         return solution;
+    }
+    
+    public List<ArrayList<Intersection>> getSolution2() {
+        return solution2;
     }
 
     public List<Intersection> getChemin() {

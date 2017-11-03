@@ -85,7 +85,7 @@ public class Livraison {
 
     @Override
     public String toString() {
-        return "Livraison{" + "adresse=" + adresse + ", duree=" + duree + ", debutPlage=" + debutPlage + ", finPlage=" + finPlage + '}';
+        return "Livraison{" + "adresse=" + adresse.getTroncons().get(0).getNomRue() + ", duree=" + duree + ", debutPlage=" + debutPlage + ", finPlage=" + finPlage + '}';
     }
     
 }

@@ -18,8 +18,6 @@ public class Troncon {
         this.longueur = longueur;
     }
 
-    
-
     public String getNomRue() {
         return nomRue;
     }
@@ -42,4 +40,8 @@ public class Troncon {
         return longueur;
     }
 
+    @Override
+    public String toString() {
+        return "Troncon{" + "nomRue=" + nomRue + ", destination=" + destination.getId() + ", origine=" + origine.getId() + ", longueur=" + longueur + '}';
+    }
 }

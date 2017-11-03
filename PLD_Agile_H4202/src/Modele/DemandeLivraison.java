@@ -37,7 +37,7 @@ public class DemandeLivraison {
 
     @Override
     public String toString() {
-        return "DemandeLivraison{" + "entrepot=" + entrepot.getId() + ", heureDepart=" + heureDepart + ", livraisons=" + livraisons + '}';
+        return "DemandeLivraison{" + "entrepot=" + entrepot.getId() + ", heureDepart=" + heureDepart + ", " + livraisons + '}';
     }
     
     

@@ -48,11 +48,6 @@ public class Intersection {
         return troncons;
     }
 
-    @Override
-    public String toString() {
-        return "Intersection{" + "id=" + id + ", x=" + x + ", y=" + y + ", troncons=" + troncons + '}';
-    }
-
     public int getD() {
         return d;
     }
@@ -91,8 +86,7 @@ public class Intersection {
       
     public int getCouleur() {
         return couleur;
-    }
-    
+    }    
         
     public void relacher(int newD, Intersection pred){
         if (newD < d){
@@ -106,10 +100,7 @@ public class Intersection {
 //            System.out.println("Le predeceseur " + this.pred);
 //            System.out.println("L'index de predecesseur " + this.predIndex);
 //            System.out.println();
-            
         }
-           
-        
     }
     
     public List<Intersection> relacherSucc(){
@@ -132,6 +123,9 @@ public class Intersection {
         }
         return nouveauGris;
     }
-       
-    
+      
+    @Override
+    public String toString() {
+        return "Intersection{" + "id=" + id + ", x=" + x + ", y=" + y + ", troncons=" + troncons + '}';
+    } 
 }
