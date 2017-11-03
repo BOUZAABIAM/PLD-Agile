@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.text.ParseException;
 
 import Modele.DemandeLivraison;
-//import Modele.donneesxml.Modele;
 import Modele.Plan;
 import Modele.XMLParser;
 import Modele.ExceptionXML;
@@ -18,7 +17,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * La commande de chargement de la demande
- * @author Maxou
  */
 public class CommandeChargerDemande extends CommandeNonAnnulable {
 

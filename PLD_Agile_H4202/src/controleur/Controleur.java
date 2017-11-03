@@ -6,7 +6,6 @@ import controleur.observateur.*;
 
 import Modele.Plan;
 import controleur.commande.CommandeException;
-import controleur.commande.CommandeGenererFeuilleDeRoute;
 import controleur.etat.EtatAjout;
 import controleur.etat.EtatInitial;
 import controleur.etat.EtatInterface;
