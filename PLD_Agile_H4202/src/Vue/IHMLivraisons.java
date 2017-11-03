@@ -490,11 +490,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
             jTableLivraisons.getModel().setValueAt(setvide, i, 4);          
         }
         int indexRow=0;
-        System.out.println(DLActuelle);
         for(Intersection intersection : sol ){
             Livraison livraison = DLActuelle.getLivraison().get(intersection.getId());
             
             if(livraison == null){
+         
                 jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
                 jTableLivraisons.getModel().setValueAt(
                         intersection.getTroncons().get(0).getNomRue() + 

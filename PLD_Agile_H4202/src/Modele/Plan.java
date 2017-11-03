@@ -210,7 +210,9 @@ public class Plan {
      * La premiere ligne a les indices dans la liste de livraisons de livraison a ajouter, livraison precent et livraison suivant.
      * La deuxieme ligne donne la duree entre les livraisons
      */
-    public int[][] addLivraison(Intersection precedent, Intersection suivant, Intersection livraisonAAjouter){
+    
+    private void calcul(){}
+    public void addLivraison(Intersection precedent, Intersection suivant, Intersection livraisonAAjouter){
         
         int[][] result = new int[2][3];
         
@@ -225,7 +227,6 @@ public class Plan {
         result[0][1] = this.getIndiceLivraisonParIntersection(precedent);
         result[0][2] = this.getIndiceLivraisonParIntersection(suivant);
         
-        return result;
     }
     
     public int getIndiceLivraisonParIntersection(Intersection intersection){
@@ -291,7 +292,9 @@ public class Plan {
         
         //Obtenir la solution en intersection
         Intersection[] sol = new Intersection[nbSommet];
+        System.out.println("nbSommet " + nbSommet);
         sol[0] = entrepot;
+        this.solution.add(sol[0]);
         for (int i = 1; i < nbSommet; i++){
             if ((entrep + i) < nbSommet){
                 sol[i] = this.getAdresseDeLivraison(solution[entrep+i]);
