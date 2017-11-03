@@ -33,9 +33,9 @@ public class Troncon {
     }
 
     public int getDuree() {
-        // vitesse en m par miliseconde
-        double vitesse  = (5 * 1000)/(60*60*1000);
-        return (int)longueur;
+        // vitesse en m par minute
+        double vitesse  = (5 * 1000)/60;
+        return (int)(longueur/vitesse);
     }
 
     public double getLongueur() {
