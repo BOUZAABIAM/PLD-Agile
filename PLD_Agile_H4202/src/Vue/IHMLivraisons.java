@@ -416,7 +416,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 }
                 annulerDL();
                 
-                DLActuelle = dl;    
+                DLActuelle = dl; 
+                planActuel.setDL(dl);
                 jPanelPlanMap.setPlan(planActuel);
                 jPanelPlanMap.setDL(DLActuelle);
                 jPanelPlanMap.repaint();
@@ -467,25 +468,17 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonChargerLivraisonActionPerformed
     
     private void jButtonCalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculerTourneeActionPerformed
-        java.util.List<Livraison> livraisons  = new ArrayList<Livraison>();
-        livraisons.addAll(DLActuelle.getLivraison().values());
-        
-        java.util.List<Intersection> intersections  = planActuel.getIntersectionsList();
-        
+      
         //Création de calcul tournée
-        CalculTournee calcul =  new CalculTournee(livraisons, intersections, DLActuelle.getEntrepot());
-        int[][] tab = calcul.graphLivraison();
+        planActuel.setDL(DLActuelle);
+        int[][] tab = planActuel.graphLivraison();
 
         int tpsLimite = 100000000;
-        int nbSommet = livraisons.size()+1;
+        int nbSommet = tab.length;
         TSP tsp = new TSP1();
         
         //Initialiser le tableau des durees
-        int[] duree = new int[nbSommet];
-        for (int i=0; i<nbSommet-1; i++){
-            duree[i] = livraisons.get(i).getDuree();
-        }
-        duree[nbSommet-1] = 0;
+        int[] duree = planActuel.getDuree();
 
         tsp.chercheSolution(tpsLimite, nbSommet, tab, duree);
         
@@ -508,14 +501,14 @@ public class IHMLivraisons extends javax.swing.JDialog {
         sol[0] = DLActuelle.getEntrepot();
         for (int i = 1; i < nbSommet; i++){
             if ((entrep + i) < nbSommet){
-                sol[i] = livraisons.get(solution[entrep+i]).getAdresse();
+                sol[i] = planActuel.getAdresseDeLivraison(solution[entrep+i]);
 //                System.out.println(solution[entrep+i]);
             } else {
-                sol[i] = livraisons.get(solution[entrep+i-nbSommet]).getAdresse();
+                sol[i] = planActuel.getAdresseDeLivraison(solution[entrep+i-nbSommet]);
 //                System.out.println(solution[entrep+i-nbSommet]);
             }
             if (i>0){
-                List<Intersection> etapes = calcul.getChemin(solution[i-1], solution[i]);
+                List<Intersection> etapes = planActuel.getChemin(solution[i-1], solution[i]);
                 chemin.addAll(etapes);
             }
         }

@@ -165,4 +165,8 @@ public class CalculTournee {
         }
     }
     
+    public void addLivraison(Livraison avant, Livraison apres, Intersection livraison){
+                
+    }
+    
 }
