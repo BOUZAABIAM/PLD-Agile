@@ -59,13 +59,14 @@ public class CalculTournee {
                     posArray = i;
                 }
             }
-           List<Intersection> nouveauGris = minValeur.relacherSucc();
-           gris[posArray] = gris[nbGris-1];
-           nbGris--;
-           for (Intersection intersection: nouveauGris){
-               gris[nbGris] = intersection;
-               nbGris++;
-           }           
+            // Relacher le minimum de gris
+            List<Intersection> nouveauGris = minValeur.relacherSucc();
+            gris[posArray] = gris[nbGris-1];
+            nbGris--;
+            for (Intersection intersection: nouveauGris){
+                gris[nbGris] = intersection;
+                nbGris++;
+            }           
             
         }
         
@@ -140,24 +141,19 @@ public class CalculTournee {
             int indexArrive = intersectionArrive.getIndex();
             
             trajet.add(intersectionArrive);
-            System.out.println(trajet);
-            System.out.println("Depart " + depart);
-            System.out.println("Arrive " + arrive);
-            System.out.println("Index Depart" + indexDepart);
-            System.out.println("Index Arrive" + indexArrive);
+          
             
             int colonne=trajet.get(0).getIndex();
             while(pred[depart][colonne]  != indexDepart){             
-                System.out.println("Dernier intersection ajoute " + colonne);                
-                System.out.println();
-                
                 trajet.addFirst(intersections.get(pred[depart][colonne]));
                 colonne = trajet.get(0).getIndex();
-            }       
+            }      
+            
             trajet.addFirst(intersections.get(pred[depart][colonne]));
             colonne = trajet.get(0).getIndex();
             trajet.add(intersectionArrive);
             return trajet;
+            
         } else {
             System.err.println("Attention, les nombres dans le getChemin ne correspondent pas avec les livraisons :");
             System.err.println("Dimension tableau livraison : " + (livraisons.size()+1) + ", données fournies : " + depart + ", " + arrive);
