@@ -75,6 +75,7 @@
                               <EmptySpace min="-2" pref="238" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -101,6 +102,13 @@
                       <Component id="jButtonAnnulerModif" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="445" max="-2" attributes="0"/>
+                      <Component id="jTextFieldPrecedent" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jTextFieldAjouter" min="-2" pref="201" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
               </Group>
           </Group>
           <Group type="102" attributes="0">
@@ -114,12 +122,6 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jTextFieldPrecedent" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jTextFieldSuivant" min="-2" pref="201" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jTextFieldAjouter" min="-2" pref="201" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jTextFieldSupprimer" min="-2" pref="199" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -173,7 +175,6 @@
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jTextFieldPrecedent" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextFieldSuivant" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextFieldAjouter" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextFieldSupprimer" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -413,14 +414,6 @@
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTextFieldPrecedent.setVisible(false);"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JTextField" name="jTextFieldSuivant">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="ID intersection suivante"/>
-      </Properties>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jTextFieldSuivant.setVisible(false);"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldAjouter">

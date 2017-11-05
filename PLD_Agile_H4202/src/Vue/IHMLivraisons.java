@@ -1,11 +1,17 @@
 package Vue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Collection;
+import java.util.List;
+import java.util.ArrayList;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.text.ParseException;
 import org.xml.sax.SAXException;
 
 import Modele.Plan;
@@ -14,23 +20,13 @@ import Modele.ExceptionXML;
 import Modele.Intersection;
 import Modele.Livraison;
 import Modele.XMLParser;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.text.ParseException;
 
-//import com.itextpdf.text.Document;
-//import com.itextpdf.text.DocumentException;
-//import com.itextpdf.text.pdf.PdfPTable;
-//import com.itextpdf.text.pdf.PdfWriter;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -78,7 +74,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jTextAreaMessage = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldPrecedent = new javax.swing.JTextField();
-        jTextFieldSuivant = new javax.swing.JTextField();
         jTextFieldAjouter = new javax.swing.JTextField();
         jTextFieldSupprimer = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -258,9 +253,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jTextFieldPrecedent.setText("ID intersection précédente ");
         jTextFieldPrecedent.setPreferredSize(new java.awt.Dimension(200, 26));
 
-        jTextFieldSuivant.setVisible(false);
-        jTextFieldSuivant.setText("ID intersection suivante");
-
         jTextFieldAjouter.setVisible(false);
         jTextFieldAjouter.setText("ID intersection à ajouter");
 
@@ -298,10 +290,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(238, 238, 238))))
+                                .addGap(238, 238, 238)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -317,13 +310,18 @@ public class IHMLivraisons extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(654, 654, 654)
                                 .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonSupprimer)
                         .addGap(18, 27, Short.MAX_VALUE)
                         .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonAnnulerModif)
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(445, 445, 445)
+                        .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -334,12 +332,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldSuivant, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(jTextFieldSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -381,7 +373,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldSuivant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -614,7 +605,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonAnnulerModif.setEnabled(false);
         jButtonFeuilleDeRoute.setEnabled(true);
         jTextFieldPrecedent.setVisible(false);
-        jTextFieldSuivant.setVisible(false);
         jTextFieldAjouter.setVisible(false);
         jTextFieldSupprimer.setVisible(false);
 
@@ -787,7 +777,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonAnnulerModif.setEnabled(false);
         jButtonFeuilleDeRoute.setEnabled(false);
         jTextFieldPrecedent.setVisible(true);
-        jTextFieldSuivant.setVisible(true);
         jTextFieldAjouter.setVisible(true);
         jTextFieldSupprimer.setVisible(true);
         
@@ -872,7 +861,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private javax.swing.JTextArea jTextAreaMessage;
     private javax.swing.JTextField jTextFieldAjouter;
     private javax.swing.JTextField jTextFieldPrecedent;
-    private javax.swing.JTextField jTextFieldSuivant;
     private javax.swing.JTextField jTextFieldSupprimer;
     // End of variables declaration//GEN-END:variables
 }
