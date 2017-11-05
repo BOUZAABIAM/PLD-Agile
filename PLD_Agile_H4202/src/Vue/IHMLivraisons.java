@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import org.jdom2.JDOMException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.text.ParseException;
@@ -462,7 +463,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 try {
                     XMLParser parser = new XMLParser();
                     dl = parser.getDL(selectedFile, planActuel);
-                } catch (SAXException | ExceptionXML |ParserConfigurationException| IOException | ParseException ex) {
+                } catch (SAXException | ExceptionXML |JDOMException |ParserConfigurationException| IOException | ParseException ex) {
                     Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 annulerDL();
