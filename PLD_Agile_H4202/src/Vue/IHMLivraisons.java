@@ -14,6 +14,13 @@ import Modele.ExceptionXML;
 import Modele.Intersection;
 import Modele.Livraison;
 import Modele.XMLParser;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.text.ParseException;
 
 //import com.itextpdf.text.Document;
@@ -639,30 +646,42 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonViderDLActionPerformed
 
     private void jButtonFeuilleDeRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFeuilleDeRouteActionPerformed
-//                try {
-//            Document doc = new Document();
-//            PdfWriter.getInstance(doc, new FileOutputStream("table.pdf"));
-//            doc.open();
-//            PdfPTable pdfTable = new PdfPTable(jTableLivraisons.getColumnCount());
-//            //adding table headers
-//            for (int i = 0; i < jTableLivraisons.getColumnCount(); i++) {
-//                pdfTable.addCell(jTableLivraisons.getColumnName(i));
-//            }
-//            //extracting data from the JTable and inserting it to PdfPTable
-//            for (int rows = 0; rows < jTableLivraisons.getRowCount() - 1; rows++) {
-//                for (int cols = 0; cols < jTableLivraisons.getColumnCount(); cols++) {
-//                    pdfTable.addCell(jTableLivraisons.getModel().getValueAt(rows, cols).toString());
-//
-//                }
-//            }
-//            doc.add(pdfTable);
-//            doc.close();
-//            System.out.println("done");
-//        } catch (DocumentException ex) {
-//        } catch (FileNotFoundException ex) 
-//        }
-//
-//     
+                try {
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream("feuilleDeRoute.pdf"));
+            document.open();
+             PdfPTable pdfTable = new PdfPTable(jTableLivraisons.getColumnCount());
+            //adding table headers
+            for (int i = 0; i < jTableLivraisons.getColumnCount(); i++) {
+                pdfTable.addCell(jTableLivraisons.getColumnName(i));
+            }
+            //extracting data from the JTable and inserting it to feuilleDeRoute
+            for (int rows = 0; rows < jTableLivraisons.getRowCount() - 1; rows++) {
+                for (int cols = 0; cols < jTableLivraisons.getColumnCount(); cols++) {
+                    pdfTable.addCell(jTableLivraisons.getModel().getValueAt(rows, cols).toString());
+
+                }
+            }
+            document.add(new Paragraph("\t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t FEUILLE DE ROUTE \n \n"));            
+            document.add(pdfTable);
+            //descreption textuelle de l’itinéraire
+//                    document.add(new Paragraph("ENTROPOT :"+jTableLivraisons.getModel().getValueAt(1,2)
+//                            +"\n"+jTableLivraisons.getModel().getValueAt(1,4)
+//                            +"\n"+jTableLivraisons.getModel().getValueAt(1,5)));
+//            for(Livraison livraison :livraisoncollection ){
+//                String nomRue = livraison.getAdresse().getTroncons().get(0).getNomRue();
+//            document.add(new Paragraph(livraison.getDebutPlage().toString()+
+//                    "-"+livraison.getFinPlage().toString()+"\n"+nomRue+"\n" ));
+//            
+
+            document.close();
+            System.out.println("done");
+        } catch (DocumentException ex) {
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+     
     }//GEN-LAST:event_jButtonFeuilleDeRouteActionPerformed
 
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
