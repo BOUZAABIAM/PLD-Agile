@@ -37,6 +37,16 @@ public class Plan {
     public List<Intersection> getIntersectionsList() {
         return intersectionsList;
     }
+    
+    /**
+     * Récupère l'intersection correspondant à l'id passé en paramètre
+     *
+     * @param idIntersection L'identifiant de l'intersection
+     * @return La livraison sur cette adresse, si elle n'existe pas null
+     */
+    public Intersection getIntersection(long idIntersection) {
+        return intersections.get(idIntersection);
+    }
 
     public void setDL(DemandeLivraison dl){
         this.tempsPassage = new ArrayList<Time[]>();
