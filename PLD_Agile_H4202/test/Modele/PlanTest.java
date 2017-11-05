@@ -160,7 +160,6 @@ public class PlanTest {
     @Test
     public void testGetLivraisonParIntersection() {
         System.out.println("getLivraisonParIntersection");
-       
         Plan instance = this.initiale();
         Intersection intersection5 = new Intersection(5,1,1,4);
         Map<Long, Livraison> livraisons = new TreeMap<Long, Livraison>();
