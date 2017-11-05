@@ -25,7 +25,6 @@ import Modele.XMLParser;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import javax.swing.JFileChooser;
@@ -637,20 +636,22 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonViderDLActionPerformed
 
     private void jButtonFeuilleDeRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFeuilleDeRouteActionPerformed
-        Document document = new Document();
-        try {
-            try {
-                PdfWriter.getInstance(document, new FileOutputStream("feuilleDeRoute.pdf"));
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (DocumentException ex) {
-            Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        document.open();
-        System.out.println(solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue());
-        try {
-            //             PdfPTable pdfTable = new PdfPTable(jTableLivraisons.getColumnCount());
+                                                             
+               
+            Document document = new Document();
+                    try {
+                try {
+                    PdfWriter.getInstance(document, new FileOutputStream("feuilleDeRoute.pdf"));
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    } catch (DocumentException ex) {
+                        Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+            document.open();
+                    System.out.println(solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue());
+                    try {
+                        //             PdfPTable pdfTable = new PdfPTable(jTableLivraisons.getColumnCount());
 //            //adding table headers
 //            for (int i = 0; i < jTableLivraisons.getColumnCount(); i++) {
 //                pdfTable.addCell(jTableLivraisons.getColumnName(i));
@@ -665,26 +666,30 @@ public class IHMLivraisons extends javax.swing.JDialog {
 //            document.add(new Paragraph("\t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t FEUILLE DE ROUTE \n \n"));            
 //            document.add(pdfTable);
 //descreption textuelle de l’itinéraire
-            document.add(new Paragraph("ENTREPOT :" + solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue()));
-
-            for (ArrayList<Intersection> i : solutionActuelle) {
-
-                for (Intersection j : i) {
-                    for (Troncon a : j.getTroncons()) {
-                        String nomRue = a.getNomRue();
-
-                        document.add(new Paragraph("--->" + nomRue));
+          document.add(new Paragraph("ENTROPOT :"));
+                  
+            for(ArrayList<Intersection> i :solutionActuelle ){
+                for (Intersection j :i){
+                
+                
+                String nomRue = j.getTroncons().get(0).getNomRue();
+                
+                       
+                      document.add(new Paragraph("--->"+nomRue ));
 //            
                     }
-                    document.add(new Paragraph("\n livraison :"));
-                }
-
+                    document.add(new Paragraph("\n livraison :" ));
             }
-        } catch (DocumentException ex) {
+            document.add(new Paragraph("ENTROPOT :"+solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue()));
+                    } catch (DocumentException ex) {
             Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
         }
-        document.close();
-        System.out.println("done");
+                    document.close();
+            System.out.println("done");
+        
+
+     
+
     }//GEN-LAST:event_jButtonFeuilleDeRouteActionPerformed
 
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
