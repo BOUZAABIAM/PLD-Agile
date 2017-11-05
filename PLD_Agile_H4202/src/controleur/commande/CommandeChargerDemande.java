@@ -14,6 +14,7 @@ import org.xml.sax.SAXException;
 
 import controleur.ControleurDonnees;
 import javax.xml.parsers.ParserConfigurationException;
+import org.jdom2.JDOMException;
 
 /**
  * La commande de chargement de la demande
@@ -55,8 +56,9 @@ public class CommandeChargerDemande extends CommandeNonAnnulable {
 
             controleurDonnees.notifierObservateursMessage(String.format("Demande de livraisons (%s) chargée avec succès ! Veuillez calculer la tournée maintenant.", livraisonsFichier.getName()));
             controleurDonnees.effacerHistorique();
-        } catch (SAXException | ExceptionXML |ParserConfigurationException| IOException | ParseException ex) {
+        } catch (SAXException | ExceptionXML| JDOMException|ParserConfigurationException| IOException | ParseException ex) {
             throw new CommandeException(ex.getMessage());
         }
     }
 }
+
