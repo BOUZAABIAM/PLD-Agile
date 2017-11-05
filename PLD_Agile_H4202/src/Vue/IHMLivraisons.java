@@ -25,7 +25,6 @@ import Modele.XMLParser;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import javax.swing.JFileChooser;
@@ -449,7 +448,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 jPanelPlanMap.repaint();
                 
                 jButtonCalculerTournee.setEnabled(true);
-                jButtonFeuilleDeRoute.setEnabled(true);
                 
                 //Remplissage du tableau
                 Collection<Livraison> livraisoncollection = dl.getLivraison().values();
@@ -588,6 +586,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
             indexRow++;
         }
         
+        jButtonFeuilleDeRoute.setEnabled(true);
         jButtonModifier.setEnabled(true);
         jButtonAjouter.setVisible(true);
         jButtonAjouter.setEnabled(false);
@@ -626,6 +625,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         DLActuelle=null;
         solutionActuelle=null;
         jButtonCalculerTournee.setEnabled(false);
+        jButtonFeuilleDeRoute.setEnabled(false);
          
     }
     private void jButtonViderDLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViderDLActionPerformed
@@ -637,6 +637,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonViderDLActionPerformed
 
     private void jButtonFeuilleDeRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFeuilleDeRouteActionPerformed
+                                                             
         Document document = new Document();
         try {
             try {
@@ -650,36 +651,20 @@ public class IHMLivraisons extends javax.swing.JDialog {
         document.open();
         System.out.println(solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue());
         try {
-            //             PdfPTable pdfTable = new PdfPTable(jTableLivraisons.getColumnCount());
-//            //adding table headers
-//            for (int i = 0; i < jTableLivraisons.getColumnCount(); i++) {
-//                pdfTable.addCell(jTableLivraisons.getColumnName(i));
-//            }
-//            //extracting data from the JTable and inserting it to feuilleDeRoute
-//            for (int rows = 0; rows < jTableLivraisons.getRowCount() - 1; rows++) {
-//                for (int cols = 0; cols < jTableLivraisons.getColumnCount(); cols++) {
-//                    pdfTable.addCell(jTableLivraisons.getModel().getValueAt(rows, cols).toString());
-//
-//                }
-//            }
-//            document.add(new Paragraph("\t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t FEUILLE DE ROUTE \n \n"));            
-//            document.add(pdfTable);
-//descreption textuelle de l’itinéraire
-            document.add(new Paragraph("ENTREPOT :" + solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue()));
+
+            document.add(new Paragraph("ENTREPOT :"));
 
             for (ArrayList<Intersection> i : solutionActuelle) {
-
                 for (Intersection j : i) {
-                    for (Troncon a : j.getTroncons()) {
-                        String nomRue = a.getNomRue();
 
-                        document.add(new Paragraph("--->" + nomRue));
+                    String nomRue = j.getTroncons().get(0).getNomRue();
+
+                    document.add(new Paragraph("--->" + nomRue));
 //            
-                    }
-                    document.add(new Paragraph("\n livraison :"));
                 }
-
+                document.add(new Paragraph("\n livraison :"));
             }
+            document.add(new Paragraph("ENTREPOT :" + solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue()));
         } catch (DocumentException ex) {
             Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
         }
