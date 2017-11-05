@@ -13,6 +13,7 @@ import Modele.Troncon;
 import java.awt.*;
 import javax.swing.*;
 import java.util.*;
+import controleur.ControleurInterface;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.control.Slider;
