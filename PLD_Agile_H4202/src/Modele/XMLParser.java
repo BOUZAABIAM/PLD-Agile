@@ -16,6 +16,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.jdom2.DataConversionException;
+import javax.xml.transform.stream.StreamSource;
 ////import org.jdom2.Document;
 //import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -135,12 +136,12 @@ public class XMLParser {
         }
         return newTime;
     }
-    *
-     * Convertit un String sous la fomre HH:mm:ss en séconde
-     *
-     * @param heureMnSec Chaine de caractère à convertir
-     * @return Le timestamp en seconde
-     */
+   // *
+    // * Convertit un String sous la fomre HH:mm:ss en séconde
+    // *
+    // * @param heureMnSec Chaine de caractère à convertir
+    // * @return Le timestamp en seconde
+    // */
     private int convertirHeureEnSeconde(String heureMnSec) {
         String[] decoupage = heureMnSec.split(":");
 
