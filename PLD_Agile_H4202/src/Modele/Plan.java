@@ -18,8 +18,6 @@ public class Plan {
     private Intersection entrepot;
     private List<int[]> pred;
     private List<ArrayList<Intersection>> solution2;
-    private List<Intersection> solution;
-    private List<Intersection> chemin;
     private List<Time[]> tempsPassage;
    
     private void addIntersection(Intersection intersection) {
@@ -411,18 +409,8 @@ public class Plan {
         return tempsPassage;
     }
     
-    
-    
-    public List<Intersection> getSolution() {
-        return solution;
-    }
-    
     public List<ArrayList<Intersection>> getSolution2() {
         return solution2;
-    }
-
-    public List<Intersection> getChemin() {
-        return chemin;
     }
     
     public boolean adresseEnLivraison(Intersection intersection){
