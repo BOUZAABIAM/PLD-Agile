@@ -86,19 +86,22 @@ public class Plan {
         
         //Initialisation de graph (distances et couleurs)
         for (int i = 0; i < intersectionsList.size(); i++){
-            if (intersectionsList.get(i) == depart){
+            Intersection intersection = intersectionsList.get(i);
+            if (intersection == depart){
                 depart.setD(0);
                 gris[0] = depart;
                 nbGris++;
                 depart.setCouleur(1);
             }
             else {
-                intersectionsList.get(i).setD(Integer.MAX_VALUE);
-                intersectionsList.get(i).setCouleur(0);
+               
+                intersection.setD(Integer.MAX_VALUE);
+                intersection.setCouleur(0);
             } 
         }   
         
         //Calcule de plus court chemin
+        int[] lesD = new int[intersectionsList.size()];
         while (nbGris != 0){
             // Determination de minimum gris
             int minDuree = Integer.MAX_VALUE;
@@ -114,16 +117,21 @@ public class Plan {
             // Relacher le minimum de gris
             List<Intersection> nouveauGris = minValeur.relacherSucc();
             gris[posArray] = gris[nbGris-1];
+            gris[nbGris-1] = null;
             nbGris--;
             for (Intersection intersection: nouveauGris){
                 gris[nbGris] = intersection;
                 nbGris++;
             } 
+            for (int i = 0; i < intersectionsList.size(); i++){
+                lesD[i] = intersectionsList.get(i).getD();
+            }
         }
         
         int[] d = new int[intersectionLivraison.length];
         for (int i = 0; i < intersectionLivraison.length; i++){
-            d[i] = intersectionLivraison[i].getD(); 
+            Intersection intersection = intersectionLivraison[i];
+            d[i] = intersection.getD(); 
             //System.out.print(d[i] + "  ");
         } 
         int[] pred = new int[intersectionsList.size()];
@@ -219,7 +227,7 @@ public class Plan {
      * La deuxieme ligne donne la duree entre les livraisons
      */
     public List<ArrayList<Intersection>> addLivraison(Intersection precedent, Intersection livraisonAAjouter){
-        
+        if (!this.adresseEnLivraison(livraisonAAjouter)){
         int[] indexes = new int[3];
         
         int positionPrecEnSolution = -1;
@@ -252,15 +260,55 @@ public class Plan {
         etapes2.addAll(this.getChemin(indexes[0], indexes[2]));
         solution2.add(positionPrecEnSolution+1, etapes2);
         
+        } else {
+            System.err.println("Adresse deja en livraison");
+        }
         return solution2;
     }
     
+    public List<ArrayList<Intersection>> deleteLivraison(Intersection livraisonAEffacer){
+        if ((this.adresseEnLivraison(livraisonAEffacer)) || (livraisonAEffacer != entrepot)){
+            int[] indexes = new int[2];
+        
+            int positionEnSolution = -1;
+            ArrayList<Intersection> listePrec = new ArrayList<Intersection>();
+            for (ArrayList list: this.solution2){
+                if (list.get(0) == livraisonAEffacer){
+                    positionEnSolution = this.solution2.indexOf(list);
+                    listePrec = list;
+                    break;
+                }
+            }
+            int positionLivraison = this.getIndiceLivraisonParIntersection(livraisonAEffacer);
+            this.livraisons.remove(positionLivraison);
+            
+            Intersection precedent = solution2.get(positionEnSolution-1).get(0);
+            Intersection suivant = listePrec.get(listePrec.size()-1);
+            
+        
+            indexes[0] = this.getIndiceLivraisonParIntersection(precedent);
+            indexes[1] = this.getIndiceLivraisonParIntersection(suivant);
+        
+            this.pred.remove(positionLivraison);
+        
+            this.solution2.remove(positionEnSolution-1);
+            this.solution2.remove(positionEnSolution-1);  
+            if (indexes[0] != indexes[1]){
+                ArrayList<Intersection> etapes = new ArrayList();
+                etapes.addAll(this.getChemin(indexes[0], indexes[1]));
+                solution2.add(positionEnSolution-1, etapes);
+            }
+        } else {
+            System.err.println("Il n'y a pas une telle livraison ou cette adresse correspond a l'entrepot");
+        }
+        return solution2;
+    }
     public int getIndiceLivraisonParIntersection(Intersection intersection){
         int i = 0;
         
         boolean found = false;
         
-        if(livraisons.get(0).getAdresse() == intersection){
+        if((livraisons.size() != 0) && (livraisons.get(0).getAdresse() == intersection)){
             found = true;
         }
         while(!found){
@@ -333,6 +381,7 @@ public class Plan {
             
             solution2.add(etapes);
         }   
+        
         ArrayList<Intersection> lastEtape = new ArrayList();
         lastEtape.addAll(this.getChemin(solutionPermut[nbSommet - 1], solutionPermut[0]));
         solution2.add(lastEtape);
@@ -352,7 +401,25 @@ public class Plan {
         return chemin;
     }
     
-    
+    public boolean adresseEnLivraison(Intersection intersection){
+        boolean found = false;
+        
+        if((livraisons.get(0).getAdresse() == intersection) || (entrepot == intersection)){
+            found = true;
+        } 
+        int i = 0;
+        while(!found){
+            i++;
+            if (i < livraisons.size()){
+                if (livraisons.get(i).getAdresse() == intersection){
+                    found = true;
+                }
+            } else {
+                break;
+            }
+        }
+        return found;
+    }
     
     public Intersection getAdresseDeLivraison(int index){
         return livraisons.get(index).getAdresse();
@@ -361,4 +428,9 @@ public class Plan {
     public String toString() {
         return "Plan{" + "intersections=" + intersections + '}';
     }
+
+    public List<Livraison> getLivraisons() {
+        return livraisons;
+    }
+    
 }
