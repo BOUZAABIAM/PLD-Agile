@@ -272,10 +272,8 @@ public class Plan {
         }
     }
 
-    public void calculSolutionTSP2(){
-        
+    public void calculSolutionTSP1bis(){
         ArrayList<ArrayList<Intersection>> solution2 = new ArrayList<ArrayList<Intersection>>();
-        
 
         int tpsLimite = 100000000;
         int nbSommet = livraisons.size()+1;
@@ -287,7 +285,6 @@ public class Plan {
         int[] solution = new int[nbSommet];
         for (int j = 0; j<nbSommet; j++){
             solution[j] = tsp.getMeilleureSolution(j);
-//          System.out.println(solution[j]);
         }
         
         //Bouger circulairement pour avoir l'entrepot au debut
@@ -298,31 +295,28 @@ public class Plan {
         
         //Obtenir la solution en intersection
         Intersection[] sol = new Intersection[nbSommet];
-
         sol[0] = entrepot;
         int[] solutionPermut = new int[nbSommet];
         solutionPermut[0] = solution[entrep];
-        ArrayList<Intersection> etapes = new ArrayList();
         
         for (int i = 1; i < nbSommet; i++){
-           if ((entrep + i) < nbSommet){
+            if ((entrep + i) < nbSommet){
                 sol[i] = this.getAdresseDeLivraison(solution[entrep+i]);
                 solutionPermut[i] = solution[entrep+i];
-//                System.out.println(solution[entrep+i]);
             } else {
                 sol[i] = this.getAdresseDeLivraison(solution[entrep+i-nbSommet]);
                 solutionPermut[i] = solution[entrep+i-nbSommet];
-//                System.out.println(solution[entrep+i-nbSommet]);
-            }
-            
+            }    
+            ArrayList<Intersection> etapes = new ArrayList();
 
             etapes.addAll(this.getChemin(solutionPermut[i-1], solutionPermut[i]));
             
             solution2.add(etapes);
-        }
+        }   
+        ArrayList<Intersection> lastEtape = new ArrayList();
+        lastEtape.addAll(this.getChemin(solutionPermut[nbSommet - 1], solutionPermut[0]));
+        solution2.add(lastEtape);
         
-        etapes.addAll(this.getChemin(solutionPermut[nbSommet - 1], solutionPermut[0]));
-        solution2.add(etapes);
         this.solution2 = solution2;
     }
     

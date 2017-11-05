@@ -471,40 +471,18 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private void jButtonCalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculerTourneeActionPerformed
       
         //Création de calcul tournée
-        planActuel.calculSolutionTSP1();
-        planActuel.calculSolutionTSP2();
-        List<Intersection> chemin = planActuel.getChemin();
-        List<Intersection> sol = planActuel.getSolution();
+//        planActuel.calculSolutionTSP1();
+//        List<Intersection> chemin = planActuel.getChemin();
+//        List<Intersection> sol = planActuel.getSolution();
+        
+        planActuel.calculSolutionTSP1bis();
         List<ArrayList<Intersection>> sol2 = planActuel.getSolution2();
-        System.out.println("Sol : ");
-        for (int i=0; i<sol.size(); i++){
-            System.out.println(sol.get(i).toString());
-        }
-        
-        System.out.println("Sol2.size = " +sol2.size());
-        System.out.println("Sol2 : ");
-        for (int j=0; j<sol2.size(); j++){
-            System.out.println(sol2.get(j).get(0).toString());
-        }
-        
-        System.out.println("\n\nchemin : ");
-        for (int i=0; i<chemin.size(); i++){
-            System.out.println(chemin.get(i).toString());
-        }
-        
-        System.out.println("Sol2 : ");
-        for (int j=0; j<sol2.size(); j++){
-            System.out.println("Liste " + j + " ");
-            for (int k=0; k<sol2.get(j).size(); k++){
-                System.out.println(sol2.get(j).get(k).toString());
-            }
-            
-        }
+
         
         // Affichage de la solution
         jPanelPlanMap.setSolution2(sol2);
-        jPanelPlanMap.setSolution(sol);
-        jPanelPlanMap.setChemin(chemin);
+//        jPanelPlanMap.setSolution(sol);
+//        jPanelPlanMap.setChemin(chemin);
         jPanelPlanMap.repaint();   
                 
         //vide le tableau
