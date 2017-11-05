@@ -494,6 +494,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         
         System.out.println("Sol2 : ");
         for (int j=0; j<sol2.size(); j++){
+            System.out.println("Liste " + j + " ");
             for (int k=0; k<sol2.get(j).size(); k++){
                 System.out.println(sol2.get(j).get(k).toString());
             }
@@ -501,7 +502,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         }
         
         // Affichage de la solution
-//        jPanelPlanMap.setSolution2(sol2);
+        jPanelPlanMap.setSolution2(sol2);
         jPanelPlanMap.setSolution(sol);
         jPanelPlanMap.setChemin(chemin);
         jPanelPlanMap.repaint();   

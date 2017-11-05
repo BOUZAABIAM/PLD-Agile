@@ -177,13 +177,20 @@ public class Plan {
             
             int colonne=trajet.get(0).getIndex();
             while(pred.get(depart)[colonne]  != indexDepart){
-                trajet.addFirst(intersectionsList.get(pred.get(depart)[colonne]));
+                int predecessor = pred.get(depart)[colonne];
+                Intersection intersectionPredecessor = intersectionsList.get(predecessor);
+                trajet.addFirst(intersectionPredecessor);
+               
                 colonne = trajet.get(0).getIndex();
             }      
             
             trajet.addFirst(intersectionsList.get(pred.get(depart)[colonne]));
             colonne = trajet.get(0).getIndex();
-            trajet.add(intersectionArrive);
+            System.out.println("Le chemin de " + indexDepart + "a " + indexArrive + " :");
+            for (Intersection intersection: trajet){
+                System.out.print(intersection.getIndex() + "   ");
+            }
+            System.out.println();
             return trajet;
         } else {
             System.err.println("Attention, les nombres dans le getChemin ne correspondent pas avec les livraisons :");
@@ -293,22 +300,29 @@ public class Plan {
         Intersection[] sol = new Intersection[nbSommet];
 
         sol[0] = entrepot;
-
+        int[] solutionPermut = new int[nbSommet];
+        solutionPermut[0] = solution[entrep];
+        ArrayList<Intersection> etapes = new ArrayList();
+        
         for (int i = 1; i < nbSommet; i++){
-            if ((entrep + i) < nbSommet){
+           if ((entrep + i) < nbSommet){
                 sol[i] = this.getAdresseDeLivraison(solution[entrep+i]);
+                solutionPermut[i] = solution[entrep+i];
 //                System.out.println(solution[entrep+i]);
             } else {
                 sol[i] = this.getAdresseDeLivraison(solution[entrep+i-nbSommet]);
+                solutionPermut[i] = solution[entrep+i-nbSommet];
 //                System.out.println(solution[entrep+i-nbSommet]);
             }
             
-            ArrayList<Intersection> etapes = new ArrayList();
 
-            etapes.addAll(this.getChemin(solution[i-1], solution[i]));
+            etapes.addAll(this.getChemin(solutionPermut[i-1], solutionPermut[i]));
             
             solution2.add(etapes);
         }
+        
+        etapes.addAll(this.getChemin(solutionPermut[nbSommet - 1], solutionPermut[0]));
+        solution2.add(etapes);
         this.solution2 = solution2;
     }
     
@@ -338,19 +352,26 @@ public class Plan {
         //Obtenir la solution en intersection
         Intersection[] sol = new Intersection[nbSommet];
         sol[0] = entrepot;
+        int[] solutionPermut = new int[nbSommet];
+        solutionPermut[0] = solution[entrep];
+        
         this.solution.add(sol[0]);
         for (int i = 1; i < nbSommet; i++){
             if ((entrep + i) < nbSommet){
                 sol[i] = this.getAdresseDeLivraison(solution[entrep+i]);
+                solutionPermut[i] = solution[entrep+i];
 //                System.out.println(solution[entrep+i]);
             } else {
                 sol[i] = this.getAdresseDeLivraison(solution[entrep+i-nbSommet]);
+                solutionPermut[i] = solution[entrep+i-nbSommet];
 //                System.out.println(solution[entrep+i-nbSommet]);
             }
-            this.solution.add(sol[i]);
-            List<Intersection> etapes = this.getChemin(solution[i-1], solution[i]);
+            List<Intersection> etapes = this.getChemin(solutionPermut[i-1], solutionPermut[i]);            
             this.chemin.addAll(etapes);
-        }    
+            this.solution.add(sol[i]);
+                       
+        }   
+        chemin.addAll(this.getChemin(solutionPermut[nbSommet - 1], solutionPermut[0]));
     }
 
     public List<Intersection> getSolution() {
