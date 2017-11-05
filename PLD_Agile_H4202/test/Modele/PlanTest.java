@@ -122,8 +122,8 @@ public class PlanTest {
         
         
         Plan instance = this.initiale();     
-        instance.addLivraison(intersection5, intersection6, livraisonAAjouter);
-        assertEquals(livraisons, instance.getDL());
+        instance.addLivraison(intersection5,  livraisonAAjouter);
+        
         fail("The test case is a prototype.");
     }
 
