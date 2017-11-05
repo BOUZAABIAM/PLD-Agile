@@ -22,9 +22,7 @@ public class JPanelPlan extends JPanel {
 
     private Plan lePlan;
     private DemandeLivraison laDL;
-    private java.util.List<Intersection> laSolution;
-    private java.util.List<ArrayList<Intersection>> laSolution2;
-    private java.util.List<Intersection> leChemin;
+    private java.util.List<ArrayList<Intersection>> laSolution;
 
     public void setPlan(Plan lePlan) {
         this.lePlan = lePlan;
@@ -34,15 +32,8 @@ public class JPanelPlan extends JPanel {
         this.laDL = laDL;
     }
 
-    public void setSolution(java.util.List<Intersection> solution) {
+    public void setSolution(java.util.List<ArrayList<Intersection>> solution) {
         this.laSolution = solution;
-    }
-    public void setSolution2(java.util.List<ArrayList<Intersection>> solution) {
-        this.laSolution2 = solution;
-    }
-
-    public void setChemin(java.util.List<Intersection> chemin) {
-        this.leChemin = chemin;
     }
 
     @Override
@@ -150,48 +141,9 @@ public class JPanelPlan extends JPanel {
             }
         }
 
-        if ((leChemin != null) && (laSolution != null)) {
+        if (laSolution != null) {
 
-            for (int i =0; i< leChemin.size()-1; i++) {
-                gc.setColor(Color.YELLOW);
-                // proporionel
-                gc.setStroke(new BasicStroke(6));
-                Intersection origineT = leChemin.get(i);
-                Intersection destinationT = leChemin.get(i+1);
-                
-                int x1 = (int) Math.round((origineT.getX() - minX) / paramLargeur);
-                int y1 = (int) Math.round((origineT.getY() - minY) / paramHauteur);
-                coordonnees = rotationPoint(x1, y1, xCentre, yCentre);
-                x1 = coordonnees[0] - translation[0];
-                y1 = coordonnees[1] - translation[1];
-                
-                int x2 = (int) Math.round((destinationT.getX() - minX) / paramLargeur);
-                int y2 = (int) Math.round((destinationT.getY() - minY) / paramHauteur);
-                coordonnees = rotationPoint(x2, y2, xCentre, yCentre);
-                x2 = coordonnees[0] - translation[0];
-                y2 = coordonnees[1] - translation[1];
-                gc.drawLine(x1, y1, x2, y2);
-               
-            }
-            for (Intersection inter : laSolution) {
-                System.out.println(inter.getId());
-                if (laDL.getEntrepot().getId() == inter.getId()){
-                    gc.setColor(Color.RED);
-                }else{
-                    gc.setColor(Color.BLUE);
-                }
-                int xEtape = (int) Math.round(((inter.getX() - minX) / paramLargeur));
-                int yEtape = (int) Math.round(((inter.getY() - minY) / paramHauteur));
-                coordonnees = rotationPoint(xEtape, yEtape, xCentre, yCentre);
-                xEtape = coordonnees[0] - translation[0];
-                yEtape = coordonnees[1] - translation[1];
-                gc.fillOval(xEtape - 5, yEtape - 5, 10, 10);
-            }
-        }
-
-        if (laSolution2 != null) {
-
-            for (ArrayList<Intersection> inter : laSolution2) {
+            for (ArrayList<Intersection> inter : laSolution) {
                 
                 for (int i =0; i< inter.size()-1; i++) {
                     gc.setColor(Color.YELLOW);
