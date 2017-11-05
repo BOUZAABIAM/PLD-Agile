@@ -28,6 +28,18 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.text.ParseException;
+import javafx.scene.layout.StackPane;
+import org.controlsfx.dialog.ExceptionDialog;
+import controleur.commande.CommandeException;
+import controleur.ControleurInterface;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.ArrayList;
+
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -386,15 +398,16 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
    
     private void jButtonChargerPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerPlanActionPerformed
-        JFileChooser xml_map = new JFileChooser();
+             JFileChooser xml_map = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
+        
+        
         xml_map.setFileFilter(filter);
         Plan plandDeVille = null;
         String exception="";
         JOptionPane jop; // fenetre d'alerte
         if (xml_map.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File selectedFile = xml_map.getSelectedFile();
-            
             //Vérifier le format du fichier xml ou non
             if(filter.accept(selectedFile)==false){
                 exception = "Format Fichier Plan Incorrect !";
@@ -403,11 +416,20 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 
                 return;
             }
+//            if(selectedFile != null){
+//            try {
+//                controleurApplication.chargerPlan(selectedFile);
+//            } catch (Exception e) {
+//                ouvrirErreurFichier(e, selectedFile.getName());
+//                return;
+//            }
+//        }
+            
             
             try {
                 XMLParser parser = new XMLParser();
                 plandDeVille = parser.getPlan(selectedFile);
-            } catch (SAXException | ExceptionXML |ParserConfigurationException| IOException | ParseException ex) {
+            } catch (SAXException | ExceptionXML|JDOMException |ParserConfigurationException| IOException | ParseException ex) {
                 Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
             }
             annulerDL(); 
@@ -893,6 +915,28 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonFeuilleDeRoute.setEnabled(true);
     }//GEN-LAST:event_jButtonAnnulerModifActionPerformed
 
+ /**
+     * Ouvre une boîte de dialogue d'exception modale afin de signalier à
+     * l'utilisateur une erreur avec un fichier XML
+     *
+     * @param message Le message à afficher
+     * @param fichier Le nom du fichier qui a généré l'erreur
+     */
+    private void ouvrirErreurFichier(Exception message, String fichier) {
+
+//        ExceptionDialog exceptionDialog = new ExceptionDialog(message);
+//        exceptionDialog.setTitle("Erreur");
+//        exceptionDialog.setHeaderText("Problème avec le fichier : " + "'" + fichier + "'");
+//        exceptionDialog.setWidth(250);
+//        exceptionDialog.setHeight(450);
+//        exceptionDialog.setResizable(false);
+        //exceptionDialog.initOwner(groupEllipseVueGraphique.getScene().getWindow());
+         String title ="Problème avec le fichier : " + "'" + fichier + "'";
+        JOptionPane.showMessageDialog(null, message.getMessage(), title, JOptionPane.ERROR_MESSAGE);
+        
+
+        //exceptionDialog.showAndWait();
+    }
     /**
      * @param args the command line arguments
      */
