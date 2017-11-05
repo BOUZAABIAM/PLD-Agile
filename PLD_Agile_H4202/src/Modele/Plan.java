@@ -186,11 +186,11 @@ public class Plan {
             
             trajet.addFirst(intersectionsList.get(pred.get(depart)[colonne]));
             colonne = trajet.get(0).getIndex();
-            System.out.println("Le chemin de " + indexDepart + "a " + indexArrive + " :");
+//            System.out.println("Le chemin de " + indexDepart + "a " + indexArrive + " :");
             for (Intersection intersection: trajet){
-                System.out.print(intersection.getIndex() + "   ");
+//                System.out.print(intersection.getIndex() + "   ");
             }
-            System.out.println();
+//            System.out.println();
             return trajet;
         } else {
             System.err.println("Attention, les nombres dans le getChemin ne correspondent pas avec les livraisons :");

@@ -471,18 +471,27 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private void jButtonCalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculerTourneeActionPerformed
       
         //Création de calcul tournée
-//        planActuel.calculSolutionTSP1();
-//        List<Intersection> chemin = planActuel.getChemin();
-//        List<Intersection> sol = planActuel.getSolution();
-        
         planActuel.calculSolutionTSP1bis();
-        List<ArrayList<Intersection>> sol2 = planActuel.getSolution2();
-
+        List<ArrayList<Intersection>> solution = planActuel.getSolution2();
+        solutionActuelle = solution;
         
+//        System.out.println("Solutions : ");
+//        for (int j=0; j<solution.size(); j++){
+//            System.out.println(solution.get(j).get(0).toString());
+//        }
+//        int s1 = solution.size()-1;
+//        int s2 = solution.get(s1).size()-1;
+//        System.out.println(solution.get(s1).get(s2).toString());
+//
+//        System.out.println("Itinéraire : ");
+//        for (int j=0; j<solution.size(); j++){
+//            for (int k=0; k<solution.get(j).size(); k++){
+//                System.out.println(solution.get(j).get(k).toString());
+//            }
+//        }
+
         // Affichage de la solution
-        jPanelPlanMap.setSolution2(sol2);
-//        jPanelPlanMap.setSolution(sol);
-//        jPanelPlanMap.setChemin(chemin);
+        jPanelPlanMap.setSolution(solution);
         jPanelPlanMap.repaint();   
                 
         //vide le tableau
@@ -497,9 +506,10 @@ public class IHMLivraisons extends javax.swing.JDialog {
             jTableLivraisons.getModel().setValueAt(setvide, i, 4);          
         }
         int indexRow=0;
-        System.out.println(DLActuelle);
+//        System.out.println(DLActuelle);
         
-        for(ArrayList<Intersection> inter : sol2){
+        //Affiche le nouveau tableau
+        for(ArrayList<Intersection> inter : solution){
             Livraison livraison = DLActuelle.getLivraison().get(inter.get(0).getId());
             
             //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
@@ -545,52 +555,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }
             indexRow++;
         }
-//        for(Intersection intersection : sol ){
-//            Livraison livraison = DLActuelle.getLivraison().get(intersection.getId());
-//            
-//            //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
-//            if(livraison == null){
-//                //1er colonne : E pour entrepot
-//                jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
-//                //2e colonne : adresse
-//                jTableLivraisons.getModel().setValueAt(
-//                        intersection.getTroncons().get(0).getNomRue() + 
-//                                " (" + intersection.getId() + ")", 0, 1);
-//            }else{
-//                //1er colonne : n°
-//                jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
-//                
-//                //2e colonne : adresse
-//                String nomRue = livraison.getAdresse().getTroncons().get(0).getNomRue();
-//                Long idAdresse = livraison.getAdresse().getId();
-//                jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
-//
-//                //3e colonne : durée
-//                String dureeFormatee = "";
-//                int seconds = livraison.getDuree() % 60;
-//                int totalMinutes = livraison.getDuree() / 60;
-//                int minutes = totalMinutes % 60;
-//                int hours = totalMinutes / 60;
-//
-//                if(hours >0){
-//                    dureeFormatee += hours + "h ";
-//                }
-//                if(minutes >0){
-//                    dureeFormatee += minutes + "min ";
-//                }
-//                if(seconds >0){
-//                    dureeFormatee += seconds + "s";
-//                }
-//                jTableLivraisons.getModel().setValueAt(dureeFormatee, indexRow, 2);
-//
-//                if (livraison.getDebutPlage() != null){
-//                    //4e et 5e colonne : début et fin de plage
-//                    jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 3);
-//                    jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 4);
-//                }
-//            }
-//            indexRow++;
-//        }
         
         jButtonModifier.setEnabled(true);
         jButtonAjouter.setVisible(true);
@@ -733,9 +697,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
     
     private Plan planActuel;
     private DemandeLivraison DLActuelle;
-    private List<ArrayList<Intersection>> solutionActuelle2;
-    private List<Intersection> solutionActuelle;
-    private List<Intersection>cheminActuel;
+    private List<ArrayList<Intersection>> solutionActuelle;
     // /!\ IMPORTANT : changer private javax.swing.JPanel jPanelPlanMap; en private JPanelPlan jPanelPlanMap;
     // netBeans va essayer de le changer
     // Variables declaration - do not modify//GEN-BEGIN:variables
