@@ -16,10 +16,7 @@ import controleur.commande.Historique;
  */
 public class ControleurDonnees {
 
-    /**
-     *  Représente les fichiers XMLs chargés. Peut aussi calculer et stoquer une solution
-     */
-    //private Modele modele;
+    
 
     /**
      * Collection des observateurs (pour GUI avec functionalités réduites si plan et livraisons ne sont pas encore chargés)
@@ -269,3 +266,4 @@ public class ControleurDonnees {
         effacerCommandesARetablir();
     }
 }
+
