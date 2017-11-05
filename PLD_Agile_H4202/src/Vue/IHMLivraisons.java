@@ -676,7 +676,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
         
-        planActuel.addLivraison(planActuel.getAdresseDeLivraison(0), planActuel.getIntersectionsList().get(2));
+        Intersection interAdd = planActuel.getIntersectionsList().get(2);
+        planActuel.addLivraison(planActuel.getAdresseDeLivraison(0), interAdd);
         List<ArrayList<Intersection>> solution = planActuel.getSolution2();
         solutionActuelle = solution;
         
@@ -684,16 +685,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
         for (int j=0; j<solution.size(); j++){
             System.out.println(solution.get(j).get(0).toString());
         }
-//        int s1 = solution.size()-1;
-//        int s2 = solution.get(s1).size()-1;
-//        System.out.println(solution.get(s1).get(s2).toString());
-//
-//        System.out.println("Itinéraire : ");
-//        for (int j=0; j<solution.size(); j++){
-//            for (int k=0; k<solution.get(j).size(); k++){
-//                System.out.println(solution.get(j).get(k).toString());
-//            }
-//        }
 
         // Affichage de la solution
         jPanelPlanMap.setSolution(solution);
@@ -711,20 +702,32 @@ public class IHMLivraisons extends javax.swing.JDialog {
             jTableLivraisons.getModel().setValueAt(setvide, i, 4);          
         }
         int indexRow=0;
-//        System.out.println(DLActuelle);
         
         //Affiche le nouveau tableau
-        for(ArrayList<Intersection> inter : solution){
+        for(ArrayList<Intersection> inter : solutionActuelle){
             Livraison livraison = DLActuelle.getLivraison().get(inter.get(0).getId());
             
-            //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
             if(livraison == null){
-                //1er colonne : E pour entrepot
-                jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
-                //2e colonne : adresse
-                jTableLivraisons.getModel().setValueAt(
-                        inter.get(0).getTroncons().get(0).getNomRue() + 
-                                " (" + inter.get(0).getId() + ")", 0, 1);
+                //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
+                if( inter.get(0).getId() != interAdd.getId()){
+                    //1er colonne : E pour entrepot
+                    jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
+                    //2e colonne : adresse
+                    jTableLivraisons.getModel().setValueAt(
+                            inter.get(0).getTroncons().get(0).getNomRue() + 
+                            " (" + inter.get(0).getId() + ")", 0, 1); 
+                }else{//ou la nouvelle intersection
+                   //1er colonne : n°
+                    jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
+
+                    //2e colonne : adresse
+                    String nomRue = inter.get(0).getTroncons().get(0).getNomRue();
+                    Long idAdresse = inter.get(0).getId();
+                    jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
+                    
+                    //3e colonne : durée n'existe pas ici
+                    jTableLivraisons.getModel().setValueAt("-", indexRow, 2);
+                }
             }else{
                 //1er colonne : n°
                 jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
@@ -760,8 +763,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }
             indexRow++;
         }
-        
-       
+
     }//GEN-LAST:event_jButtonAjouterActionPerformed
 
     private void jButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerActionPerformed
