@@ -1,11 +1,17 @@
 package Vue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Collection;
+import java.util.List;
+import java.util.ArrayList;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.text.ParseException;
 import org.xml.sax.SAXException;
 
 import Modele.Plan;
@@ -14,23 +20,13 @@ import Modele.ExceptionXML;
 import Modele.Intersection;
 import Modele.Livraison;
 import Modele.XMLParser;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.text.ParseException;
 
-//import com.itextpdf.text.Document;
-//import com.itextpdf.text.DocumentException;
-//import com.itextpdf.text.pdf.PdfPTable;
-//import com.itextpdf.text.pdf.PdfWriter;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -78,7 +74,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jTextAreaMessage = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldPrecedent = new javax.swing.JTextField();
-        jTextFieldSuivant = new javax.swing.JTextField();
         jTextFieldAjouter = new javax.swing.JTextField();
         jTextFieldSupprimer = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -258,9 +253,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jTextFieldPrecedent.setText("ID intersection précédente ");
         jTextFieldPrecedent.setPreferredSize(new java.awt.Dimension(200, 26));
 
-        jTextFieldSuivant.setVisible(false);
-        jTextFieldSuivant.setText("ID intersection suivante");
-
         jTextFieldAjouter.setVisible(false);
         jTextFieldAjouter.setText("ID intersection à ajouter");
 
@@ -298,10 +290,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(238, 238, 238))))
+                                .addGap(238, 238, 238)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -317,13 +310,18 @@ public class IHMLivraisons extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(654, 654, 654)
                                 .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonSupprimer)
                         .addGap(18, 27, Short.MAX_VALUE)
                         .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonAnnulerModif)
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(445, 445, 445)
+                        .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -334,12 +332,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldSuivant, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(jTextFieldSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -381,7 +373,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldSuivant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -614,7 +605,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonAnnulerModif.setEnabled(false);
         jButtonFeuilleDeRoute.setEnabled(true);
         jTextFieldPrecedent.setVisible(false);
-        jTextFieldSuivant.setVisible(false);
         jTextFieldAjouter.setVisible(false);
         jTextFieldSupprimer.setVisible(false);
 
@@ -686,7 +676,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
         
-        planActuel.addLivraison(planActuel.getAdresseDeLivraison(0), planActuel.getIntersectionsList().get(2));
+        Intersection interAdd = planActuel.getIntersectionsList().get(2);
+        planActuel.addLivraison(planActuel.getAdresseDeLivraison(0), interAdd);
         List<ArrayList<Intersection>> solution = planActuel.getSolution2();
         solutionActuelle = solution;
         
@@ -694,16 +685,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
         for (int j=0; j<solution.size(); j++){
             System.out.println(solution.get(j).get(0).toString());
         }
-//        int s1 = solution.size()-1;
-//        int s2 = solution.get(s1).size()-1;
-//        System.out.println(solution.get(s1).get(s2).toString());
-//
-//        System.out.println("Itinéraire : ");
-//        for (int j=0; j<solution.size(); j++){
-//            for (int k=0; k<solution.get(j).size(); k++){
-//                System.out.println(solution.get(j).get(k).toString());
-//            }
-//        }
 
         // Affichage de la solution
         jPanelPlanMap.setSolution(solution);
@@ -721,20 +702,32 @@ public class IHMLivraisons extends javax.swing.JDialog {
             jTableLivraisons.getModel().setValueAt(setvide, i, 4);          
         }
         int indexRow=0;
-//        System.out.println(DLActuelle);
         
         //Affiche le nouveau tableau
-        for(ArrayList<Intersection> inter : solution){
+        for(ArrayList<Intersection> inter : solutionActuelle){
             Livraison livraison = DLActuelle.getLivraison().get(inter.get(0).getId());
             
-            //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
             if(livraison == null){
-                //1er colonne : E pour entrepot
-                jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
-                //2e colonne : adresse
-                jTableLivraisons.getModel().setValueAt(
-                        inter.get(0).getTroncons().get(0).getNomRue() + 
-                                " (" + inter.get(0).getId() + ")", 0, 1);
+                //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
+                if( inter.get(0).getId() != interAdd.getId()){
+                    //1er colonne : E pour entrepot
+                    jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
+                    //2e colonne : adresse
+                    jTableLivraisons.getModel().setValueAt(
+                            inter.get(0).getTroncons().get(0).getNomRue() + 
+                            " (" + inter.get(0).getId() + ")", 0, 1); 
+                }else{//ou la nouvelle intersection
+                   //1er colonne : n°
+                    jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
+
+                    //2e colonne : adresse
+                    String nomRue = inter.get(0).getTroncons().get(0).getNomRue();
+                    Long idAdresse = inter.get(0).getId();
+                    jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
+                    
+                    //3e colonne : durée n'existe pas ici
+                    jTableLivraisons.getModel().setValueAt("-", indexRow, 2);
+                }
             }else{
                 //1er colonne : n°
                 jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
@@ -770,8 +763,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }
             indexRow++;
         }
-        
-       
+
     }//GEN-LAST:event_jButtonAjouterActionPerformed
 
     private void jButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerActionPerformed
@@ -873,7 +865,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonAnnulerModif.setEnabled(false);
         jButtonFeuilleDeRoute.setEnabled(false);
         jTextFieldPrecedent.setVisible(true);
-        jTextFieldSuivant.setVisible(true);
         jTextFieldAjouter.setVisible(true);
         jTextFieldSupprimer.setVisible(true);
         
@@ -958,7 +949,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private javax.swing.JTextArea jTextAreaMessage;
     private javax.swing.JTextField jTextFieldAjouter;
     private javax.swing.JTextField jTextFieldPrecedent;
-    private javax.swing.JTextField jTextFieldSuivant;
     private javax.swing.JTextField jTextFieldSupprimer;
     // End of variables declaration//GEN-END:variables
 }
