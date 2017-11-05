@@ -15,6 +15,7 @@ import java.text.ParseException;
 import org.xml.sax.SAXException;
 
 import Modele.Plan;
+import Modele.Troncon;
 import Modele.DemandeLivraison;
 import Modele.ExceptionXML;
 import Modele.Intersection;
@@ -636,42 +637,54 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonViderDLActionPerformed
 
     private void jButtonFeuilleDeRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFeuilleDeRouteActionPerformed
-                try {
-            Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream("feuilleDeRoute.pdf"));
-            document.open();
-             PdfPTable pdfTable = new PdfPTable(jTableLivraisons.getColumnCount());
-            //adding table headers
-            for (int i = 0; i < jTableLivraisons.getColumnCount(); i++) {
-                pdfTable.addCell(jTableLivraisons.getColumnName(i));
+        Document document = new Document();
+        try {
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream("feuilleDeRoute.pdf"));
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
             }
-            //extracting data from the JTable and inserting it to feuilleDeRoute
-            for (int rows = 0; rows < jTableLivraisons.getRowCount() - 1; rows++) {
-                for (int cols = 0; cols < jTableLivraisons.getColumnCount(); cols++) {
-                    pdfTable.addCell(jTableLivraisons.getModel().getValueAt(rows, cols).toString());
-
-                }
-            }
-            document.add(new Paragraph("\t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t FEUILLE DE ROUTE \n \n"));            
-            document.add(pdfTable);
-            //descreption textuelle de l’itinéraire
-//                    document.add(new Paragraph("ENTROPOT :"+jTableLivraisons.getModel().getValueAt(1,2)
-//                            +"\n"+jTableLivraisons.getModel().getValueAt(1,4)
-//                            +"\n"+jTableLivraisons.getModel().getValueAt(1,5)));
-//            for(Livraison livraison :livraisoncollection ){
-//                String nomRue = livraison.getAdresse().getTroncons().get(0).getNomRue();
-//            document.add(new Paragraph(livraison.getDebutPlage().toString()+
-//                    "-"+livraison.getFinPlage().toString()+"\n"+nomRue+"\n" ));
-//            
-
-            document.close();
-            System.out.println("done");
         } catch (DocumentException ex) {
-        } catch (FileNotFoundException ex) {
             Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
         }
+        document.open();
+        System.out.println(solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue());
+        try {
+            //             PdfPTable pdfTable = new PdfPTable(jTableLivraisons.getColumnCount());
+//            //adding table headers
+//            for (int i = 0; i < jTableLivraisons.getColumnCount(); i++) {
+//                pdfTable.addCell(jTableLivraisons.getColumnName(i));
+//            }
+//            //extracting data from the JTable and inserting it to feuilleDeRoute
+//            for (int rows = 0; rows < jTableLivraisons.getRowCount() - 1; rows++) {
+//                for (int cols = 0; cols < jTableLivraisons.getColumnCount(); cols++) {
+//                    pdfTable.addCell(jTableLivraisons.getModel().getValueAt(rows, cols).toString());
+//
+//                }
+//            }
+//            document.add(new Paragraph("\t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t \t FEUILLE DE ROUTE \n \n"));            
+//            document.add(pdfTable);
+//descreption textuelle de l’itinéraire
+            document.add(new Paragraph("ENTREPOT :" + solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue()));
 
-     
+            for (ArrayList<Intersection> i : solutionActuelle) {
+
+                for (Intersection j : i) {
+                    for (Troncon a : j.getTroncons()) {
+                        String nomRue = a.getNomRue();
+
+                        document.add(new Paragraph("--->" + nomRue));
+//            
+                    }
+                    document.add(new Paragraph("\n livraison :"));
+                }
+
+            }
+        } catch (DocumentException ex) {
+            Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        document.close();
+        System.out.println("done");
     }//GEN-LAST:event_jButtonFeuilleDeRouteActionPerformed
 
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
