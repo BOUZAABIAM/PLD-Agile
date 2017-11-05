@@ -232,22 +232,25 @@ public class Plan {
             }
         }
         Intersection suivant = listePrec.get(listePrec.size()-1);
-        indexes[0] = livraisons.size();
-        indexes[1] = this.getIndiceLivraisonParIntersection(precedent);
-        indexes[2] = this.getIndiceLivraisonParIntersection(suivant);
         
         Intersection[] intersectionsCalcul = {livraisonAAjouter, precedent, suivant};
         int[] resultCalcul = this.calculDuree(livraisonAAjouter, intersectionsCalcul, pred.size()-1);             
         Livraison livraison = new Livraison(livraisonAAjouter, 500);
         livraisons.add(livraison);
         
+        indexes[0] = livraisons.size()-1;
+        indexes[1] = this.getIndiceLivraisonParIntersection(precedent);
+        indexes[2] = this.getIndiceLivraisonParIntersection(suivant);
+        
+        
+        
         solution2.remove(positionPrecEnSolution);
-        ArrayList<Intersection> etapes = new ArrayList();
-        etapes.addAll(this.getChemin(indexes[1], indexes[0]));
-        solution2.add(positionPrecEnSolution, etapes);
-        etapes.clear();
-        etapes.addAll(this.getChemin(indexes[0], indexes[2]));
-        solution2.add(positionPrecEnSolution+1, etapes);
+        ArrayList<Intersection> etapes1 = new ArrayList();
+        etapes1.addAll(this.getChemin(indexes[1], indexes[0]));
+        solution2.add(positionPrecEnSolution, etapes1);
+        ArrayList<Intersection> etapes2 = new ArrayList();
+        etapes2.addAll(this.getChemin(indexes[0], indexes[2]));
+        solution2.add(positionPrecEnSolution+1, etapes2);
         
         return solution2;
     }
@@ -348,6 +351,7 @@ public class Plan {
     public List<Intersection> getChemin() {
         return chemin;
     }
+    
     
     
     public Intersection getAdresseDeLivraison(int index){

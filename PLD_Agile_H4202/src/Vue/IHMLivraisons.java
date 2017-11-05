@@ -685,14 +685,15 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonFeuilleDeRouteActionPerformed
 
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
-
-        List<ArrayList<Intersection>> solution = planActuel.addLivraison(DLActuelle.getLivraison().get(0).getAdresse(), planActuel.getIntersectionsList().get(2));
+        
+        planActuel.addLivraison(planActuel.getAdresseDeLivraison(0), planActuel.getIntersectionsList().get(2));
+        List<ArrayList<Intersection>> solution = planActuel.getSolution2();
         solutionActuelle = solution;
         
-//        System.out.println("Solutions : ");
-//        for (int j=0; j<solution.size(); j++){
-//            System.out.println(solution.get(j).get(0).toString());
-//        }
+        System.out.println("Solutions : ");
+        for (int j=0; j<solution.size(); j++){
+            System.out.println(solution.get(j).get(0).toString());
+        }
 //        int s1 = solution.size()-1;
 //        int s2 = solution.get(s1).size()-1;
 //        System.out.println(solution.get(s1).get(s2).toString());
