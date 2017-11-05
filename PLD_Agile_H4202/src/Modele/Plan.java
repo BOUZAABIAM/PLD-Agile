@@ -8,6 +8,7 @@ package Modele;
 import java.util.*;
 import tsp.TSP;
 import tsp.TSP1;
+import java.sql.Time;
 
 public class Plan {
 
@@ -19,6 +20,7 @@ public class Plan {
     private List<ArrayList<Intersection>> solution2;
     private List<Intersection> solution;
     private List<Intersection> chemin;
+    private List<Time[]> tempsPassage;
    
     private void addIntersection(Intersection intersection) {
         this.intersections.put(intersection.getId(), intersection);
@@ -39,11 +41,14 @@ public class Plan {
     }
 
     public void setDL(DemandeLivraison dl){
+        this.tempsPassage = new ArrayList<Time[]>();
         List<Livraison> livraisons  = new ArrayList<Livraison>();
         livraisons.addAll(dl.getLivraison().values());
         this.livraisons = livraisons;
         this.entrepot = dl.getEntrepot();
         this.pred = new ArrayList<int[]>();
+        Time[] tempsEntrepot = {dl.getHeureDepart(), dl.getHeureDepart()};
+        this.tempsPassage.add(tempsEntrepot);
     }
     
     public void deleteDL(){
@@ -100,8 +105,7 @@ public class Plan {
             } 
         }   
         
-        //Calcule de plus court chemin
-        int[] lesD = new int[intersectionsList.size()];
+        //Calcule de plus court chemi
         while (nbGris != 0){
             // Determination de minimum gris
             int minDuree = Integer.MAX_VALUE;
@@ -123,9 +127,7 @@ public class Plan {
                 gris[nbGris] = intersection;
                 nbGris++;
             } 
-            for (int i = 0; i < intersectionsList.size(); i++){
-                lesD[i] = intersectionsList.get(i).getD();
-            }
+         
         }
         
         int[] d = new int[intersectionLivraison.length];
@@ -327,6 +329,7 @@ public class Plan {
         return i;
     }
     
+    
     public Livraison getLivraisonParIntersection(Intersection intersection) {
         int indice = this.getIndiceLivraisonParIntersection(intersection);
         if (indice < livraisons.size()){
@@ -342,12 +345,14 @@ public class Plan {
 
     public void calculSolutionTSP1(){
         ArrayList<ArrayList<Intersection>> solution2 = new ArrayList<ArrayList<Intersection>>();
+    
 
         int tpsLimite = 100000000;
         int nbSommet = livraisons.size()+1;
         TSP tsp = new TSP1();
+        int[][] matrice = this.graphLivraison();
 
-        tsp.chercheSolution(tpsLimite, nbSommet, this.graphLivraison(), this.getDuree());
+        tsp.chercheSolution(tpsLimite, nbSommet, matrice , this.getDuree());
         
         //Obtenir la solution dans solution
         int[] solution = new int[nbSommet];
@@ -378,16 +383,35 @@ public class Plan {
             ArrayList<Intersection> etapes = new ArrayList();
 
             etapes.addAll(this.getChemin(solutionPermut[i-1], solutionPermut[i]));
-            
             solution2.add(etapes);
+            
+            Time[] tempsNouvelleDestination = new Time[2];
+            long tempsDepartPred = tempsPassage.get(i-1)[1].getTime();
+            long tempsChemin = matrice[solutionPermut[i-1]][solutionPermut[i]];
+            tempsNouvelleDestination[0] = new Time(tempsDepartPred + tempsChemin);
+            tempsNouvelleDestination[1] = new Time(tempsNouvelleDestination[0].getTime() + this.livraisons.get(solutionPermut[i]).getDuree()*1000);
+            this.tempsPassage.add(tempsNouvelleDestination);
+            
         }   
         
         ArrayList<Intersection> lastEtape = new ArrayList();
         lastEtape.addAll(this.getChemin(solutionPermut[nbSommet - 1], solutionPermut[0]));
         solution2.add(lastEtape);
         
+        Time[] tempsNouvelleDestination = new Time[2];
+        long tempsDepartPred = tempsPassage.get(tempsPassage.size()-1)[1].getTime();
+        long tempsChemin = matrice[solutionPermut[solutionPermut.length-1]][matrice.length-1];
+        tempsNouvelleDestination[0] = new Time(tempsDepartPred + tempsChemin);
+        tempsNouvelleDestination[1] = tempsNouvelleDestination[0];
+        this.tempsPassage.add(tempsNouvelleDestination);
         this.solution2 = solution2;
     }
+
+    public List<Time[]> getTempsPassage() {
+        return tempsPassage;
+    }
+    
+    
     
     public List<Intersection> getSolution() {
         return solution;
