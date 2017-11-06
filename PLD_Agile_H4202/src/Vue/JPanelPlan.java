@@ -15,8 +15,6 @@ import javax.swing.*;
 import java.util.*;
 import controleur.ControleurInterface;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.control.Slider;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -32,6 +30,18 @@ public class JPanelPlan extends JPanel {
     private Plan lePlan;
     private DemandeLivraison laDL;
     private java.util.List<ArrayList<Intersection>> laSolution;
+    
+    public void setPlan(Plan lePlan) {
+        this.lePlan = lePlan;
+    }
+
+    public void setDL(DemandeLivraison laDL) {
+        this.laDL = laDL;
+    }
+
+    public void setSolution(java.util.List<ArrayList<Intersection>> solution) {
+        this.laSolution = solution;
+    }
     
     /** La liste des livraisons */
     private java.util.List<Livraison> livraisons = null;
@@ -305,18 +315,6 @@ public class JPanelPlan extends JPanel {
         }
     }
 
-    public void setPlan(Plan lePlan) {
-        this.lePlan = lePlan;
-    }
-
-    public void setDL(DemandeLivraison laDL) {
-        this.laDL = laDL;
-    }
-
-    public void setSolution(java.util.List<ArrayList<Intersection>> solution) {
-        this.laSolution = solution;
-    }
-
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -366,8 +364,8 @@ public class JPanelPlan extends JPanel {
         }
 
         //trouver taille effective du jPanel à la place de 500 530, ou cacher les valeurs
-        double paramLargeur = (maxX - minX) / 525;
-        double paramHauteur = (maxY - minY) / 445;
+        double paramLargeur = (maxX - minX) / 551;
+        double paramHauteur = (maxY - minY) / 530;
 
         //Coordonnees du centre de rotation
         int coordonnees[];
