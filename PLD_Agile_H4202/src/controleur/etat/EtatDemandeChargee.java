@@ -53,7 +53,7 @@ public class EtatDemandeChargee implements EtatInterface {
     }
 
     @Override
-    public EtatInterface clicCalculerTournee() {
+    public EtatInterface calculerTournee() {
         try {
             new CommandeCalculerTournee(controleurDonnees).executer();
         } catch (CommandeException ex) {

@@ -62,7 +62,7 @@ public class EtatAjout2 implements EtatInterface {
     }
 
     @Override
-    public EtatInterface clicCalculerTournee() {
+    public EtatInterface calculerTournee() {
         throw new RuntimeException("Cet état ne permet pas de calculer la tournée");
     }
 

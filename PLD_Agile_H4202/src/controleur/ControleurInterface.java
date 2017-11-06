@@ -1,10 +1,15 @@
 package controleur;
 
+import Modele.DemandeLivraison;
+import Modele.Intersection;
 import java.io.File;
 
 import controleur.commande.CommandeException;
 import controleur.observateur.*;
 import Modele.Plan;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Joue le rôle de façade pour le controleur. La vue ne vera que cette façade pour appeler les méthodes du controleur
@@ -91,7 +96,7 @@ public interface ControleurInterface {
      * @param fichierPlan Objet File qui représente le fichier XML
      * @throws Exception Lance une exception s'il y a une erreur lors du chargement des objets
      */
-    void chargerPlan(File fichierPlan) throws Exception;
+    Plan parserPlan(File fichierPlan) throws Exception;
 
     /**
      * Cette methode essaye de convertir un fichier XML dans sa représentation
@@ -100,7 +105,7 @@ public interface ControleurInterface {
      * @param fichierLivraisons Objet File qui représente le fichier XML
      * @throws Exception Lance une exception s'il y a une erreur lors du chargement des objets
      */
-    void chargerLivraisons(File fichierLivraisons) throws Exception;
+    DemandeLivraison parserLivraisons(File fichierLivraisons, Plan planActuel) throws Exception;
 
     /**
      * Appel lors du clic pour passer dans le mode d'ajout
@@ -122,13 +127,16 @@ public interface ControleurInterface {
 
     /**
      * Appel lors du clic sur le calcul de la tournée
+     * @return
      */
-    void clicCalculTournee();
+    List<ArrayList<Intersection>> calculTournee(Plan planActuel);
     
-	/**
-	 * Génère la feuille de route
-	 * @param fichier Le fichier dans lequel on devra écrire la feuille de route
-	 * @throws CommandeException Une erreur lors de l'exécution de la commande de génération
-	 */
-	void genererFeuilleDeRoute(File fichier) throws CommandeException;
+    List<Time[]> calculDuree(Plan planActuel);
+    
+    /**
+     * Génère la feuille de route
+     * @param fichier Le fichier dans lequel on devra écrire la feuille de route
+     * @throws CommandeException Une erreur lors de l'exécution de la commande de génération
+     */
+    void genererFeuilleDeRoute(File fichier) throws CommandeException;
 }

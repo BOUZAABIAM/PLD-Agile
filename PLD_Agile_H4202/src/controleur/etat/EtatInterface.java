@@ -43,7 +43,7 @@ public interface EtatInterface {
      * Effectue l'action de l'état actuel après avoir demander le calcul de la tournée
      * @return Le nouvel état
      */
-    EtatInterface clicCalculerTournee();
+    EtatInterface calculerTournee();
 
     /**
      * Effectue l'action de l'état actuel après avoir fait un clic droits

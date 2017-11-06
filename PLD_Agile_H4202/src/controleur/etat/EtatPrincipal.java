@@ -49,7 +49,7 @@ public class EtatPrincipal implements EtatInterface {
     }
 
     @Override
-    public EtatInterface clicCalculerTournee() {
+    public EtatInterface calculerTournee() {
     	// Ne fait rien
         return this;
     }

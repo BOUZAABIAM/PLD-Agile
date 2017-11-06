@@ -45,7 +45,7 @@ public class EtatInitial implements EtatInterface {
     }
 
     @Override
-    public EtatInterface clicCalculerTournee() {
+    public EtatInterface calculerTournee() {
         throw new RuntimeException("Cet état ne permet pas de calculer la tournee");
     }
 

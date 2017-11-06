@@ -401,18 +401,38 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
    
     private void jButtonChargerPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerPlanActionPerformed
-           Plan planDeVille = controleur.ajouterPlan();
-            annulerDL(); 
-            planActuel = planDeVille;
-            jPanelPlanMap.setPlan(planDeVille);
-            jPanelPlanMap.repaint();
-            jButtonChargerLivraison.setEnabled(true);
+        JFileChooser xml_map = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
+        
+        xml_map.setFileFilter(filter);
+        Plan planDeVille = null;
+        String exception="";
+        JOptionPane jop; // fenetre d'alerte
+        if (xml_map.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = xml_map.getSelectedFile();
+            //Vérifier le format du fichier xml ou non
+            if(filter.accept(selectedFile)==false){
+                exception = "Format Fichier Plan Incorrect !";
+                jop = new JOptionPane();
+                jop.showMessageDialog(null, exception, "Attention", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            try {   
+                planDeVille = controleur.parserPlan(selectedFile);
+            } catch (Exception ex) {
+                Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        annulerDL(); 
+        planActuel = planDeVille;
+        jPanelPlanMap.setPlan(planDeVille);
+        jPanelPlanMap.repaint();
+        jButtonChargerLivraison.setEnabled(true);
     }//GEN-LAST:event_jButtonChargerPlanActionPerformed
     
     private void jButtonChargerLivraisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerLivraisonActionPerformed
         annulerDL();
         jPanelPlanMap.setDL(DLActuelle);
-        jPanelPlanMap.setSolution(solutionActuelle);
         jPanelPlanMap.repaint();
         if (planActuel != null){
             JFileChooser xml_DL = new JFileChooser();
@@ -431,9 +451,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
                    return;
                 }
                 try {
-                    XMLParser parser = new XMLParser();
-                    dl = parser.getDL(selectedFile, planActuel);
-                } catch (SAXException | ExceptionXML |JDOMException |ParserConfigurationException| IOException | ParseException ex) {
+                    dl = controleur.parserLivraisons(selectedFile, planActuel);
+                } catch (Exception ex) {
                     Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 annulerDL();
@@ -494,35 +513,15 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }  
         }
     }//GEN-LAST:event_jButtonChargerLivraisonActionPerformed
- 
-                                    
-  
-    
+     
     private void jButtonCalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculerTourneeActionPerformed
       
-        //Création de calcul tournée
-        planActuel.calculSolutionTSP1();
-        List<ArrayList<Intersection>> solution = planActuel.getSolution2();
-        solutionActuelle = solution;
-        List<Time[]> heures = planActuel.getTempsPassage();
+        solutionActuelle = controleur.calculTournee(planActuel);
         
-//        System.out.println("Solutions : ");
-//        for (int j=0; j<solution.size(); j++){
-//            System.out.println(solution.get(j).get(0).toString());
-//        }
-//        int s1 = solution.size()-1;
-//        int s2 = solution.get(s1).size()-1;
-//        System.out.println(solution.get(s1).get(s2).toString());
-//
-//        System.out.println("Itinéraire : ");
-//        for (int j=0; j<solution.size(); j++){
-//            for (int k=0; k<solution.get(j).size(); k++){
-//                System.out.println(solution.get(j).get(k).toString());
-//            }
-//        }
+        List<Time[]> heures = controleur.calculDuree(planActuel);
 
         // Affichage de la solution
-        jPanelPlanMap.setSolution(solution);
+        jPanelPlanMap.setSolution(solutionActuelle);
         jPanelPlanMap.repaint();   
                 
         //vide le tableau
@@ -539,10 +538,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
             jTableLivraisons.getModel().setValueAt(setvide, i, 6); 
         }
         int indexRow=0;
-//        System.out.println(DLActuelle);
         
         //Affiche le nouveau tableau
-        for(ArrayList<Intersection> inter : solution){
+        for(ArrayList<Intersection> inter : solutionActuelle){
             Livraison livraison = DLActuelle.getLivraison().get(inter.get(0).getId());
             
             //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot

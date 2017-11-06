@@ -1,6 +1,8 @@
 package controleur;
 
+import Modele.DemandeLivraison;
 import Modele.ExceptionXML;
+import Modele.Intersection;
 import java.io.File;
 
 import controleur.observateur.*;
@@ -13,7 +15,10 @@ import controleur.etat.EtatAjout;
 import controleur.etat.EtatInitial;
 import controleur.etat.EtatInterface;
 import java.io.IOException;
+import java.sql.Time;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -77,13 +82,31 @@ public class Controleur implements ControleurInterface {
     }
 
     @Override
-    public void chargerPlan(File fichierPlan) throws Exception {
-        etat = etat.chargerPlan(fichierPlan);
+    public Plan parserPlan(File selectedFile) throws Exception {
+        etat = etat.chargerPlan(selectedFile);
+        Plan planDeVille = null;
+
+        try {
+            XMLParser parser = new XMLParser();
+            planDeVille = parser.getPlan(selectedFile);
+        } catch (SAXException | ExceptionXML | JDOMException | ParserConfigurationException | IOException | ParseException ex) {
+            Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return planDeVille;
     }
 
     @Override
-    public void chargerLivraisons(File fichierLivraisons) throws Exception {
+    public DemandeLivraison parserLivraisons(File fichierLivraisons, Plan planActuel) throws Exception {
         etat = etat.chargerLivraisons(fichierLivraisons);
+        DemandeLivraison dl = null;
+        try {
+                    XMLParser parser = new XMLParser();
+                    dl = parser.getDL(fichierLivraisons, planActuel);
+                } catch (SAXException | ExceptionXML |JDOMException |ParserConfigurationException| IOException | ParseException ex) {
+                    Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        return dl;
     }
 
     @Override
@@ -108,8 +131,33 @@ public class Controleur implements ControleurInterface {
     }
 
     @Override
-    public void clicCalculTournee() {
-        etat = etat.clicCalculerTournee();
+    public List<ArrayList<Intersection>> calculTournee(Plan planActuel) {
+        etat = etat.calculerTournee();
+        //Création de calcul tournée
+        planActuel.calculSolutionTSP1();
+        List<ArrayList<Intersection>> solution = planActuel.getSolution2();
+        
+        
+        return solution;
+//        System.out.println("Solutions : ");
+//        for (int j=0; j<solution.size(); j++){
+//            System.out.println(solution.get(j).get(0).toString());
+//        }
+//        int s1 = solution.size()-1;
+//        int s2 = solution.get(s1).size()-1;
+//        System.out.println(solution.get(s1).get(s2).toString());
+//
+//        System.out.println("Itinéraire : ");
+//        for (int j=0; j<solution.size(); j++){
+//            for (int k=0; k<solution.get(j).size(); k++){
+//                System.out.println(solution.get(j).get(k).toString());
+//            }
+//        }
+    }
+    
+    @Override
+    public List<Time[]> calculDuree(Plan planActuel){
+        return planActuel.getTempsPassage();
     }
 
     @Override
@@ -160,35 +208,4 @@ public class Controleur implements ControleurInterface {
 	public void ajouterActivationOuvrirPlanObservateur(ActivationOuvrirPlanObservateur chargementPlanObserveur) {
 		controleurDonnees.ajouterChargementPlanObservateur(chargementPlanObserveur);
 	}
-        
-    public Plan ajouterPlan() {
-         JFileChooser xml_map = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
-        
-        xml_map.setFileFilter(filter);
-        Plan planDeVille = null;
-        String exception="";
-        JOptionPane jop; // fenetre d'alerte
-        if (xml_map.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = xml_map.getSelectedFile();
-            //Vérifier le format du fichier xml ou non
-            if(filter.accept(selectedFile)==false){
-                exception = "Format Fichier Plan Incorrect !";
-                jop = new JOptionPane();
-                jop.showMessageDialog(null, exception, "Attention", JOptionPane.WARNING_MESSAGE);
-                
-                return null;
-            }
-
-            try {
-                XMLParser parser = new XMLParser();
-                planDeVille = parser.getPlan(selectedFile);
-            } catch (SAXException | ExceptionXML|JDOMException |ParserConfigurationException| IOException | ParseException ex) {
-                Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        }
-        return planDeVille;
-    }
-
 }
