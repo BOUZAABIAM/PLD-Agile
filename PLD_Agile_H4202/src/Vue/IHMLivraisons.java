@@ -26,6 +26,8 @@ import Modele.XMLParser;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import controleur.Controleur;
@@ -98,6 +100,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Système de livraison");
         setBackground(new java.awt.Color(255, 255, 255));
+   //     setIconImage("icon.png");
         setPreferredSize(new java.awt.Dimension(1242, 876));
 
         jButtonChargerPlan.setText("Charger Plan");
@@ -139,13 +142,25 @@ public class IHMLivraisons extends javax.swing.JDialog {
         });
 
         jPanelPlanMap.setBackground(new java.awt.Color(153, 153, 153));
+        jPanelPlanMap.setAlignmentX(1.0F);
+        jPanelPlanMap.setAlignmentY(1.0F);
         jPanelPlanMap.setPreferredSize(new java.awt.Dimension(551, 530));
+        jPanelPlanMap.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jPanelPlanMapMouseMoved(evt);
+            }
+        });
+        jPanelPlanMap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelPlanMapMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelPlanMapLayout = new javax.swing.GroupLayout(jPanelPlanMap);
         jPanelPlanMap.setLayout(jPanelPlanMapLayout);
         jPanelPlanMapLayout.setHorizontalGroup(
             jPanelPlanMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 527, Short.MAX_VALUE)
+            .addGap(0, 551, Short.MAX_VALUE)
         );
         jPanelPlanMapLayout.setVerticalGroup(
             jPanelPlanMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,7 +306,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                                         .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(191, 191, 191)
                                         .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jPanelPlanMap, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jPanelPlanMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane4)
@@ -480,34 +495,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonChargerLivraisonActionPerformed
  
- private void jPanelPlanMapMouseClicked(java.awt.event.MouseEvent evt) {                                           
-
-        double X= evt.getLocationOnScreen().x;
-        double Y= evt.getLocationOnScreen().y;
-        System.out.println(X);
-        System.out.println(Y);
-        
-        long idIntersection = jPanelPlanMap.estSurIntersection(X, Y);
-                if (idIntersection == -1) {
-                    return;
-                }else {System.out.println(idIntersection);}
-                
-        
-    }                                          
-
-    private void jPanelPlanMapMouseMoved(java.awt.event.MouseEvent evt) {                                         
-        // TODO add your handling code here:
-        double X= evt.getLocationOnScreen().x;
-        double Y= evt.getLocationOnScreen().y;
-        
-        Livraison l = jPanelPlanMap.estSurLivraison(X, Y);
-            if (l == null) {
-                jPanelPlanMap.desactiverSurbrillance();
-                return;
-            }
-
-            jPanelPlanMap.surbrillanceLivraison(l);
-    }   
+                                    
+  
     
     private void jButtonCalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculerTourneeActionPerformed
       
@@ -663,13 +652,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
         String yourPdfName = "";
         try {
             try {
-                
-
                 yourPdfName = (String) JOptionPane.showInputDialog("Nom fichier:");
-                if(!(yourPdfName.endsWith(".pdf"))) {
+                if (!(yourPdfName.endsWith(".pdf"))) {
                     yourPdfName += ".pdf";
-                } 
-                PdfWriter.getInstance(document,new FileOutputStream(yourPdfName));
+                }
+                PdfWriter.getInstance(document, new FileOutputStream(yourPdfName));
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -677,27 +664,42 @@ public class IHMLivraisons extends javax.swing.JDialog {
             Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
         }
         document.open();
-        System.out.println(solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue());
+        Font font20 = new Font(FontFamily.TIMES_ROMAN, 20);
+        Font font12 = new Font(FontFamily.TIMES_ROMAN, 12);
+
         try {
-
-            document.add(new Paragraph("ENTREPOT :"));
-
+            document.add(new Paragraph("ENTREPOT :" + solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue(), font20));
+            String text = "";
             for (ArrayList<Intersection> i : solutionActuelle) {
+
                 for (Intersection j : i) {
 
                     String nomRue = j.getTroncons().get(0).getNomRue();
-
-                    document.add(new Paragraph("--->" + nomRue));
-//            
+                    // String debutPlage=j.
+                    text = text.concat(nomRue + "--->");
                 }
-                document.add(new Paragraph("\n livraison :"));
+
+                Livraison livraison = DLActuelle.getLivraison().get(i.get(0).getId());
+                System.out.println(livraison);
+                if (livraison != null) {
+                    String debutPlage = livraison.getDebutPlage().toString();
+                    String finPlage = livraison.getFinPlage().toString();
+                    String adresse = livraison.getAdresse().getTroncons().get(0).getNomRue();
+                    document.add(new Paragraph("Livraison : " + adresse, font20));
+                    document.add(new Paragraph("Plage horaire : [" + debutPlage + " - " + finPlage + "]\n", font20));
+                    document.add(new Paragraph("Trajet vers la livraison suivante", font20));
+                } else {
+                    document.add(new Paragraph("Trajet de l'entropot vers 1ére adresse", font20));
+                }
+                document.add(new Paragraph(text, font12));
+
             }
-            document.add(new Paragraph("ENTREPOT :" + solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue()));
+            document.add(new Paragraph("ENTREPOT :" + solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue(), font20));
         } catch (DocumentException ex) {
             Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
         }
         document.close();
-        
+
         try {
             Desktop.getDesktop().open(new File(yourPdfName));
         } catch (IOException ex) {
@@ -911,6 +913,33 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonAnnulerModif.setEnabled(false);
         jButtonFeuilleDeRoute.setEnabled(true);
     }//GEN-LAST:event_jButtonAnnulerModifActionPerformed
+
+    private void jPanelPlanMapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelPlanMapMouseClicked
+        // TODO add your handling code here:
+        double X= evt.getLocationOnScreen().x;
+        double Y= evt.getLocationOnScreen().y;
+        System.out.println(X);
+        System.out.println(Y);
+        
+        long idIntersection = jPanelPlanMap.estSurIntersection(X, Y);
+                if (idIntersection == -1) {
+                    return;
+                }else {System.out.println(idIntersection);}
+    }//GEN-LAST:event_jPanelPlanMapMouseClicked
+
+    private void jPanelPlanMapMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelPlanMapMouseMoved
+        // TODO add your handling code here:
+        double X= evt.getLocationOnScreen().x;
+        double Y= evt.getLocationOnScreen().y;
+        
+        Livraison l = jPanelPlanMap.estSurLivraison(X, Y);
+            if (l == null) {
+                jPanelPlanMap.desactiverSurbrillance();
+                return;
+            }
+
+            jPanelPlanMap.surbrillanceLivraison(l);
+    }//GEN-LAST:event_jPanelPlanMapMouseMoved
 
  /**
      * Ouvre une boîte de dialogue d'exception modale afin de signalier à

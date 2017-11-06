@@ -6,8 +6,7 @@
 package Modele;
 
 import java.util.*;
-import tsp.TSP;
-import tsp.TSP1;
+import tsp.*;
 import java.sql.Time;
 
 public class Plan {
