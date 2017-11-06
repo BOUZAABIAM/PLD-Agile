@@ -512,6 +512,35 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }  
         }
     }//GEN-LAST:event_jButtonChargerLivraisonActionPerformed
+ 
+ private void jPanelPlanMapMouseClicked(java.awt.event.MouseEvent evt) {                                           
+        // TODO add your handling code here:
+        double X= evt.getLocationOnScreen().x;
+        double Y= evt.getLocationOnScreen().y;
+        System.out.println(X);
+        System.out.println(Y);
+        
+        long idIntersection = jPanelPlanMap.estSurIntersection(X, Y);
+                if (idIntersection == -1) {
+                    return;
+                }else {System.out.println(idIntersection);}
+                
+        
+    }                                          
+
+    private void jPanelPlanMapMouseMoved(java.awt.event.MouseEvent evt) {                                         
+        // TODO add your handling code here:
+        double X= evt.getLocationOnScreen().x;
+        double Y= evt.getLocationOnScreen().y;
+        
+        Livraison l = jPanelPlanMap.estSurLivraison(X, Y);
+            if (l == null) {
+                jPanelPlanMap.desactiverSurbrillance();
+                return;
+            }
+
+            jPanelPlanMap.surbrillanceLivraison(l);
+    }   
     
     private void jButtonCalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculerTourneeActionPerformed
       
