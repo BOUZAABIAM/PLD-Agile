@@ -17,8 +17,6 @@ public class Plan {
     private Intersection entrepot;
     private List<int[]> pred;
     private List<ArrayList<Intersection>> solution2;
-    private List<Intersection> solution;
-    private List<Intersection> chemin;
     private List<Time[]> tempsPassage;
    
     private void addIntersection(Intersection intersection) {
@@ -37,6 +35,16 @@ public class Plan {
 
     public List<Intersection> getIntersectionsList() {
         return intersectionsList;
+    }
+    
+    /**
+     * Récupère l'intersection correspondant à l'id passé en paramètre
+     *
+     * @param idIntersection L'identifiant de l'intersection
+     * @return La livraison sur cette adresse, si elle n'existe pas null
+     */
+    public Intersection getIntersection(long idIntersection) {
+        return intersections.get(idIntersection);
     }
 
     public void setDL(DemandeLivraison dl){
@@ -410,18 +418,8 @@ public class Plan {
         return tempsPassage;
     }
     
-    
-    
-    public List<Intersection> getSolution() {
-        return solution;
-    }
-    
     public List<ArrayList<Intersection>> getSolution2() {
         return solution2;
-    }
-
-    public List<Intersection> getChemin() {
-        return chemin;
     }
     
     public boolean adresseEnLivraison(Intersection intersection){

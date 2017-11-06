@@ -15,6 +15,15 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.jdom2.DataConversionException;
+import javax.xml.transform.stream.StreamSource;
+////import org.jdom2.Document;
+//import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.input.sax.XMLReaderJDOMFactory;
+import org.jdom2.input.sax.XMLReaderXSDFactory;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -23,6 +32,8 @@ import org.xml.sax.SAXException;
 public class XMLParser {
     
     private static XMLParser instance = null;
+    private final String XSD_PLAN = "Modele/validateurPlan.xsd";
+    private final String XSD_LIVRAISONS = "Modele/validateurLivraisons.xsd";
 
     public XMLParser() {
     }
@@ -32,11 +43,34 @@ public class XMLParser {
     	}
     	return instance;
     }
+    /**
+     * Valide un fichier XML avec le fichier XSD fourni.
+     *
+     * @param xsdResourceName  Le nom schéma XSD à utiliser.
+     * @param fichierXML Le fichier XML à valider.
+     * @return Renvoie le document correspondant si la validation est effective.
+     * @throws JDOMException Si la validation du XML a échoué.
+     * @throws IOException   S'il y a eu une erreur de lecture.
+     */
+    private org.jdom2.Document validerFichierXML(final String xsdResourceName, final InputStream fichierXML)
+            throws JDOMException, IOException {
 
-    public Plan getPlan(File xmlFile) throws IOException, SAXException, ParserConfigurationException,ParseException,ExceptionXML {
+        InputStream xsdStream = ClassLoader.getSystemResourceAsStream(xsdResourceName);
+        
+        XMLReaderJDOMFactory factory = new XMLReaderXSDFactory(new StreamSource(xsdStream));
+        SAXBuilder saxBuilder = new SAXBuilder(factory);
+        
+        org.jdom2.Document document = saxBuilder.build(fichierXML);
+
+        return document;
+    }
+
+    public Plan getPlan(File xmlFile) throws IOException, SAXException, ParserConfigurationException,ParseException,JDOMException,ExceptionXML {
         Map<Long, Intersection> intersections = new TreeMap<Long, Intersection>();
         List<Intersection> intersectionsList = new LinkedList<Intersection>();
-
+        InputStream inputStream = new FileInputStream(xmlFile);
+        // Validation du fichier XML avec le schéma
+        org.jdom2.Document document = validerFichierXML(XSD_PLAN, inputStream);
         Document mapDocument = null;
         try {
             mapDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile);
@@ -72,6 +106,9 @@ public class XMLParser {
 
             idIntersectionStart = Long.parseLong(element.getAttribute("origine"));
             idIntersectionEnd = Long.parseLong(element.getAttribute("destination"));
+            if (idIntersectionStart == idIntersectionEnd) {
+                  throw new ExceptionXML("Impossible de charger le plan : une intersection plointe vers elle même");
+            }
             longueur = Double.parseDouble(element.getAttribute("longueur"));
 
             rueNom = element.getAttribute("nomRue");
@@ -99,12 +136,29 @@ public class XMLParser {
         }
         return newTime;
     }
+   // *
+    // * Convertit un String sous la fomre HH:mm:ss en séconde
+    // *
+    // * @param heureMnSec Chaine de caractère à convertir
+    // * @return Le timestamp en seconde
+    // */
+    private int convertirHeureEnSeconde(String heureMnSec) {
+        String[] decoupage = heureMnSec.split(":");
+
+        int heure = Integer.parseInt(decoupage[0]);
+        int mn = Integer.parseInt(decoupage[1]);
+        int sec = Integer.parseInt(decoupage[2]);
+
+        return heure * 3600 + mn * 60 + sec;
+    }
     
-    public DemandeLivraison getDL(final File xmlFile, final Plan plan) throws IOException, SAXException, ParserConfigurationException,ParseException,ExceptionXML {
+    public DemandeLivraison getDL(final File xmlFile, final Plan plan) throws IOException,JDOMException, SAXException, ParserConfigurationException,ParseException,ExceptionXML {
         Map<Long, Livraison> livraisons = new TreeMap<Long, Livraison>();
         Intersection entrepot = null;
         Time heureDepart = null;
-        
+        // Chargement du validateur xsd et validation
+        InputStream inputStream = new FileInputStream(xmlFile);
+        org.jdom2.Document document = validerFichierXML(XSD_LIVRAISONS, inputStream);
 
         Document mapDocument = null;
         try {
@@ -122,7 +176,9 @@ public class XMLParser {
 
             idAdresse = Long.parseLong(element.getAttribute("adresse"));
             entrepot = plan.getIntersectionsMap().get(idAdresse);
-            
+            if (entrepot == null) {
+	            throw new ExceptionXML("Il semblerait que l'entrepot ne se trouve pas dans la ville. Veuillez vérifier votre fichier");
+	        }
             time = element.getAttribute("heureDepart");
             //goodTimeForm générait une erreur, ça a l'air de larcher comma ça
             //String newTime = goodTimeForm(time);
@@ -137,9 +193,15 @@ public class XMLParser {
             Integer duree;
             String debutPlage;
             String finPlage;
+            int DP;
+            int FP;
             Element element = (Element) livr.item(i);
 
             id = Long.parseLong(element.getAttribute("adresse"));
+            // Vérification de la présence de l'intersection dans la ville
+            if (plan.getIntersection(id) == null) {
+                 throw new ExceptionXML(String.format("Impossible de charger la demande de livraison. L'intersection : %d ne se trouve pas dans la ville.", id));
+            }
             Intersection adresse = plan.getIntersectionsMap().get(id);
             
             duree = Integer.parseInt(element.getAttribute("duree"));
@@ -147,6 +209,12 @@ public class XMLParser {
             debutPlage = element.getAttribute("debutPlage");
             finPlage = element.getAttribute("finPlage");
             
+            if (debutPlage!="" && finPlage != "" ){
+            DP = convertirHeureEnSeconde(element.getAttribute("debutPlage"));
+            FP = convertirHeureEnSeconde (finPlage);
+            if ( DP >= FP) {
+            throw new ExceptionXML("Une des livraisons est incorrecte : L'heure de début est supérieure ou égale à l'heure de fin");
+            }}
             if(debutPlage.isEmpty()||finPlage.isEmpty()){
                 livraison = new Livraison(adresse, duree);
             }else{

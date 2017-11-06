@@ -10,6 +10,7 @@ import org.xml.sax.SAXException;
 import controleur.ControleurDonnees;
 import java.text.ParseException;
 import javax.xml.parsers.ParserConfigurationException;
+import org.jdom2.JDOMException;
 
 /**
  * La commande de chargement d'un plan
@@ -48,9 +49,10 @@ public class CommandeChargerPlan extends CommandeNonAnnulable {
             controleurDonnees.notifierPlanChargeObservateur();
             controleurDonnees.notifierObservateursMessage(String.format("Plan de la ville (%s) chargé avec succès ! Veuillez charger la demande de livraison maintenant.", planFichier.getName()));
             controleurDonnees.effacerHistorique();
-        } catch (SAXException | ExceptionXML |ParserConfigurationException| IOException | ParseException ex) {
+        } catch (SAXException | JDOMException|ExceptionXML |ParserConfigurationException| IOException | ParseException ex) {
             throw new CommandeException(ex.getMessage());
         }
     }
 
 }
+

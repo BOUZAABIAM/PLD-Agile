@@ -9,10 +9,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import org.jdom2.JDOMException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.text.ParseException;
 import org.xml.sax.SAXException;
+import java.sql.Time;
 
 import Modele.Plan;
 import Modele.Troncon;
@@ -26,6 +28,19 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.text.ParseException;
+import javafx.scene.layout.StackPane;
+import org.controlsfx.dialog.ExceptionDialog;
+import controleur.commande.CommandeException;
+import controleur.ControleurInterface;
+import java.awt.Desktop;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -76,12 +91,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jTextFieldPrecedent = new javax.swing.JTextField();
         jTextFieldAjouter = new javax.swing.JTextField();
         jTextFieldSupprimer = new javax.swing.JTextField();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Système de livraison");
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(1242, 876));
 
         jButtonChargerPlan.setText("Charger Plan");
         jButtonChargerPlan.addActionListener(new java.awt.event.ActionListener() {
@@ -128,7 +142,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jPanelPlanMap.setLayout(jPanelPlanMapLayout);
         jPanelPlanMapLayout.setHorizontalGroup(
             jPanelPlanMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 551, Short.MAX_VALUE)
+            .addGap(0, 527, Short.MAX_VALUE)
         );
         jPanelPlanMapLayout.setVerticalGroup(
             jPanelPlanMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,48 +165,48 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
         jTableLivraisons.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "N°", "Adresse", "Duree", "Debut Plage", "Fin Plage"
+                "N°", "Adresse", "Duree", "Debut Plage", "Fin Plage", "H arrivé", "H départ"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Long.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -259,81 +273,67 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jTextFieldSupprimer.setVisible(false);
         jTextFieldSupprimer.setText("ID intersection à supprimer");
 
-        jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanelPlanMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(238, 238, 238)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(155, 155, 155)
-                                .addComponent(jButtonViderDL)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                                .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(jButtonModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(77, 77, 77))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(654, 654, 654)
-                                .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(jButtonSupprimer)
-                        .addGap(18, 27, Short.MAX_VALUE)
-                        .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonAnnulerModif)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(445, 445, 445)
-                        .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(191, 191, 191)
+                                        .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jPanelPlanMap, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane4)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jButtonViderDL)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(107, 107, 107)
+                                        .addComponent(jButtonModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel1)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(358, 358, 358)
+                                        .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jTextFieldAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jTextFieldSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButtonSupprimer)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonAnnulerModif, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(322, 322, 322)
                         .addComponent(jLabelTitre)
-                        .addGap(158, 158, 158)
+                        .addGap(217, 217, 217)
                         .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextFieldSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(690, 690, 690)
+                .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -349,27 +349,28 @@ public class IHMLivraisons extends javax.swing.JDialog {
                         .addComponent(jPanelPlanMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(jButtonViderDL, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonViderDL, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonAnnulerModif, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(12, 12, 12)
+                .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -382,15 +383,16 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
    
     private void jButtonChargerPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerPlanActionPerformed
-        JFileChooser xml_map = new JFileChooser();
+             JFileChooser xml_map = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
+        
+        
         xml_map.setFileFilter(filter);
         Plan plandDeVille = null;
         String exception="";
         JOptionPane jop; // fenetre d'alerte
         if (xml_map.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File selectedFile = xml_map.getSelectedFile();
-            
             //Vérifier le format du fichier xml ou non
             if(filter.accept(selectedFile)==false){
                 exception = "Format Fichier Plan Incorrect !";
@@ -399,11 +401,20 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 
                 return;
             }
+//            if(selectedFile != null){
+//            try {
+//                controleurApplication.chargerPlan(selectedFile);
+//            } catch (Exception e) {
+//                ouvrirErreurFichier(e, selectedFile.getName());
+//                return;
+//            }
+//        }
+            
             
             try {
                 XMLParser parser = new XMLParser();
                 plandDeVille = parser.getPlan(selectedFile);
-            } catch (SAXException | ExceptionXML |ParserConfigurationException| IOException | ParseException ex) {
+            } catch (SAXException | ExceptionXML|JDOMException |ParserConfigurationException| IOException | ParseException ex) {
                 Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
             }
             annulerDL(); 
@@ -417,6 +428,10 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonChargerPlanActionPerformed
     
     private void jButtonChargerLivraisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerLivraisonActionPerformed
+        annulerDL();
+        jPanelPlanMap.setDL(DLActuelle);
+        jPanelPlanMap.setSolution(solutionActuelle);
+        jPanelPlanMap.repaint();
         if (planActuel != null){
             JFileChooser xml_DL = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
@@ -436,7 +451,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 try {
                     XMLParser parser = new XMLParser();
                     dl = parser.getDL(selectedFile, planActuel);
-                } catch (SAXException | ExceptionXML |ParserConfigurationException| IOException | ParseException ex) {
+                } catch (SAXException | ExceptionXML |JDOMException |ParserConfigurationException| IOException | ParseException ex) {
                     Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 annulerDL();
@@ -497,6 +512,35 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }  
         }
     }//GEN-LAST:event_jButtonChargerLivraisonActionPerformed
+ 
+ private void jPanelPlanMapMouseClicked(java.awt.event.MouseEvent evt) {                                           
+        // TODO add your handling code here:
+        double X= evt.getLocationOnScreen().x;
+        double Y= evt.getLocationOnScreen().y;
+        System.out.println(X);
+        System.out.println(Y);
+        
+        long idIntersection = jPanelPlanMap.estSurIntersection(X, Y);
+                if (idIntersection == -1) {
+                    return;
+                }else {System.out.println(idIntersection);}
+                
+        
+    }                                          
+
+    private void jPanelPlanMapMouseMoved(java.awt.event.MouseEvent evt) {                                         
+        // TODO add your handling code here:
+        double X= evt.getLocationOnScreen().x;
+        double Y= evt.getLocationOnScreen().y;
+        
+        Livraison l = jPanelPlanMap.estSurLivraison(X, Y);
+            if (l == null) {
+                jPanelPlanMap.desactiverSurbrillance();
+                return;
+            }
+
+            jPanelPlanMap.surbrillanceLivraison(l);
+    }   
     
     private void jButtonCalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculerTourneeActionPerformed
       
@@ -504,6 +548,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         planActuel.calculSolutionTSP1();
         List<ArrayList<Intersection>> solution = planActuel.getSolution2();
         solutionActuelle = solution;
+        List<Time[]> heures = planActuel.getTempsPassage();
         
 //        System.out.println("Solutions : ");
 //        for (int j=0; j<solution.size(); j++){
@@ -533,7 +578,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
             jTableLivraisons.getModel().setValueAt(setvide, i, 1);
             jTableLivraisons.getModel().setValueAt(setvide, i, 2);
             jTableLivraisons.getModel().setValueAt(setvide, i, 3);
-            jTableLivraisons.getModel().setValueAt(setvide, i, 4);          
+            jTableLivraisons.getModel().setValueAt(setvide, i, 4);    
+            jTableLivraisons.getModel().setValueAt(setvide, i, 5); 
+            jTableLivraisons.getModel().setValueAt(setvide, i, 6); 
         }
         int indexRow=0;
 //        System.out.println(DLActuelle);
@@ -550,6 +597,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 jTableLivraisons.getModel().setValueAt(
                         inter.get(0).getTroncons().get(0).getNomRue() + 
                                 " (" + inter.get(0).getId() + ")", 0, 1);
+                //6e et 7e colonne : heure arrivé et départ
+                jTableLivraisons.getModel().setValueAt(heures.get(indexRow)[0].toString(), indexRow, 5);
+                jTableLivraisons.getModel().setValueAt(heures.get(indexRow)[1].toString(), indexRow, 6);
             }else{
                 //1er colonne : n°
                 jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
@@ -582,6 +632,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
                     jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 3);
                     jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 4);
                 }
+                //6e et 7e colonne : heure arrivé et départ
+                jTableLivraisons.getModel().setValueAt(heures.get(indexRow)[0].toString(), indexRow, 5);
+                jTableLivraisons.getModel().setValueAt(heures.get(indexRow)[1].toString(), indexRow, 6);
             }
             indexRow++;
         }
@@ -620,6 +673,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
             jTableLivraisons.getModel().setValueAt(vide, i, 2);
             jTableLivraisons.getModel().setValueAt(vide, i, 3);
             jTableLivraisons.getModel().setValueAt(vide, i, 4);
+            jTableLivraisons.getModel().setValueAt(vide, i, 5);
+            jTableLivraisons.getModel().setValueAt(vide, i, 6);
                     
         }
         DLActuelle=null;
@@ -629,8 +684,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
          
     }
     private void jButtonViderDLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViderDLActionPerformed
-        annulerDL(); 
-        jPanelPlanMap.setPlan(planActuel);
+        annulerDL();
         jPanelPlanMap.setDL(DLActuelle);
         jPanelPlanMap.setSolution(solutionActuelle);
         jPanelPlanMap.repaint();
@@ -639,9 +693,16 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private void jButtonFeuilleDeRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFeuilleDeRouteActionPerformed
                                                              
         Document document = new Document();
+        String yourPdfName = "";
         try {
             try {
-                PdfWriter.getInstance(document, new FileOutputStream("feuilleDeRoute.pdf"));
+                
+
+                yourPdfName = (String) JOptionPane.showInputDialog("Nom fichier:");
+                if(!(yourPdfName.endsWith(".pdf"))) {
+                    yourPdfName += ".pdf";
+                } 
+                PdfWriter.getInstance(document,new FileOutputStream(yourPdfName));
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -669,6 +730,12 @@ public class IHMLivraisons extends javax.swing.JDialog {
             Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
         }
         document.close();
+        
+        try {
+            Desktop.getDesktop().open(new File(yourPdfName));
+        } catch (IOException ex) {
+            Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.out.println("done");
     }//GEN-LAST:event_jButtonFeuilleDeRouteActionPerformed
 
@@ -723,8 +790,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
                     Long idAdresse = inter.get(0).getId();
                     jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
                     
-                    //3e colonne : durée n'existe pas ici
-                    jTableLivraisons.getModel().setValueAt("-", indexRow, 2);
+                    //3e colonne : durée fixe
+                    jTableLivraisons.getModel().setValueAt("10min", indexRow, 2);
                 }
             }else{
                 //1er colonne : n°
@@ -801,7 +868,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
             jTableLivraisons.getModel().setValueAt(setvide, i, 1);
             jTableLivraisons.getModel().setValueAt(setvide, i, 2);
             jTableLivraisons.getModel().setValueAt(setvide, i, 3);
-            jTableLivraisons.getModel().setValueAt(setvide, i, 4);          
+            jTableLivraisons.getModel().setValueAt(setvide, i, 4);
+            jTableLivraisons.getModel().setValueAt(setvide, i, 5);
+            jTableLivraisons.getModel().setValueAt(setvide, i, 6);   
         }
         int indexRow=0;
 //        System.out.println(DLActuelle);
@@ -876,6 +945,28 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonFeuilleDeRoute.setEnabled(true);
     }//GEN-LAST:event_jButtonAnnulerModifActionPerformed
 
+ /**
+     * Ouvre une boîte de dialogue d'exception modale afin de signalier à
+     * l'utilisateur une erreur avec un fichier XML
+     *
+     * @param message Le message à afficher
+     * @param fichier Le nom du fichier qui a généré l'erreur
+     */
+    private void ouvrirErreurFichier(Exception message, String fichier) {
+
+//        ExceptionDialog exceptionDialog = new ExceptionDialog(message);
+//        exceptionDialog.setTitle("Erreur");
+//        exceptionDialog.setHeaderText("Problème avec le fichier : " + "'" + fichier + "'");
+//        exceptionDialog.setWidth(250);
+//        exceptionDialog.setHeight(450);
+//        exceptionDialog.setResizable(false);
+        //exceptionDialog.initOwner(groupEllipseVueGraphique.getScene().getWindow());
+         String title ="Problème avec le fichier : " + "'" + fichier + "'";
+        JOptionPane.showMessageDialog(null, message.getMessage(), title, JOptionPane.ERROR_MESSAGE);
+        
+
+        //exceptionDialog.showAndWait();
+    }
     /**
      * @param args the command line arguments
      */
@@ -937,9 +1028,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelTitre;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
     private JPanelPlan jPanelPlanMap;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
