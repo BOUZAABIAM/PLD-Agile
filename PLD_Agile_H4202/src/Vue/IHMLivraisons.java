@@ -28,6 +28,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import controleur.Controleur;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -53,12 +54,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class IHMLivraisons extends javax.swing.JDialog {
 
+    Controleur controleur;
     /**
      * Creates new form IHMLivraisons
      */
-    public IHMLivraisons(java.awt.Frame parent, boolean modal) {
+    public IHMLivraisons(java.awt.Frame parent, boolean modal, Controleur controleur) {
         super(parent, modal);
         initComponents();
+        this.controleur = controleur;
     }
 
     /**
@@ -383,48 +386,12 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
    
     private void jButtonChargerPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerPlanActionPerformed
-             JFileChooser xml_map = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
-        
-        
-        xml_map.setFileFilter(filter);
-        Plan plandDeVille = null;
-        String exception="";
-        JOptionPane jop; // fenetre d'alerte
-        if (xml_map.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = xml_map.getSelectedFile();
-            //Vérifier le format du fichier xml ou non
-            if(filter.accept(selectedFile)==false){
-                exception = "Format Fichier Plan Incorrect !";
-                jop = new JOptionPane();
-                jop.showMessageDialog(null, exception, "Attention", JOptionPane.WARNING_MESSAGE);
-                
-                return;
-            }
-//            if(selectedFile != null){
-//            try {
-//                controleurApplication.chargerPlan(selectedFile);
-//            } catch (Exception e) {
-//                ouvrirErreurFichier(e, selectedFile.getName());
-//                return;
-//            }
-//        }
-            
-            
-            try {
-                XMLParser parser = new XMLParser();
-                plandDeVille = parser.getPlan(selectedFile);
-            } catch (SAXException | ExceptionXML|JDOMException |ParserConfigurationException| IOException | ParseException ex) {
-                Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
-            }
+           Plan planDeVille = controleur.ajouterPlan();
             annulerDL(); 
-            planActuel = plandDeVille;
-            jPanelPlanMap.setPlan(plandDeVille);
+            planActuel = planDeVille;
+            jPanelPlanMap.setPlan(planDeVille);
             jPanelPlanMap.repaint();
             jButtonChargerLivraison.setEnabled(true);
-        }
-        
-
     }//GEN-LAST:event_jButtonChargerPlanActionPerformed
     
     private void jButtonChargerLivraisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerLivraisonActionPerformed
@@ -514,7 +481,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonChargerLivraisonActionPerformed
  
  private void jPanelPlanMapMouseClicked(java.awt.event.MouseEvent evt) {                                           
-        // TODO add your handling code here:
+
         double X= evt.getLocationOnScreen().x;
         double Y= evt.getLocationOnScreen().y;
         System.out.println(X);
@@ -997,7 +964,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                IHMLivraisons dialog = new IHMLivraisons(new javax.swing.JFrame(), true);
+                IHMLivraisons dialog = new IHMLivraisons(new javax.swing.JFrame(), true, new Controleur());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

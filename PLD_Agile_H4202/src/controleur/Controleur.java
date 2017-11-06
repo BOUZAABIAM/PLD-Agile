@@ -1,14 +1,27 @@
 package controleur;
 
+import Modele.ExceptionXML;
 import java.io.File;
 
 import controleur.observateur.*;
 
 import Modele.Plan;
+import Modele.XMLParser;
+import Vue.IHMLivraisons;
 import controleur.commande.CommandeException;
 import controleur.etat.EtatAjout;
 import controleur.etat.EtatInitial;
 import controleur.etat.EtatInterface;
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.parsers.ParserConfigurationException;
+import org.jdom2.JDOMException;
+import org.xml.sax.SAXException;
 
 
 /**
@@ -147,5 +160,35 @@ public class Controleur implements ControleurInterface {
 	public void ajouterActivationOuvrirPlanObservateur(ActivationOuvrirPlanObservateur chargementPlanObserveur) {
 		controleurDonnees.ajouterChargementPlanObservateur(chargementPlanObserveur);
 	}
+        
+    public Plan ajouterPlan() {
+         JFileChooser xml_map = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
+        
+        xml_map.setFileFilter(filter);
+        Plan planDeVille = null;
+        String exception="";
+        JOptionPane jop; // fenetre d'alerte
+        if (xml_map.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = xml_map.getSelectedFile();
+            //Vérifier le format du fichier xml ou non
+            if(filter.accept(selectedFile)==false){
+                exception = "Format Fichier Plan Incorrect !";
+                jop = new JOptionPane();
+                jop.showMessageDialog(null, exception, "Attention", JOptionPane.WARNING_MESSAGE);
+                
+                return null;
+            }
+
+            try {
+                XMLParser parser = new XMLParser();
+                planDeVille = parser.getPlan(selectedFile);
+            } catch (SAXException | ExceptionXML|JDOMException |ParserConfigurationException| IOException | ParseException ex) {
+                Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        return planDeVille;
+    }
 
 }

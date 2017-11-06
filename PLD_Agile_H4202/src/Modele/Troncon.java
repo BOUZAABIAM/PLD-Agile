@@ -8,7 +8,8 @@ package Modele;
 public class Troncon {
 
     private String nomRue;
-    private Intersection destination, origine;
+    private Intersection destination;
+    private Intersection origine;
     private double longueur;
 
     public Troncon(String nomRue, Intersection destination, Intersection origine, double longueur) {

@@ -32,16 +32,16 @@ public class EtatAjout2 implements EtatInterface {
 
     @Override
     public EtatInterface clicSurLivraison(long idLivraisonAvant) {
-        Commande commande = new CommandeAjouterLivraison(controleurDonnees, idLivraisonAvant, idIntersectionLivraison);
-        try {
-            commande.executer();
-            controleurDonnees.ajouterCommande(commande);
-            controleurDonnees.effacerCommandesARetablir();
-            controleurDonnees.notifierObservateursMessage(String.format("[AJOUT] Nouvelle livraison à l'adresse %d créée, suivant la livraison %d. Cliquez sur le plan pour choisir une autre intersection pour créer une livraison ou clic droit pour sortir du mode d'ajout.", idIntersectionLivraison, idLivraisonAvant));
-            return new EtatAjout(controleurDonnees);
-        } catch (CommandeException e) {
-            controleurDonnees.notifierObservateursMessage(e.getMessage());
-        }
+//        Commande commande = new CommandeAjouterLivraison(controleurDonnees, idLivraisonAvant, idIntersectionLivraison);
+//        try {
+//            commande.executer();
+//            controleurDonnees.ajouterCommande(commande);
+//            controleurDonnees.effacerCommandesARetablir();
+//            controleurDonnees.notifierObservateursMessage(String.format("[AJOUT] Nouvelle livraison à l'adresse %d créée, suivant la livraison %d. Cliquez sur le plan pour choisir une autre intersection pour créer une livraison ou clic droit pour sortir du mode d'ajout.", idIntersectionLivraison, idLivraisonAvant));
+//            return new EtatAjout(controleurDonnees);
+//        } catch (CommandeException e) {
+//            controleurDonnees.notifierObservateursMessage(e.getMessage());
+//        }
         return this;
     }
 
