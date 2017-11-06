@@ -95,6 +95,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Système de livraison");
         setBackground(new java.awt.Color(255, 255, 255));
+   //     setIconImage("icon.png");
         setPreferredSize(new java.awt.Dimension(1242, 876));
 
         jButtonChargerPlan.setText("Charger Plan");
@@ -136,13 +137,25 @@ public class IHMLivraisons extends javax.swing.JDialog {
         });
 
         jPanelPlanMap.setBackground(new java.awt.Color(153, 153, 153));
+        jPanelPlanMap.setAlignmentX(1.0F);
+        jPanelPlanMap.setAlignmentY(1.0F);
         jPanelPlanMap.setPreferredSize(new java.awt.Dimension(551, 530));
+        jPanelPlanMap.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jPanelPlanMapMouseMoved(evt);
+            }
+        });
+        jPanelPlanMap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelPlanMapMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelPlanMapLayout = new javax.swing.GroupLayout(jPanelPlanMap);
         jPanelPlanMap.setLayout(jPanelPlanMapLayout);
         jPanelPlanMapLayout.setHorizontalGroup(
             jPanelPlanMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 527, Short.MAX_VALUE)
+            .addGap(0, 551, Short.MAX_VALUE)
         );
         jPanelPlanMapLayout.setVerticalGroup(
             jPanelPlanMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,7 +301,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                                         .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(191, 191, 191)
                                         .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jPanelPlanMap, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jPanelPlanMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane4)
@@ -513,34 +526,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonChargerLivraisonActionPerformed
  
- private void jPanelPlanMapMouseClicked(java.awt.event.MouseEvent evt) {                                           
-        // TODO add your handling code here:
-        double X= evt.getLocationOnScreen().x;
-        double Y= evt.getLocationOnScreen().y;
-        System.out.println(X);
-        System.out.println(Y);
-        
-        long idIntersection = jPanelPlanMap.estSurIntersection(X, Y);
-                if (idIntersection == -1) {
-                    return;
-                }else {System.out.println(idIntersection);}
-                
-        
-    }                                          
-
-    private void jPanelPlanMapMouseMoved(java.awt.event.MouseEvent evt) {                                         
-        // TODO add your handling code here:
-        double X= evt.getLocationOnScreen().x;
-        double Y= evt.getLocationOnScreen().y;
-        
-        Livraison l = jPanelPlanMap.estSurLivraison(X, Y);
-            if (l == null) {
-                jPanelPlanMap.desactiverSurbrillance();
-                return;
-            }
-
-            jPanelPlanMap.surbrillanceLivraison(l);
-    }   
+                                    
+  
     
     private void jButtonCalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculerTourneeActionPerformed
       
@@ -944,6 +931,33 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonAnnulerModif.setEnabled(false);
         jButtonFeuilleDeRoute.setEnabled(true);
     }//GEN-LAST:event_jButtonAnnulerModifActionPerformed
+
+    private void jPanelPlanMapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelPlanMapMouseClicked
+        // TODO add your handling code here:
+        double X= evt.getLocationOnScreen().x;
+        double Y= evt.getLocationOnScreen().y;
+        System.out.println(X);
+        System.out.println(Y);
+        
+        long idIntersection = jPanelPlanMap.estSurIntersection(X, Y);
+                if (idIntersection == -1) {
+                    return;
+                }else {System.out.println(idIntersection);}
+    }//GEN-LAST:event_jPanelPlanMapMouseClicked
+
+    private void jPanelPlanMapMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelPlanMapMouseMoved
+        // TODO add your handling code here:
+        double X= evt.getLocationOnScreen().x;
+        double Y= evt.getLocationOnScreen().y;
+        
+        Livraison l = jPanelPlanMap.estSurLivraison(X, Y);
+            if (l == null) {
+                jPanelPlanMap.desactiverSurbrillance();
+                return;
+            }
+
+            jPanelPlanMap.surbrillanceLivraison(l);
+    }//GEN-LAST:event_jPanelPlanMapMouseMoved
 
  /**
      * Ouvre une boîte de dialogue d'exception modale afin de signalier à
