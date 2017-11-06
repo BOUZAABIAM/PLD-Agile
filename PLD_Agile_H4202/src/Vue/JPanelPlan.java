@@ -94,7 +94,7 @@ public class JPanelPlan extends JPanel {
      * @param y Coordonnées Y du canvas graphique
      * @return null si les coordonnées ne sont sur aucune livraison
      */
-    private Livraison estSurLivraison(double x, double y) {
+    public Livraison estSurLivraison(double x, double y) {
         if (livraisons == null || livraisons.isEmpty() || intersectionsGraphiques == null) {
             return null;
         }
@@ -116,7 +116,7 @@ public class JPanelPlan extends JPanel {
      * @param y La position y sur le canvas graphique
      * @return -1 si les positions ne sont pas sur une intersection
      */
-    private long estSurIntersection(double x, double y) {
+    public long estSurIntersection(double x, double y) {
         if (intersectionsGraphiques == null || intersectionsGraphiques.isEmpty()) {
             return -1;
         }
@@ -136,7 +136,7 @@ public class JPanelPlan extends JPanel {
      * @param y Coordonnée ordonnée
      * @return Vrai si superposition
      */
-    private boolean estSurEllipse(Ellipse e, double x, double y) {
+    public boolean estSurEllipse(Ellipse e, double x, double y) {
         return e.getCenterX() - ConstantesGraphique.DIAMETRE_PERMISSION <= x && x <= e.getCenterX() + ConstantesGraphique.DIAMETRE_PERMISSION
                 && e.getCenterY() - ConstantesGraphique.DIAMETRE_PERMISSION <= y && y <= e.getCenterY() + ConstantesGraphique.DIAMETRE_PERMISSION;
     }
@@ -144,7 +144,7 @@ public class JPanelPlan extends JPanel {
     /**
      * Contient les constantes définissant certaines propriétés (taille, marge, couleur,...) de la fenêtre
      */
-    private static class ConstantesGraphique {
+    public static class ConstantesGraphique {
         /**
          * La taille sur l'interface graphique d'une intersection du plan de la
          * ville
@@ -184,7 +184,7 @@ public class JPanelPlan extends JPanel {
 
     /** Gère la subrillance quand on passe sur la zone graphique
      */
-    private class HoverGraphiqueGestionnaireEvenement implements EventHandler<MouseEvent> {
+    public class HoverGraphiqueGestionnaireEvenement implements EventHandler<MouseEvent> {
 
         @Override
         public void handle(MouseEvent event) {
@@ -209,7 +209,7 @@ public class JPanelPlan extends JPanel {
      * @param livraison La livraison à faire surbriller
      * @param desactiverSurbrillance Si vrai, désactivation d'abord de toutes les surbrillances activées 
      */
-    private void surbrillanceLivraison(Livraison livraison, boolean desactiverSurbrillance) {
+    public void surbrillanceLivraison(Livraison livraison, boolean desactiverSurbrillance) {
         // Repeindre toutes les intersections en couleur normal (pour parvenir aux entrées et sorties non détectées) si demandé
         if (desactiverSurbrillance) {
             desactiverSurbrillance();
@@ -229,7 +229,7 @@ public class JPanelPlan extends JPanel {
      * @param idEllipse L'identifiant de l'ellipse
      * @param couleur   La nouvelle couleur
      */
-    private void colorerEllipse(long idEllipse, javafx.scene.paint.Paint couleur) {
+    public void colorerEllipse(long idEllipse, javafx.scene.paint.Paint couleur) {
         colorerEllipse(intersectionsGraphiques.get(idEllipse).getKey(), couleur);
     }
 
@@ -239,7 +239,7 @@ public class JPanelPlan extends JPanel {
      * @param e L'ellipse à modifier
      * @param couleur La nouvelle couleur
      */
-    private void colorerEllipse(Ellipse e, javafx.scene.paint.Paint couleur) {
+    public void colorerEllipse(Ellipse e, javafx.scene.paint.Paint couleur) {
         e.setFill(couleur);
     }
 
@@ -247,7 +247,7 @@ public class JPanelPlan extends JPanel {
      * @param idIntersection L'identifiant de l'intersection à colorer
      * @param e L'ellipse à colorer
      */
-    private void colorerEllipse(long idIntersection, Ellipse e) {
+    public void colorerEllipse(long idIntersection, Ellipse e) {
         // Choix de la bonne couleur
         javafx.scene.paint.Paint couleur;
 
@@ -269,7 +269,7 @@ public class JPanelPlan extends JPanel {
      * @param e L'ellipse à modifier
      * @param rayon Le nouveau rayon
      */
-    private void changerTailleEllipse(Ellipse e, double rayon) {
+    public void changerTailleEllipse(Ellipse e, double rayon) {
         e.setRadiusX(rayon);
         e.setRadiusY(rayon);
     }
@@ -298,7 +298,7 @@ public class JPanelPlan extends JPanel {
 
     /** Gère le clic sur la partie graphique
      */
-    private class ClicGraphiqueGestionnaireEvenement implements EventHandler<MouseEvent> {
+    public class ClicGraphiqueGestionnaireEvenement implements EventHandler<MouseEvent> {
 
         @Override
         public void handle(MouseEvent event) {
