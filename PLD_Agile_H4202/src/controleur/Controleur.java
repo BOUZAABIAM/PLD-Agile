@@ -3,6 +3,7 @@ package controleur;
 import Modele.DemandeLivraison;
 import Modele.ExceptionXML;
 import Modele.Intersection;
+import Modele.Livraison;
 import java.io.File;
 
 import controleur.observateur.*;
@@ -10,10 +11,18 @@ import controleur.observateur.*;
 import Modele.Plan;
 import Modele.XMLParser;
 import Vue.IHMLivraisons;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.Paragraph;
+
 import controleur.commande.CommandeException;
 import controleur.etat.EtatAjout;
 import controleur.etat.EtatInitial;
 import controleur.etat.EtatInterface;
+
 import java.io.IOException;
 import java.sql.Time;
 import java.text.ParseException;
@@ -21,9 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.ParserConfigurationException;
 import org.jdom2.JDOMException;
 import org.xml.sax.SAXException;
@@ -33,6 +39,10 @@ import org.xml.sax.SAXException;
  * Implémente l'interface contrôleur. Point d'entrée principal pour toutes les intéractions avec le package vue.
  */
 public class Controleur implements ControleurInterface {
+    
+    private Plan planActuel;
+    private DemandeLivraison DLActuelle;
+    private List<ArrayList<Intersection>> solutionActuelle;
 
     /**
      * Etat actuel de l'application
@@ -92,12 +102,12 @@ public class Controleur implements ControleurInterface {
         } catch (SAXException | ExceptionXML | JDOMException | ParserConfigurationException | IOException | ParseException ex) {
             Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        planActuel = planDeVille;
         return planDeVille;
     }
 
     @Override
-    public DemandeLivraison parserLivraisons(File fichierLivraisons, Plan planActuel) throws Exception {
+    public DemandeLivraison parserLivraisons(File fichierLivraisons) throws Exception {
         etat = etat.chargerLivraisons(fichierLivraisons);
         DemandeLivraison dl = null;
         try {
@@ -106,6 +116,8 @@ public class Controleur implements ControleurInterface {
                 } catch (SAXException | ExceptionXML |JDOMException |ParserConfigurationException| IOException | ParseException ex) {
                     Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
                 }
+        DLActuelle = dl;
+        planActuel.setDL(dl);
         return dl;
     }
 
@@ -131,13 +143,13 @@ public class Controleur implements ControleurInterface {
     }
 
     @Override
-    public List<ArrayList<Intersection>> calculTournee(Plan planActuel) {
+    public List<ArrayList<Intersection>> calculTournee() {
         etat = etat.calculerTournee();
         //Création de calcul tournée
         planActuel.calculSolutionTSP1();
         List<ArrayList<Intersection>> solution = planActuel.getSolution2();
         
-        
+        solutionActuelle = solution;
         return solution;
 //        System.out.println("Solutions : ");
 //        for (int j=0; j<solution.size(); j++){
@@ -156,7 +168,7 @@ public class Controleur implements ControleurInterface {
     }
     
     @Override
-    public List<Time[]> calculDuree(Plan planActuel){
+    public List<Time[]> calculDuree(){
         return planActuel.getTempsPassage();
     }
 
@@ -208,4 +220,94 @@ public class Controleur implements ControleurInterface {
 	public void ajouterActivationOuvrirPlanObservateur(ActivationOuvrirPlanObservateur chargementPlanObserveur) {
 		controleurDonnees.ajouterChargementPlanObservateur(chargementPlanObserveur);
 	}
+    @Override
+        public void annuler(){
+            DLActuelle=null;
+            solutionActuelle=null;
+        }
+        
+    @Override
+        public Livraison getLivraisonByID(long id){
+            return DLActuelle.getLivraison().get(id);
+        }
+        
+    @Override
+        public List<ArrayList<Intersection>> ajouterLivraison(long idAdd, long idPrec){
+
+            Intersection interAdd = planActuel.getIntersectionsMap().get(idAdd);    
+            Intersection interPrec = planActuel.getIntersectionsMap().get(idPrec); 
+
+            planActuel.addLivraison(interPrec, interAdd);
+            solutionActuelle = planActuel.getSolution2();
+            return solutionActuelle;
+        }
+        
+    @Override
+        public List<ArrayList<Intersection>> supprimerLivraison(long idSuppr){
+            
+            if (!planActuel.getLivraisons().isEmpty()){
+                Intersection interSup;
+                interSup = planActuel.getIntersectionsMap().get(idSuppr);
+                
+                planActuel.deleteLivraison(interSup);
+                solutionActuelle = planActuel.getSolution2();
+                return solutionActuelle;
+            }
+            return null;
+        }
+    
+    @Override 
+        public void feuilleDeRoute(Document document) {
+            Font font20 = new Font(FontFamily.TIMES_ROMAN, 20);
+            Font font12 = new Font(FontFamily.TIMES_ROMAN, 12);
+            Font font30 = new Font(FontFamily.TIMES_ROMAN, 30);
+            try {
+                document.add(new Paragraph("FEUILLE DE ROUTE", font30));
+                document.add(new Paragraph("ENTREPOT :" + solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue(), font20));
+                String text = "";
+                for (ArrayList<Intersection> i : solutionActuelle) {
+
+                    for (Intersection j : i) {
+
+                        String nomRue = j.getTroncons().get(0).getNomRue();
+                        // String debutPlage=j.
+                        text = text.concat(nomRue + "--->");
+                    }
+
+                    Livraison livraison = DLActuelle.getLivraison().get(i.get(0).getId());
+                    System.out.println(livraison);
+                    if (livraison != null) {
+                        String debutPlage = "";
+                        String finPlage = "";
+                        if (livraison.getDebutPlage() == null) {
+                            debutPlage = "**";
+                        } else {
+                            debutPlage = livraison.getDebutPlage().toString();
+                        }
+                        if (livraison.getFinPlage() == null) {
+                            finPlage = "**";
+                        } else {
+                            finPlage = livraison.getFinPlage().toString();
+                        }
+                        String adresse = livraison.getAdresse().getTroncons().get(0).getNomRue();
+                        if (livraison.getDebutPlage() == null) {
+                            debutPlage = "**";
+                        }
+                        if (livraison.getFinPlage() == null) {
+                            finPlage = "**";
+                        }
+                        document.add(new Paragraph("Livraison : " + adresse, font20));
+                        document.add(new Paragraph("Plage horaire : [" + debutPlage + " - " + finPlage + "]\n", font20));
+                        document.add(new Paragraph("Trajet vers la livraison suivante", font20));
+                    } else {
+                        document.add(new Paragraph("Trajet de l'entrepot vers 1ére adresse", font20));
+                    }
+                    document.add(new Paragraph(text, font12));
+
+                }
+                document.add(new Paragraph("ENTREPOT :" + solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue(), font20));
+            } catch (DocumentException ex) {
+                Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
 }
