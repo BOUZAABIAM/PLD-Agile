@@ -841,29 +841,34 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
     private void jPanelPlanMapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelPlanMapMouseClicked
         // TODO add your handling code here:
-        double X= evt.getLocationOnScreen().x;
-        double Y= evt.getLocationOnScreen().y;
-        System.out.println(X);
-        System.out.println(Y);
-        
-        long idIntersection = jPanelPlanMap.estSurIntersection(X, Y);
+       int X= evt.getX();
+        int Y= evt.getY();
+        long idIntersection = jPanelPlanMap.estSurIntersection(X,Y);
                 if (idIntersection == -1) {
+                    //jTextAreaMessage.setText("!!!!!");
                     return;
-                }else {System.out.println(idIntersection);}
+                }else {
+                    
+                    jTextAreaMessage.setText("Intersection n° : "+idIntersection+" et des coordonnées : X = "+jPanelPlanMap.lePlan.getIntersection(idIntersection).getX()+" et Y = "+jPanelPlanMap.lePlan.getIntersection(idIntersection).getY());
+                
+                }
     }//GEN-LAST:event_jPanelPlanMapMouseClicked
 
     private void jPanelPlanMapMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelPlanMapMouseMoved
         // TODO add your handling code here:
-        double X= evt.getLocationOnScreen().x;
-        double Y= evt.getLocationOnScreen().y;
-        
-        Livraison l = jPanelPlanMap.estSurLivraison(X, Y);
+        int X= evt.getX();
+        int Y= evt.getY();
+        long l[] = jPanelPlanMap.estSurLivraison(X, Y);
             if (l == null) {
-                jPanelPlanMap.desactiverSurbrillance();
                 return;
             }
-
-            jPanelPlanMap.surbrillanceLivraison(l);
+            
+            if(l[0]==0)
+            {
+                jTextAreaMessage.setText("L'entrepot se trouve dans : X = "+jPanelPlanMap.lePlan.getIntersection(l[1]).getX()+" et Y = "+jPanelPlanMap.lePlan.getIntersection(l[1]).getX());
+            } else{          
+            jTextAreaMessage.setText("Livraison n° : "+l[1]+" et de coordonnées : X = "+jPanelPlanMap.lePlan.getIntersection(l[1]).getX()+" et Y = "+jPanelPlanMap.lePlan.getIntersection(l[1]).getX());}
+           
     }//GEN-LAST:event_jPanelPlanMapMouseMoved
 
  /**
