@@ -98,9 +98,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonFeuilleDeRoute = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        
+        setTitle("Système de livraison");
         setBackground(new java.awt.Color(255, 255, 255));
-        
+        setIconImage(null);
         setPreferredSize(new java.awt.Dimension(1242, 876));
 
         jButtonChargerPlan.setText("Charger Plan");
@@ -273,14 +273,14 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
         jLabel2.setText("Messages");
 
-        jTextFieldPrecedent.setVisible(false);
+        jTextFieldPrecedent.setEnabled(false);
         jTextFieldPrecedent.setText("ID intersection précédente ");
         jTextFieldPrecedent.setPreferredSize(new java.awt.Dimension(200, 26));
 
-        jTextFieldAjouter.setVisible(false);
+        jTextFieldAjouter.setEnabled(false);
         jTextFieldAjouter.setText("ID intersection à ajouter");
 
-        jTextFieldSupprimer.setVisible(false);
+        jTextFieldSupprimer.setEnabled(false);
         jTextFieldSupprimer.setText("ID intersection à supprimer");
 
         jButtonFeuilleDeRoute.setText("Generer feuille de route");
@@ -600,9 +600,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonValider.setEnabled(false);
         jButtonAnnulerModif.setEnabled(false);
         jButtonFeuilleDeRoute.setEnabled(true);
-        jTextFieldPrecedent.setVisible(false);
-        jTextFieldAjouter.setVisible(false);
-        jTextFieldSupprimer.setVisible(false);
+        jTextFieldPrecedent.setEnabled(false);
+        jTextFieldAjouter.setEnabled(false);
+        jTextFieldSupprimer.setEnabled(false);
 
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
@@ -696,9 +696,26 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonFeuilleDeRouteActionPerformed
 
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
+        Intersection interAdd = null;
+        Intersection interPrec = null;
         
-        Intersection interAdd = planActuel.getIntersectionsList().get(2);
-        planActuel.addLivraison(planActuel.getAdresseDeLivraison(0), interAdd);
+        String sAdd = jTextFieldAjouter.getText();
+        if(!sAdd.contains("ID intersection à ajouter") && !sAdd.isEmpty()){
+            long idAdd = Long.valueOf(sAdd);
+            interAdd = planActuel.getIntersectionsMap().get(idAdd);
+        } else {
+            interAdd = planActuel.getIntersectionsList().get(2);
+        }
+        
+        String sPrec = jTextFieldPrecedent.getText();
+        if(!sPrec.contains("ID intersection précédente") && !sPrec.isEmpty()){
+            long idPrec = Long.valueOf(sPrec);
+            interPrec = planActuel.getIntersectionsMap().get(idPrec);
+        } else {
+            interPrec = planActuel.getAdresseDeLivraison(0);
+        }
+
+        planActuel.addLivraison(interPrec, interAdd);
         List<ArrayList<Intersection>> solution = planActuel.getSolution2();
         solutionActuelle = solution;
         
@@ -790,93 +807,90 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private void jButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerActionPerformed
 //       long IDsupr = Long.valueOf(jTextFieldSupprimer.getText());
 //       Intersection iSupr = planActuel.getIntersectionsMap().get(IDsupr);
-        if (planActuel.getLivraisons().size() != 0){
-            planActuel.deleteLivraison(planActuel.getAdresseDeLivraison(0));
-        }
-        List<ArrayList<Intersection>> solution = planActuel.getSolution2();
-        solutionActuelle = solution;
-        
-//        System.out.println("Solutions : ");
-//        for (int j=0; j<solution.size(); j++){
-//            System.out.println(solution.get(j).get(0).toString());
-//        }
-//        int s1 = solution.size()-1;
-//        int s2 = solution.get(s1).size()-1;
-//        System.out.println(solution.get(s1).get(s2).toString());
-//
-//        System.out.println("Itinéraire : ");
-//        for (int j=0; j<solution.size(); j++){
-//            for (int k=0; k<solution.get(j).size(); k++){
-//                System.out.println(solution.get(j).get(k).toString());
-//            }
-//        }
+        if (!planActuel.getLivraisons().isEmpty()){
+            Intersection interSup = null;
 
-        // Affichage de la solution
-        jPanelPlanMap.setSolution(solution);
-        jPanelPlanMap.repaint();   
-                
-        //vide le tableau
-        DefaultTableModel model = (DefaultTableModel) jTableLivraisons.getModel();
-        int rowCount = model.getRowCount();
-        String setvide="";
-        for (int i = 0; i < rowCount ; i++){
-            jTableLivraisons.getModel().setValueAt(setvide, i, 0);
-            jTableLivraisons.getModel().setValueAt(setvide, i, 1);
-            jTableLivraisons.getModel().setValueAt(setvide, i, 2);
-            jTableLivraisons.getModel().setValueAt(setvide, i, 3);
-            jTableLivraisons.getModel().setValueAt(setvide, i, 4);
-            jTableLivraisons.getModel().setValueAt(setvide, i, 5);
-            jTableLivraisons.getModel().setValueAt(setvide, i, 6);   
-        }
-        int indexRow=0;
-//        System.out.println(DLActuelle);
-        
-        //Affiche le nouveau tableau
-        for(ArrayList<Intersection> inter : solution){
-            Livraison livraison = DLActuelle.getLivraison().get(inter.get(0).getId());
-            
-            //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
-            if(livraison == null){
-                //1er colonne : E pour entrepot
-                jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
-                //2e colonne : adresse
-                jTableLivraisons.getModel().setValueAt(
-                        inter.get(0).getTroncons().get(0).getNomRue() + 
-                                " (" + inter.get(0).getId() + ")", 0, 1);
-            }else{
-                //1er colonne : n°
-                jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
-                
-                //2e colonne : adresse
-                String nomRue = livraison.getAdresse().getTroncons().get(0).getNomRue();
-                Long idAdresse = livraison.getAdresse().getId();
-                jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
-
-                //3e colonne : durée
-                String dureeFormatee = "";
-                int seconds = livraison.getDuree() % 60;
-                int totalMinutes = livraison.getDuree() / 60;
-                int minutes = totalMinutes % 60;
-                int hours = totalMinutes / 60;
-
-                if(hours >0){
-                    dureeFormatee += hours + "h ";
-                }
-                if(minutes >0){
-                    dureeFormatee += minutes + "min ";
-                }
-                if(seconds >0){
-                    dureeFormatee += seconds + "s";
-                }
-                jTableLivraisons.getModel().setValueAt(dureeFormatee, indexRow, 2);
-
-                if (livraison.getDebutPlage() != null){
-                    //4e et 5e colonne : début et fin de plage
-                    jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 3);
-                    jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 4);
-                }
+            String sSup = jTextFieldSupprimer.getText();
+            if(!sSup.contains("ID intersection à ajouter") && !sSup.isEmpty()){
+                long idSup = Long.valueOf(sSup);
+                interSup = planActuel.getIntersectionsMap().get(idSup);
+            } else {
+                interSup = planActuel.getAdresseDeLivraison(0);
             }
-            indexRow++;
+            
+            planActuel.deleteLivraison(interSup);
+        
+            List<ArrayList<Intersection>> solution = planActuel.getSolution2();
+            solutionActuelle = solution;
+
+
+            // Affichage de la solution
+            jPanelPlanMap.setSolution(solution);
+            jPanelPlanMap.repaint();   
+
+            //vide le tableau
+            DefaultTableModel model = (DefaultTableModel) jTableLivraisons.getModel();
+            int rowCount = model.getRowCount();
+            String setvide="";
+            for (int i = 0; i < rowCount ; i++){
+                jTableLivraisons.getModel().setValueAt(setvide, i, 0);
+                jTableLivraisons.getModel().setValueAt(setvide, i, 1);
+                jTableLivraisons.getModel().setValueAt(setvide, i, 2);
+                jTableLivraisons.getModel().setValueAt(setvide, i, 3);
+                jTableLivraisons.getModel().setValueAt(setvide, i, 4);
+                jTableLivraisons.getModel().setValueAt(setvide, i, 5);
+                jTableLivraisons.getModel().setValueAt(setvide, i, 6);   
+            }
+            int indexRow=0;
+    //        System.out.println(DLActuelle);
+
+            //Affiche le nouveau tableau
+            for(ArrayList<Intersection> inter : solution){
+                Livraison livraison = DLActuelle.getLivraison().get(inter.get(0).getId());
+
+                //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
+                if(livraison == null){
+                    //1er colonne : E pour entrepot
+                    jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
+                    //2e colonne : adresse
+                    jTableLivraisons.getModel().setValueAt(
+                            inter.get(0).getTroncons().get(0).getNomRue() + 
+                                    " (" + inter.get(0).getId() + ")", 0, 1);
+                }else{
+                    //1er colonne : n°
+                    jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
+
+                    //2e colonne : adresse
+                    String nomRue = livraison.getAdresse().getTroncons().get(0).getNomRue();
+                    Long idAdresse = livraison.getAdresse().getId();
+                    jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
+
+                    //3e colonne : durée
+                    String dureeFormatee = "";
+                    int seconds = livraison.getDuree() % 60;
+                    int totalMinutes = livraison.getDuree() / 60;
+                    int minutes = totalMinutes % 60;
+                    int hours = totalMinutes / 60;
+
+                    if(hours >0){
+                        dureeFormatee += hours + "h ";
+                    }
+                    if(minutes >0){
+                        dureeFormatee += minutes + "min ";
+                    }
+                    if(seconds >0){
+                        dureeFormatee += seconds + "s";
+                    }
+                    jTableLivraisons.getModel().setValueAt(dureeFormatee, indexRow, 2);
+
+                    if (livraison.getDebutPlage() != null){
+                        //4e et 5e colonne : début et fin de plage
+                        jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 3);
+                        jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 4);
+                    }
+                }
+                indexRow++;
+            }
         }
     }//GEN-LAST:event_jButtonSupprimerActionPerformed
 
@@ -887,9 +901,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
         //mettre à true quand on pourra annuler
         jButtonAnnulerModif.setEnabled(false);
         jButtonFeuilleDeRoute.setEnabled(false);
-        jTextFieldPrecedent.setVisible(true);
-        jTextFieldAjouter.setVisible(true);
-        jTextFieldSupprimer.setVisible(true);
+        jTextFieldPrecedent.setEnabled(true);
+        jTextFieldAjouter.setEnabled(true);
+        jTextFieldSupprimer.setEnabled(true);
         
     }//GEN-LAST:event_jButtonModifierActionPerformed
 
