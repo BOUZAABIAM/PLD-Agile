@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -417,6 +418,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jPanelPlanMap.setPlan(planDeVille);
         jPanelPlanMap.repaint();
         jButtonChargerLivraison.setEnabled(true);
+        
+        
     }//GEN-LAST:event_jButtonChargerPlanActionPerformed
     
     private void jButtonChargerLivraisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerLivraisonActionPerformed
