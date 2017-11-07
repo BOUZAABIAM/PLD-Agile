@@ -653,8 +653,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
         document.open();
         Font font20 = new Font(FontFamily.TIMES_ROMAN, 20);
         Font font12 = new Font(FontFamily.TIMES_ROMAN, 12);
-
+        Font font30 = new Font(FontFamily.TIMES_ROMAN, 30);
+        
+       
         try {
+             document.add(new Paragraph("FEUILLE DE ROUTE", font30));
             document.add(new Paragraph("ENTREPOT :" + solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue(), font20));
             String text = "";
             for (ArrayList<Intersection> i : solutionActuelle) {
@@ -669,9 +672,25 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 Livraison livraison = DLActuelle.getLivraison().get(i.get(0).getId());
                 System.out.println(livraison);
                 if (livraison != null) {
-                    String debutPlage = livraison.getDebutPlage().toString();
-                    String finPlage = livraison.getFinPlage().toString();
+                    String debutPlage = "";
+                    String finPlage = "";
+                    if (livraison.getDebutPlage()==null){
+                        debutPlage = "**" ;   
+                    } else {
+                          debutPlage = livraison.getDebutPlage().toString();
+                    }
+                    if (livraison.getFinPlage()==null){
+                        finPlage = "**" ;
+                    } else {
+                         finPlage = livraison.getFinPlage().toString();
+                    }
                     String adresse = livraison.getAdresse().getTroncons().get(0).getNomRue();
+                    if (livraison.getDebutPlage()==null){
+                        debutPlage = "**" ;
+                    }
+                    if (livraison.getFinPlage()==null){
+                        finPlage = "**" ;
+                    }
                     document.add(new Paragraph("Livraison : " + adresse, font20));
                     document.add(new Paragraph("Plage horaire : [" + debutPlage + " - " + finPlage + "]\n", font20));
                     document.add(new Paragraph("Trajet vers la livraison suivante", font20));
