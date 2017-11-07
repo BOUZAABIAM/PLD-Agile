@@ -849,7 +849,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                     return;
                 }else {
                     
-                    jTextAreaMessage.setText("Intersection n° : "+idIntersection+" et des coordonnées : X = "+jPanelPlanMap.lePlan.getIntersection(idIntersection).getX()+" et Y = "+jPanelPlanMap.lePlan.getIntersection(idIntersection).getY());
+                    jTextAreaMessage.setText("Intersection n° : "+idIntersection+" et de coordonnées : X = "+jPanelPlanMap.lePlan.getIntersection(idIntersection).getX()+" et Y = "+jPanelPlanMap.lePlan.getIntersection(idIntersection).getY());
                 
                 }
     }//GEN-LAST:event_jPanelPlanMapMouseClicked
