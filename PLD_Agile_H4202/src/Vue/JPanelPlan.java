@@ -157,9 +157,9 @@ public class JPanelPlan extends JPanel {
          * La marge à laisser sur les côté du canvas graphique afin d'avoir plus
          * du lisibilité
          */
-        private final static int MARGE_INTERSECTION = 30;
+        private final static int MARGE_INTERSECTION = 10;
 
-        private final static double MAX_ZOOM = 15;
+        
 
         /**
          * Coefficient mutliplicateur des ellipse pour les livraisons
@@ -350,21 +350,22 @@ public class JPanelPlan extends JPanel {
             Intersection inter = entry.getValue();
             if (inter.getX() <= minX) {
                 minX = inter.getX();
-                if (inter.getY() <= minY) {
+                
+            }
+            if (inter.getY() <= minY) {
                     minY = inter.getY();
                 }
-            }
-
             if (inter.getX() >= maxX) {
                 maxX = inter.getX();
-                if (inter.getY() >= maxY) {
+                
+            }
+            if (inter.getY() >= maxY) {
                     maxY = inter.getY();
                 }
-            }
         }
 
         //trouver taille effective du jPanel à la place de 500 530, ou cacher les valeurs
-        double paramLargeur = (maxX - minX) / 551;
+        double paramLargeur = (maxX - minX) / 500;
         double paramHauteur = (maxY - minY) / 530;
 
         //Coordonnees du centre de rotation
@@ -382,8 +383,8 @@ public class JPanelPlan extends JPanel {
             int x1 = (int) Math.round((origine.getX() - minX) / paramLargeur);
             int y1 = (int) Math.round((origine.getY() - minY) / paramHauteur);
             coordonnees = rotationPoint(x1, y1, xCentre, yCentre);
-            x1 = coordonnees[0] - translation[0];
-            y1 = coordonnees[1] - translation[1];
+            x1 = coordonnees[0] - translation[0]+ ConstantesGraphique.MARGE_INTERSECTION;
+            y1 = coordonnees[1] - translation[1]+ ConstantesGraphique.MARGE_INTERSECTION;
 
             for (Troncon section : origine.getTroncons()) {
                 Intersection destination = section.getDestination();
@@ -391,8 +392,8 @@ public class JPanelPlan extends JPanel {
                 int x2 = (int) Math.round((destination.getX() - minX) / paramLargeur);
                 int y2 = (int) Math.round((destination.getY() - minY) / paramHauteur);
                 coordonnees = rotationPoint(x2, y2, xCentre, yCentre);
-                x2 = coordonnees[0] - translation[0];
-                y2 = coordonnees[1] - translation[1];
+                x2 = coordonnees[0] - translation[0]+ ConstantesGraphique.MARGE_INTERSECTION;
+                y2 = coordonnees[1] - translation[1]+ ConstantesGraphique.MARGE_INTERSECTION;
                 gc.drawLine(x1, y1, x2, y2);
             }
         }
@@ -402,8 +403,8 @@ public class JPanelPlan extends JPanel {
             int xEntrepot = (int) Math.round(((laDL.getEntrepot().getX() - minX) / paramLargeur));
             int yEntrepot = (int) Math.round(((laDL.getEntrepot().getY() - minY) / paramHauteur));
             coordonnees = rotationPoint(xEntrepot, yEntrepot, xCentre, yCentre);
-            xEntrepot = coordonnees[0] - translation[0];
-            yEntrepot = coordonnees[1] - translation[1];
+            xEntrepot = coordonnees[0] - translation[0]+ ConstantesGraphique.MARGE_INTERSECTION;
+            yEntrepot = coordonnees[1] - translation[1]+ ConstantesGraphique.MARGE_INTERSECTION;
             gc.fillOval(xEntrepot - 4, yEntrepot - 4, 8, 8);
 
             //dessine les livraisons
@@ -414,8 +415,8 @@ public class JPanelPlan extends JPanel {
                 int xC = (int) Math.round(((livr.getAdresse().getX() - minX) / paramLargeur));
                 int yC = (int) Math.round(((livr.getAdresse().getY() - minY) / paramHauteur));
                 coordonnees = rotationPoint(xC, yC, xCentre, yCentre);
-                xC = coordonnees[0] - translation[0];
-                yC = coordonnees[1] - translation[1];
+                xC = coordonnees[0] - translation[0]+ ConstantesGraphique.MARGE_INTERSECTION;
+                yC = coordonnees[1] - translation[1]+ ConstantesGraphique.MARGE_INTERSECTION;
                 gc.fillOval(xC - 4, yC - 4, 8, 8);
             }
         }
@@ -434,14 +435,14 @@ public class JPanelPlan extends JPanel {
                     int x1 = (int) Math.round((origineT.getX() - minX) / paramLargeur);
                     int y1 = (int) Math.round((origineT.getY() - minY) / paramHauteur);
                     coordonnees = rotationPoint(x1, y1, xCentre, yCentre);
-                    x1 = coordonnees[0] - translation[0];
-                    y1 = coordonnees[1] - translation[1];
+                    x1 = coordonnees[0] - translation[0]+ ConstantesGraphique.MARGE_INTERSECTION;;
+                    y1 = coordonnees[1] - translation[1]+ ConstantesGraphique.MARGE_INTERSECTION;;
 
                     int x2 = (int) Math.round((destinationT.getX() - minX) / paramLargeur);
                     int y2 = (int) Math.round((destinationT.getY() - minY) / paramHauteur);
                     coordonnees = rotationPoint(x2, y2, xCentre, yCentre);
-                    x2 = coordonnees[0] - translation[0];
-                    y2 = coordonnees[1] - translation[1];
+                    x2 = coordonnees[0] - translation[0]+ ConstantesGraphique.MARGE_INTERSECTION;;
+                    y2 = coordonnees[1] - translation[1]+ ConstantesGraphique.MARGE_INTERSECTION;;
                     gc.drawLine(x1, y1, x2, y2);
                 }
                 
@@ -453,8 +454,8 @@ public class JPanelPlan extends JPanel {
                 int xEtape = (int) Math.round(((inter.get(0).getX() - minX) / paramLargeur));
                 int yEtape = (int) Math.round(((inter.get(0).getY() - minY) / paramHauteur));
                 coordonnees = rotationPoint(xEtape, yEtape, xCentre, yCentre);
-                xEtape = coordonnees[0] - translation[0];
-                yEtape = coordonnees[1] - translation[1];
+                xEtape = coordonnees[0] - translation[0]+ ConstantesGraphique.MARGE_INTERSECTION;;
+                yEtape = coordonnees[1] - translation[1]+ ConstantesGraphique.MARGE_INTERSECTION;;
                 gc.fillOval(xEtape - 5, yEtape - 5, 10, 10);
             }
            
