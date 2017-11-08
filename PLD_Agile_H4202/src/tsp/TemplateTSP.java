@@ -100,6 +100,7 @@ public abstract class TemplateTSP implements TSP {
                         tmpTempsPassage[prochainSommet][0] = tmpTempsPassage[sommetCrt][1] + cout[sommetCrt][prochainSommet];
                         tmpTempsPassage[prochainSommet][1] = tmpTempsPassage[prochainSommet][0] + duree[prochainSommet];
  
+                        
                         if (plagesHoraires[prochainSommet][0] == -1){
                             branchAndBound(prochainSommet, nonVus, vus, coutVus + cout[sommetCrt][prochainSommet] + duree[prochainSommet], cout, duree, tpsDebut, tpsLimite, tmpTempsPassage);
                         } else if(plagesHoraires[prochainSommet][1] < tmpTempsPassage[prochainSommet][0]){
