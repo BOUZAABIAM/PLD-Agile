@@ -7,10 +7,10 @@ package Modele;
 
 public class Troncon {
 
-    private String nomRue;
-    private Intersection destination;
-    private Intersection origine;
-    private double longueur;
+    final private String nomRue;
+    final private Intersection destination;
+    final private Intersection origine;
+    final private double longueur;
 
     public Troncon(String nomRue, Intersection destination, Intersection origine, double longueur) {
         this.nomRue = nomRue;
@@ -31,6 +31,10 @@ public class Troncon {
         return origine;
     }
 
+    /**
+     * Renvoie la durée en seconds pour parcurir le tronçon
+     * @return la durée en seconds pour parcurir le tronçon
+     */
     public int getDuree() {
         // vitesse en m par s
         double vitesse  = 15.0*1000/3600;

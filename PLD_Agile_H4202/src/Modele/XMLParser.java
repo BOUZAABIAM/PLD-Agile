@@ -120,19 +120,8 @@ public class XMLParser {
         return new Plan(intersections, intersectionsList);
     }
     
-    private String goodTimeForm(String time){
-        String newTime = time;
-        int prec = -1;    
-        for (int i = 0; i < newTime.length(); i++){
-            if (newTime.charAt(i) == ':' && ((i - prec) < 3)){
-                    prec = i;
-                    newTime = newTime.substring(0, i-2) + 0 + newTime.substring(i-2, newTime.length());
-             
-            }
-        }
-        return newTime;
-    }
-   // *
+    
+
     // * Convertit un String sous la fomre HH:mm:ss en séconde
     // *
     // * @param heureMnSec Chaine de caractère à convertir
@@ -149,7 +138,7 @@ public class XMLParser {
     }
     
     public DemandeLivraison getDL(final File xmlFile, final Plan plan) throws IOException,JDOMException, SAXException, ParserConfigurationException,ParseException,ExceptionXML {
-        Map<Long, Livraison> livraisons = new TreeMap<Long, Livraison>();
+        Map<Long, Livraison> livraisons = new TreeMap<>();
         Intersection entrepot = null;
         Time heureDepart = null;
         // Chargement du validateur xsd et validation

@@ -13,9 +13,9 @@ import java.sql.Time;
  */
 public class DemandeLivraison {
     
-    private Intersection entrepot;
-    private Time heureDepart;
-    private Map<Long, Livraison> livraisons;
+    final private Intersection entrepot;
+    final private Time heureDepart;
+    final private Map<Long, Livraison> livraisons;
 
     public DemandeLivraison(Intersection entrepot, Time heureDepart, Map<Long, Livraison> livraison) {
         this.entrepot = entrepot;
@@ -35,6 +35,10 @@ public class DemandeLivraison {
         return livraisons;
     }
     
+    /**
+     * Ajoute une livraison à la liste de livraisons de la demande de livraison
+     * @param livr la livraison à ajouter
+     */
     public void addLivraison(Livraison livr){
         livraisons.put(livr.getAdresse().getId(), livr);
     }
