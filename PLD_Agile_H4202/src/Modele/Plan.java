@@ -18,21 +18,38 @@ public class Plan {
     private List<int[]> pred;
     private List<ArrayList<Intersection>> solution2;
     private List<Time[]> tempsPassage;
-   
+    
+    /**
+     * Ajoute une intersection au plan
+     * @param intersection 
+     */   
     private void addIntersection(Intersection intersection) {
         this.intersections.put(intersection.getId(), intersection);
         this.intersectionsList.add(intersection);
     }
 
+    /**
+     * Construit un plan à partir d'un Map d'intersection et d'une liste d'intersection
+     * @param intersections les intersections ayant comme clé leur id
+     * @param intersectionsList la liste des intersections ordonnée par l'index
+     */
     public Plan(Map<Long, Intersection> intersections, List<Intersection> intersectionsList) {
         this.intersections = intersections;
         this.intersectionsList = intersectionsList;
     }
-
+    
+    /**
+     * Obtenir les intersections sous forme de Map avec les IDs comme clés
+     * @return le Map d'intersections
+     */
     public Map<Long, Intersection> getIntersectionsMap() {
         return intersections;
     }
 
+     /**
+     * Obtenir les intersections sous forme de liste ordonnée par index
+     * @return la liste d'intersections
+     */
     public List<Intersection> getIntersectionsList() {
         return intersectionsList;
     }
@@ -47,6 +64,10 @@ public class Plan {
         return intersections.get(idIntersection);
     }
 
+    /**
+     * Fixe la demande de livraison sur le plan pour les eventuelles traitements
+     * @param dl la demande de livraison
+     */
     public void setDL(DemandeLivraison dl){
         this.tempsPassage = new ArrayList<Time[]>();
         List<Livraison> livraisons  = new ArrayList<Livraison>();
@@ -58,12 +79,19 @@ public class Plan {
         this.tempsPassage.add(tempsEntrepot);
     }
     
+    /**
+     * Efface la demande de livraison de plan. Aucun calcul ulterieur n'est pas disponible
+     */
     public void deleteDL(){
         this.livraisons = null;
         this.entrepot = null;
         this.pred = null;
     }
     
+    /**
+     * Construit le graphe de livraison
+     * @return une matrice d'adjacence contenant la durée de parcours de la distance entre les livraisons, entrepôt. Les livraisons sont dans l'ordre de la liste de livraisons, l'entrepôt est à la fin
+     */
     public int[][] graphLivraison(){
        Intersection[] intersectionsLivraisons = new Intersection[livraisons.size()+1];
        int[][] matriceLivraison = new int[intersectionsLivraisons.length][intersectionsLivraisons.length];
@@ -85,11 +113,11 @@ public class Plan {
     } 
     
     /**
-     * 
-     * @param depart
-     * @param intersectionLivraison
-     * @param position la position ou il faut ajouter dans le tableau de precedents, si Integer.MAX_VALUE - ajout simple
-     * @return un array avec toutes les durees jusqu'au intersections de intersectionLivraison
+     * Calcule les durées pour parcourir la distance entre le point de depart et les points de intersectionLivraison
+     * @param depart le point de depart
+     * @param intersectionLivraison la liste des intersections jusq'aux quelles on veut savoir la durée
+     * @param position la position où il faut ajouter dans le tableau de precedents, si Integer.MAX_VALUE - ajout simple
+     * @return un array avec toutes les durées jusqu'au intersections de intersectionLivraison
      */
     public int[] calculDuree(Intersection depart, Intersection[] intersectionLivraison, int position){
         
@@ -153,22 +181,16 @@ public class Plan {
         } else {
             this.pred.add(position, pred);
         }
-//        this.affichePrec();
         return d;
     }
-      
-    public void affichePrec(){
-        for (int i = 0; i < pred.size(); i++){
-            for (int j = 0; j < pred.get(i).length; j++){
-                System.out.print(pred.get(i)[j] + "  ");
-            }
-            //System.out.println();
-        }
-        //System.out.println();
-    }
-    
+
+    /**
+     * Renvoie la liste d'intersections par lesquelles il faut passer pour aller de l'intersection depart à l'intersection arrivée
+     * @param depart la position du depart dans la livraison dans la liste de livraisons ou la longeur de la liste de livraisons pour l'entrepôt
+     * @param arrive la position de l'arrivée dans livraison dans la liste de livraisons ou la longeur de la liste de livraisons pour l'entrepôt
+     * @return la liste d'intersections par lesquelles il faut passer pour aller de l'intersection depart à l'intersection arrivée 
+     */
     public List<Intersection> getChemin(int depart, int arrive){
-        //this.affichePrec();
         if ((depart >= 0) && (depart < livraisons.size()+1) && (arrive >= 0) && (arrive < livraisons.size()+1)){
             Intersection intersectionDepart;
             Intersection intersectionArrive;
@@ -216,6 +238,10 @@ public class Plan {
         }
     }
     
+    /**
+     * Renvoie les durees de livrisons de la liste de livraisons en cours
+     * @return les durees de livrisons de la liste de livraisons en cours
+     */
     public int[] getDuree(){
         int nbSommet = livraisons.size()+1;
         int[] duree = new int[nbSommet];
@@ -227,13 +253,10 @@ public class Plan {
     }
     
     /**
-     * 
-     * @param precedent, l'intersection de la livraison qui precede celle a ajouter
-     * @param suivant, l'intersection de la livraison qui suit celle a ajouter
-     * @param livraisonAAjouter, l'intersection de la livraison a ajouter
-     * @return un tableau avec 2 lignes et trois colonnes. 
-     * La premiere ligne a les indices dans la liste de livraisons de livraison a ajouter, livraison precent et livraison suivant.
-     * La deuxieme ligne donne la duree entre les livraisons
+     * Ajoute une livraison dans la liste de livraisons et recalcule la solution
+     * @param precedent l'intersection corespondante à la livraison qui va préceder celle qu'on vais ajouter
+     * @param livraisonAAjouter l'intersection à ajouter comme livraison
+     * @return la nouvelle solution pour la tournée
      */
     public List<ArrayList<Intersection>> addLivraison(Intersection precedent, Intersection livraisonAAjouter){
         if (!this.adresseEnLivraison(livraisonAAjouter)){
@@ -275,6 +298,11 @@ public class Plan {
         return solution2;
     }
     
+    /**
+     * Ajoute une livraison dans la liste de livraisons et recalcule la solution
+     * @param livraisonAEffacer
+     * @return la nouvelle solution pour la tournée
+     */
     public List<ArrayList<Intersection>> deleteLivraison(Intersection livraisonAEffacer){
         if ((this.adresseEnLivraison(livraisonAEffacer)) || (livraisonAEffacer != entrepot)){
             int[] indexes = new int[2];
@@ -312,6 +340,14 @@ public class Plan {
         }
         return solution2;
     }
+    
+    /**
+     * Renvoie l'indice de la livraison correspondante à une intersection
+     * @param intersection
+     * @return l'indice de la livraison correspondante à une intersection si l'intersection corresponde à une livraison,
+     * la longeur de la liste de livraisons si l'intersection correspond à l'entrepôt
+     * Integer.MAX_VALUE si l'intersection ne corresponde à une livraison et n'est pas l'l'entrepôt
+     */
     public int getIndiceLivraisonParIntersection(Intersection intersection){
         int i = 0;
         
@@ -336,7 +372,12 @@ public class Plan {
         return i;
     }
     
-    
+    /**
+     * Renvoie la livraison correspondante à une intersection
+     * @param intersection
+     * @return la livraison correspondante à l'intersection
+     * null si l'intersection ne corresponde à aucune livraison
+     */
     public Livraison getLivraisonParIntersection(Intersection intersection) {
         int indice = this.getIndiceLivraisonParIntersection(intersection);
         if (indice < livraisons.size()){
@@ -350,7 +391,9 @@ public class Plan {
         }
     }
 
-    
+    /**
+     * Fait le calcule de tournée et initialise la solution 
+     */
     public void calculSolutionTSP1(){
         ArrayList<ArrayList<Intersection>> solution2 = new ArrayList<ArrayList<Intersection>>();
         long tempsDepartEntrepot = this.tempsPassage.get(0)[1].getTime();
@@ -422,6 +465,11 @@ public class Plan {
         return solution2;
     }
     
+    /**
+     * Verifie si une adresse correspond à une livraison
+     * @param intersection
+     * @return true si elle correspond, false sinon
+     */
     public boolean adresseEnLivraison(Intersection intersection){
         boolean found = false;
         
@@ -442,6 +490,11 @@ public class Plan {
         return found;
     }
     
+    /**
+     * Renvoie l'intersection correspondante à l'adresse la livraison d'indice index
+     * @param index
+     * @return l'intersection correspondante à l'adresse la livraison d'indice index
+     */
     public Intersection getAdresseDeLivraison(int index){
         return livraisons.get(index).getAdresse();
     }
