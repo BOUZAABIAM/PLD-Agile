@@ -251,8 +251,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
         jTextAreaMessage.setEditable(false);
         jTextAreaMessage.setColumns(20);
+        jTextAreaMessage.setFont(new java.awt.Font("Leelawadee UI", 0, 16)); // NOI18N
         jTextAreaMessage.setRows(5);
         jScrollPane2.setViewportView(jTextAreaMessage);
+        jTextAreaMessage.setLineWrap(true);
+        jTextAreaMessage.setWrapStyleWord(true);
 
         jLabel2.setText("Messages");
 
@@ -281,11 +284,39 @@ public class IHMLivraisons extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabelTitre)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(296, 296, 296)
+                                .addComponent(jLabel2))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(307, 307, 307)
-                                .addComponent(jLabelTitre))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(50, 50, 50)
+                                        .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jPanelPlanMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jTextFieldAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(55, 55, 55)
+                                                .addComponent(jTextFieldSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jScrollPane4)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(jButtonViderDL)
@@ -300,67 +331,46 @@ public class IHMLivraisons extends javax.swing.JDialog {
                                 .addGap(64, 64, 64)
                                 .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonAnnulerModif, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(50, 50, 50)
-                                .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanelPlanMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane4))
-                                .addContainerGap())
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2)
-                                .addGap(307, 307, 307))))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextFieldAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(55, 55, 55)
-                        .addComponent(jTextFieldSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(183, 183, 183))
+                                .addComponent(jButtonAnnulerModif, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 23, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelTitre)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButtonChargerPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButtonCalculerTournee, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(10, 10, 10))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addComponent(jPanelPlanMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelTitre)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(jLabel2)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(12, 12, 12)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jTextFieldSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextFieldAjouter))
+                                        .addGap(6, 6, 6))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButtonChargerLivraison, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(84, 84, 84))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel1)))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -374,12 +384,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
                         .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButtonModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonFeuilleDeRoute, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldAjouter))
                 .addContainerGap())
         );
 
@@ -406,7 +410,12 @@ public class IHMLivraisons extends javax.swing.JDialog {
             try {   
                 planDeVille = controleur.parserPlan(selectedFile);
             } catch (Exception ex) {
-                Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+               // Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+             String s=ex.getMessage();
+             jTextAreaMessage.setText(s);
+             jop=new JOptionPane();
+             jop.showMessageDialog(null,s,"Attention",JOptionPane.WARNING_MESSAGE);
+             return;
             }
         }
         annulerDL(); 
@@ -575,14 +584,178 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonCalculerTourneeActionPerformed
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        jButtonAjouter.setEnabled(false);
-        jButtonSupprimer.setEnabled(false);
-        jButtonValider.setEnabled(false);
-        jButtonAnnulerModif.setEnabled(false);
-        jButtonFeuilleDeRoute.setEnabled(true);
-        jTextFieldPrecedent.setEnabled(false);
-        jTextFieldAjouter.setEnabled(false);
-        jTextFieldSupprimer.setEnabled(false);
+        if(ajoutOuSuppr){
+            long idAdd;
+            long idPrec;
+
+            String sAdd = jTextFieldAjouter.getText();
+            if(!sAdd.contains("ID intersection à ajouter") && !sAdd.isEmpty()){
+                idAdd = Long.valueOf(sAdd);            
+            } else {
+                return;
+            }
+
+            String sPrec = jTextFieldPrecedent.getText();
+            if(!sPrec.contains("ID intersection précédente") && !sPrec.isEmpty()){
+                idPrec = Long.valueOf(sPrec);
+            } else {
+                return;
+            }
+
+            List<ArrayList<Intersection>> solution = controleur.ajouterLivraison(idAdd, idPrec);
+
+            System.out.println("Solutions : ");
+            for (int j=0; j<solution.size(); j++){
+                System.out.println(solution.get(j).get(0).toString());
+            }
+
+            // Affichage de la solution
+            jPanelPlanMap.setSolution(solution);
+            jPanelPlanMap.repaint();   
+
+            viderTableau();
+
+            int indexRow=0;
+
+            //Affiche le nouveau tableau
+            for(ArrayList<Intersection> inter : solution){
+                Livraison livraison = controleur.getLivraisonByID(inter.get(0).getId());
+
+                if(livraison == null){
+                    //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
+                    if( inter.get(0).getId() == idAdd){
+                        //1er colonne : E pour entrepot
+                        jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
+                        //2e colonne : adresse
+                        jTableLivraisons.getModel().setValueAt(
+                                inter.get(0).getTroncons().get(0).getNomRue() + 
+                                " (" + inter.get(0).getId() + ")", 0, 1); 
+                    }else{//ou la nouvelle intersection
+                       //1er colonne : n°
+                        jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
+
+                        //2e colonne : adresse
+                        String nomRue = inter.get(0).getTroncons().get(0).getNomRue();
+                        Long idAdresse = inter.get(0).getId();
+                        jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
+
+                        //3e colonne : durée fixe
+                        jTableLivraisons.getModel().setValueAt("10min", indexRow, 2);
+                    }
+                }else{
+                    //1er colonne : n°
+                    jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
+
+                    //2e colonne : adresse
+                    String nomRue = livraison.getAdresse().getTroncons().get(0).getNomRue();
+                    Long idAdresse = livraison.getAdresse().getId();
+                    jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
+
+                    //3e colonne : durée
+                    String dureeFormatee = "";
+                    int seconds = livraison.getDuree() % 60;
+                    int totalMinutes = livraison.getDuree() / 60;
+                    int minutes = totalMinutes % 60;
+                    int hours = totalMinutes / 60;
+
+                    if(hours >0){
+                        dureeFormatee += hours + "h ";
+                    }
+                    if(minutes >0){
+                        dureeFormatee += minutes + "min ";
+                    }
+                    if(seconds >0){
+                        dureeFormatee += seconds + "s";
+                    }
+                    jTableLivraisons.getModel().setValueAt(dureeFormatee, indexRow, 2);
+
+                    if (livraison.getDebutPlage() != null){
+                        //4e et 5e colonne : début et fin de plage
+                        jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 3);
+                        jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 4);
+                    }
+                }
+                indexRow++;
+            }
+
+            jButtonAjouter.setEnabled(false);
+            jButtonSupprimer.setEnabled(false);
+            jButtonValider.setEnabled(false);
+            jButtonAnnulerModif.setEnabled(false);
+            jButtonFeuilleDeRoute.setEnabled(true);
+            jTextFieldPrecedent.setEnabled(false);
+            jTextFieldAjouter.setEnabled(false);
+            jTextFieldSupprimer.setEnabled(false);
+        } else {
+            long idSuppr;
+        
+            String sSuppr = jTextFieldSupprimer.getText();
+            if(!sSuppr.contains("ID intersection à supprimer") && !sSuppr.isEmpty()){
+                idSuppr = Long.valueOf(sSuppr);            
+            } else {
+                return;
+            }
+            List<ArrayList<Intersection>> solution = controleur.supprimerLivraison(idSuppr);
+            if(solution == null){
+                jTextAreaMessage.setText("Plus aucune livraison à supprimer");
+                return;
+            }
+            // Affichage de la solution
+            jPanelPlanMap.setSolution(solution);
+            jPanelPlanMap.repaint();   
+
+            viderTableau();
+
+            int indexRow=0;
+
+            //Affiche le nouveau tableau
+            for(ArrayList<Intersection> inter : solution){
+                Livraison livraison = controleur.getLivraisonByID(inter.get(0).getId());
+
+                //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
+                if(livraison == null){
+                    //1er colonne : E pour entrepot
+                    jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
+                    //2e colonne : adresse
+                    jTableLivraisons.getModel().setValueAt(
+                            inter.get(0).getTroncons().get(0).getNomRue() + 
+                                    " (" + inter.get(0).getId() + ")", 0, 1);
+                }else{
+                    //1er colonne : n°
+                    jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
+
+                    //2e colonne : adresse
+                    String nomRue = livraison.getAdresse().getTroncons().get(0).getNomRue();
+                    Long idAdresse = livraison.getAdresse().getId();
+                    jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
+
+                    //3e colonne : durée
+                    String dureeFormatee = "";
+                    int seconds = livraison.getDuree() % 60;
+                    int totalMinutes = livraison.getDuree() / 60;
+                    int minutes = totalMinutes % 60;
+                    int hours = totalMinutes / 60;
+
+                    if(hours >0){
+                        dureeFormatee += hours + "h ";
+                    }
+                    if(minutes >0){
+                        dureeFormatee += minutes + "min ";
+                    }
+                    if(seconds >0){
+                        dureeFormatee += seconds + "s";
+                    }
+                    jTableLivraisons.getModel().setValueAt(dureeFormatee, indexRow, 2);
+
+                    if (livraison.getDebutPlage() != null){
+                        //4e et 5e colonne : début et fin de plage
+                        jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 3);
+                        jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 4);
+                    }
+                }
+                indexRow++;
+            }
+        }
 
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
@@ -650,184 +823,37 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonFeuilleDeRouteActionPerformed
 
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
+        jTextAreaMessage.setText("Passez la souris sur la livraison précédente, cliquez sur l'intersection à ajouter ou entrez leur ID et cliquez sur Valider");
+        ajoutOuSuppr = true;
         
-        
-        long idAdd;
-        long idPrec;
-        
-        String sAdd = jTextFieldAjouter.getText();
-        if(!sAdd.contains("ID intersection à ajouter") && !sAdd.isEmpty()){
-            idAdd = Long.valueOf(sAdd);            
-        } else {
-            return;
-        }
-        
-        String sPrec = jTextFieldPrecedent.getText();
-        if(!sPrec.contains("ID intersection précédente") && !sPrec.isEmpty()){
-            idPrec = Long.valueOf(sPrec);
-        } else {
-            return;
-        }
-        
-        List<ArrayList<Intersection>> solution = controleur.ajouterLivraison(idAdd, idPrec);
-               
-        System.out.println("Solutions : ");
-        for (int j=0; j<solution.size(); j++){
-            System.out.println(solution.get(j).get(0).toString());
-        }
-
-        // Affichage de la solution
-        jPanelPlanMap.setSolution(solution);
-        jPanelPlanMap.repaint();   
-                
-        viderTableau();
-        
-        int indexRow=0;
-        
-        //Affiche le nouveau tableau
-        for(ArrayList<Intersection> inter : solution){
-            Livraison livraison = controleur.getLivraisonByID(inter.get(0).getId());
-            
-            if(livraison == null){
-                //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
-                if( inter.get(0).getId() == idAdd){
-                    //1er colonne : E pour entrepot
-                    jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
-                    //2e colonne : adresse
-                    jTableLivraisons.getModel().setValueAt(
-                            inter.get(0).getTroncons().get(0).getNomRue() + 
-                            " (" + inter.get(0).getId() + ")", 0, 1); 
-                }else{//ou la nouvelle intersection
-                   //1er colonne : n°
-                    jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
-
-                    //2e colonne : adresse
-                    String nomRue = inter.get(0).getTroncons().get(0).getNomRue();
-                    Long idAdresse = inter.get(0).getId();
-                    jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
-                    
-                    //3e colonne : durée fixe
-                    jTableLivraisons.getModel().setValueAt("10min", indexRow, 2);
-                }
-            }else{
-                //1er colonne : n°
-                jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
-                
-                //2e colonne : adresse
-                String nomRue = livraison.getAdresse().getTroncons().get(0).getNomRue();
-                Long idAdresse = livraison.getAdresse().getId();
-                jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
-
-                //3e colonne : durée
-                String dureeFormatee = "";
-                int seconds = livraison.getDuree() % 60;
-                int totalMinutes = livraison.getDuree() / 60;
-                int minutes = totalMinutes % 60;
-                int hours = totalMinutes / 60;
-
-                if(hours >0){
-                    dureeFormatee += hours + "h ";
-                }
-                if(minutes >0){
-                    dureeFormatee += minutes + "min ";
-                }
-                if(seconds >0){
-                    dureeFormatee += seconds + "s";
-                }
-                jTableLivraisons.getModel().setValueAt(dureeFormatee, indexRow, 2);
-
-                if (livraison.getDebutPlage() != null){
-                    //4e et 5e colonne : début et fin de plage
-                    jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 3);
-                    jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 4);
-                }
-            }
-            indexRow++;
-        }
+        jButtonAjouter.setEnabled(false);
+        jButtonSupprimer.setEnabled(false);
+        jTextFieldPrecedent.setEnabled(true);
+        jTextFieldAjouter.setEnabled(true);
+        jTextFieldSupprimer.setEnabled(true);
+        jButtonValider.setEnabled(true);
+        jButtonAnnulerModif.setEnabled(true);
 
     }//GEN-LAST:event_jButtonAjouterActionPerformed
 
     private void jButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerActionPerformed
-        long idSuppr;
+        jTextAreaMessage.setText("Passez la souris sur la livraison à supprimer ou entrez son ID et cliquez sur Valider");
+        ajoutOuSuppr = false;
         
-        String sSuppr = jTextFieldSupprimer.getText();
-        if(!sSuppr.contains("ID intersection à supprimer") && !sSuppr.isEmpty()){
-            idSuppr = Long.valueOf(sSuppr);            
-        } else {
-            return;
-        }
-        List<ArrayList<Intersection>> solution = controleur.supprimerLivraison(idSuppr);
-        if(solution == null){
-            jTextAreaMessage.setText("Plus aucune livraison à supprimer");
-            return;
-        }
-        // Affichage de la solution
-        jPanelPlanMap.setSolution(solution);
-        jPanelPlanMap.repaint();   
-
-        viderTableau();
-
-        int indexRow=0;
-
-        //Affiche le nouveau tableau
-        for(ArrayList<Intersection> inter : solution){
-            Livraison livraison = controleur.getLivraisonByID(inter.get(0).getId());
-
-            //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
-            if(livraison == null){
-                //1er colonne : E pour entrepot
-                jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
-                //2e colonne : adresse
-                jTableLivraisons.getModel().setValueAt(
-                        inter.get(0).getTroncons().get(0).getNomRue() + 
-                                " (" + inter.get(0).getId() + ")", 0, 1);
-            }else{
-                //1er colonne : n°
-                jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
-
-                //2e colonne : adresse
-                String nomRue = livraison.getAdresse().getTroncons().get(0).getNomRue();
-                Long idAdresse = livraison.getAdresse().getId();
-                jTableLivraisons.getModel().setValueAt(nomRue + " (" + idAdresse + ")", indexRow, 1);
-
-                //3e colonne : durée
-                String dureeFormatee = "";
-                int seconds = livraison.getDuree() % 60;
-                int totalMinutes = livraison.getDuree() / 60;
-                int minutes = totalMinutes % 60;
-                int hours = totalMinutes / 60;
-
-                if(hours >0){
-                    dureeFormatee += hours + "h ";
-                }
-                if(minutes >0){
-                    dureeFormatee += minutes + "min ";
-                }
-                if(seconds >0){
-                    dureeFormatee += seconds + "s";
-                }
-                jTableLivraisons.getModel().setValueAt(dureeFormatee, indexRow, 2);
-
-                if (livraison.getDebutPlage() != null){
-                    //4e et 5e colonne : début et fin de plage
-                    jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 3);
-                    jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 4);
-                }
-            }
-            indexRow++;
-        }
+        jButtonAjouter.setEnabled(false);
+        jButtonSupprimer.setEnabled(false);
+        jTextFieldPrecedent.setEnabled(true);
+        jTextFieldAjouter.setEnabled(true);
+        jTextFieldSupprimer.setEnabled(true);
+        jButtonValider.setEnabled(true);
+        jButtonAnnulerModif.setEnabled(true);
     }//GEN-LAST:event_jButtonSupprimerActionPerformed
 
     private void jButtonModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifierActionPerformed
         jButtonAjouter.setEnabled(true);
         jButtonSupprimer.setEnabled(true);
-        jButtonValider.setEnabled(true);
-        //mettre à true quand on pourra annuler
         jButtonAnnulerModif.setEnabled(false);
         jButtonFeuilleDeRoute.setEnabled(false);
-        jTextFieldPrecedent.setEnabled(true);
-        jTextFieldAjouter.setEnabled(true);
-        jTextFieldSupprimer.setEnabled(true);
         
     }//GEN-LAST:event_jButtonModifierActionPerformed
 
@@ -847,10 +873,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 if (idIntersection == -1) {
                     //jTextAreaMessage.setText("!!!!!");
                     return;
-                }else {
-                    
+                } else {
                     jTextAreaMessage.setText("Intersection n° : "+idIntersection+" et de coordonnées : X = "+jPanelPlanMap.lePlan.getIntersection(idIntersection).getX()+" et Y = "+jPanelPlanMap.lePlan.getIntersection(idIntersection).getY());
-                
+                    jTextFieldAjouter.setText(String.valueOf(idIntersection));
                 }
     }//GEN-LAST:event_jPanelPlanMapMouseClicked
 
@@ -862,12 +887,16 @@ public class IHMLivraisons extends javax.swing.JDialog {
             if (l == null) {
                 return;
             }
-            
+            Intersection inter = jPanelPlanMap.lePlan.getIntersection(l[1]);
             if(l[0]==0)
             {
-                jTextAreaMessage.setText("L'entrepot se trouve dans : X = "+jPanelPlanMap.lePlan.getIntersection(l[1]).getX()+" et Y = "+jPanelPlanMap.lePlan.getIntersection(l[1]).getX());
-            } else{          
-            jTextAreaMessage.setText("Livraison n° : "+l[1]+" et de coordonnées : X = "+jPanelPlanMap.lePlan.getIntersection(l[1]).getX()+" et Y = "+jPanelPlanMap.lePlan.getIntersection(l[1]).getX());}
+                jTextAreaMessage.setText("L'entrepot se trouve dans : X = " + inter.getX()+" et Y = "+inter.getX());
+                jTextFieldPrecedent.setText(String.valueOf(inter.getId()));
+            } else {          
+                jTextAreaMessage.setText("Livraison n° : "+l[1]+" et de coordonnées : X = "+inter.getX()+" et Y = "+inter.getX());
+                jTextFieldPrecedent.setText(String.valueOf(l[1]));
+                jTextFieldSupprimer.setText(String.valueOf(l[1]));
+            }
            
     }//GEN-LAST:event_jPanelPlanMapMouseMoved
 
@@ -934,6 +963,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }
         });
     } 
+    private boolean ajoutOuSuppr;
     // /!\ IMPORTANT : changer private javax.swing.JPanel jPanelPlanMap; en private JPanelPlan jPanelPlanMap;
     // netBeans va essayer de le changer
     // Variables declaration - do not modify//GEN-BEGIN:variables

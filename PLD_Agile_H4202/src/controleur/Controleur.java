@@ -93,10 +93,10 @@ public class Controleur implements ControleurInterface {
 
     @Override
     public Plan parserPlan(File selectedFile) throws Exception {
-        etat = etat.chargerPlan(selectedFile);
         Plan planDeVille = null;
-
-        try {
+	try {
+	    etat = etat.chargerPlan(selectedFile);
+       
             XMLParser parser = new XMLParser();
             planDeVille = parser.getPlan(selectedFile);
         } catch (SAXException | ExceptionXML | JDOMException | ParserConfigurationException | IOException | ParseException ex) {

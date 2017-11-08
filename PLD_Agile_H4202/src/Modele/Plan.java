@@ -91,7 +91,7 @@ public class Plan {
      * @param position la position ou il faut ajouter dans le tableau de precedents, si Integer.MAX_VALUE - ajout simple
      * @return un array avec toutes les durees jusqu'au intersections de intersectionLivraison
      */
-    private int[] calculDuree(Intersection depart, Intersection[] intersectionLivraison, int position){
+    public int[] calculDuree(Intersection depart, Intersection[] intersectionLivraison, int position){
         
         Intersection[] gris = new Intersection[intersectionsList.size()];
         int nbGris = 0;
@@ -350,16 +350,30 @@ public class Plan {
         }
     }
 
+    
     public void calculSolutionTSP1(){
         ArrayList<ArrayList<Intersection>> solution2 = new ArrayList<ArrayList<Intersection>>();
-    
+        long tempsDepartEntrepot = this.tempsPassage.get(0)[1].getTime();
 
         int tpsLimite = 100000000;
         int nbSommet = livraisons.size()+1;
         TSP tsp = new TSP1();
         int[][] matrice = this.graphLivraison();
-
-        tsp.chercheSolution(tpsLimite, nbSommet, matrice , this.getDuree());
+        int[][] plagesHoraires = new int[nbSommet][2];
+        for (int i = 0; i < nbSommet-1; i++){
+            if(livraisons.get(i).getDebutPlage() != null){
+                plagesHoraires[i][0] = (int) ((livraisons.get(i).getDebutPlage().getTime() - tempsDepartEntrepot)/1000);
+                if(livraisons.get(i).getFinPlage() != null){
+                    plagesHoraires[i][1] = (int) ((livraisons.get(i).getFinPlage().getTime() - tempsDepartEntrepot)/1000);
+                } else {
+                    plagesHoraires[i][0] = -1;
+                    plagesHoraires[i][1] = -1;
+                }
+            } else {
+                plagesHoraires[i][0] = -1;
+            }
+        }
+        tsp.chercheSolution(tpsLimite, nbSommet, matrice , this.getDuree(), plagesHoraires);
         
         //Obtenir la solution dans solution
         int[] solution = new int[nbSommet];
@@ -367,47 +381,33 @@ public class Plan {
             solution[j] = tsp.getMeilleureSolution(j);
         }
         
-        //Bouger circulairement pour avoir l'entrepot au debut
-        int entrep = 0;
-        while(solution[entrep] != (nbSommet-1)){
-            entrep++;
-        }
         
         //Obtenir la solution en intersection
         Intersection[] sol = new Intersection[nbSommet];
         sol[0] = entrepot;
-        int[] solutionPermut = new int[nbSommet];
-        solutionPermut[0] = solution[entrep];
-        
         for (int i = 1; i < nbSommet; i++){
-            if ((entrep + i) < nbSommet){
-                sol[i] = this.getAdresseDeLivraison(solution[entrep+i]);
-                solutionPermut[i] = solution[entrep+i];
-            } else {
-                sol[i] = this.getAdresseDeLivraison(solution[entrep+i-nbSommet]);
-                solutionPermut[i] = solution[entrep+i-nbSommet];
-            }    
+            sol[i] = this.getAdresseDeLivraison(solution[i]);
+           
             ArrayList<Intersection> etapes = new ArrayList();
 
-            etapes.addAll(this.getChemin(solutionPermut[i-1], solutionPermut[i]));
+            etapes.addAll(this.getChemin(solution[i-1], solution[i]));
             solution2.add(etapes);
             
             Time[] tempsNouvelleDestination = new Time[2];
-            long tempsDepartPred = tempsPassage.get(i-1)[1].getTime();
-            long tempsChemin = matrice[solutionPermut[i-1]][solutionPermut[i]];
-            tempsNouvelleDestination[0] = new Time(tempsDepartPred + tempsChemin);
-            tempsNouvelleDestination[1] = new Time(tempsNouvelleDestination[0].getTime() + this.livraisons.get(solutionPermut[i]).getDuree()*1000);
+            int[] tempsNoeud = tsp.getTempsPassage(solution[i]);
+            tempsNouvelleDestination[0] = new Time(tempsNoeud[0]*1000 + tempsDepartEntrepot);
+            tempsNouvelleDestination[1] = new Time(tempsNoeud[1]*1000 + tempsDepartEntrepot);
             this.tempsPassage.add(tempsNouvelleDestination);
             
         }   
         
         ArrayList<Intersection> lastEtape = new ArrayList();
-        lastEtape.addAll(this.getChemin(solutionPermut[nbSommet - 1], solutionPermut[0]));
+        lastEtape.addAll(this.getChemin(solution[nbSommet - 1], solution[0]));
         solution2.add(lastEtape);
         
         Time[] tempsNouvelleDestination = new Time[2];
         long tempsDepartPred = tempsPassage.get(tempsPassage.size()-1)[1].getTime();
-        long tempsChemin = matrice[solutionPermut[solutionPermut.length-1]][matrice.length-1];
+        long tempsChemin = matrice[solution[solution.length-1]][matrice.length-1];
         tempsNouvelleDestination[0] = new Time(tempsDepartPred + tempsChemin);
         tempsNouvelleDestination[1] = tempsNouvelleDestination[0];
         this.tempsPassage.add(tempsNouvelleDestination);
@@ -453,5 +453,6 @@ public class Plan {
     public List<Livraison> getLivraisons() {
         return livraisons;
     }
+    
     
 }
