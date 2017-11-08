@@ -14,8 +14,7 @@ public interface TSP {
 	 * @param cout : cout[i][j] = duree pour aller de i a j, avec 0 <= i < nbSommets et 0 <= j < nbSommets
 	 * @param duree : duree[i] = duree pour visiter le sommet i, avec 0 <= i < nbSommets
 	 */
-	public void chercheSolution(int tpsLimite, int nbSommets, int[][] cout, int[] duree);
-	
+	public void chercheSolution(int tpsLimite, int nbSommets, int[][] cout, int[] duree, int[][]plagesHoraires);
 	/**
 	 * @param i
 	 * @return le sommet visite en i-eme position dans la solution calculee par chercheSolution
@@ -26,4 +25,11 @@ public interface TSP {
 	 * @return la duree de la solution calculee par chercheSolution
 	 */
 	public int getCoutMeilleureSolution();
+        
+        /**
+         * 
+         * @param i le noeud pour lequel on veut recuperer le point de passage (conforme a l'ordre de livraisons dans le cout)
+         * @return un tableau de 2 valeurs: le temps en miliseconds depuis le debut de la tournee arrive sur noeud et le temps pour partir de noeud 
+         */
+        public int[] getTempsPassage(int i);
 }
