@@ -13,14 +13,14 @@ import controleur.commande.CommandeException;
 public class EtatPrincipal implements EtatInterface {
 
     /** Le contrôleur de données */
-    private final ControleurDonnees controleurDonnees;
+    private final ControleurDonnees CONTROLEUR_DONNEES;
 
     /**
      * Constructeur de l'état principal
      * @param controleurDonnees Le contrôleur de données
      */
     public EtatPrincipal(ControleurDonnees controleurDonnees) {
-        this.controleurDonnees = controleurDonnees;
+        this.CONTROLEUR_DONNEES = controleurDonnees;
         controleurDonnees.notifierObservateurOuvrirDemande(true);
         controleurDonnees.notifierObservateurOuvrirPlan(true);
     }
@@ -33,14 +33,14 @@ public class EtatPrincipal implements EtatInterface {
 
     @Override
     public EtatInterface chargerPlan(File plan) throws CommandeException {
-        new CommandeChargerPlan(controleurDonnees, plan).executer();
-        return new EtatPlanCharge(controleurDonnees);
+        new CommandeChargerPlan(CONTROLEUR_DONNEES, plan).executer();
+        return new EtatPlanCharge(CONTROLEUR_DONNEES);
     }
 
     @Override
     public EtatInterface chargerLivraisons(File livraisons) throws CommandeException {
-        new CommandeChargerDemande(controleurDonnees, livraisons).executer();
-        return new EtatDemandeChargee(controleurDonnees);
+        new CommandeChargerDemande(CONTROLEUR_DONNEES, livraisons).executer();
+        return new EtatDemandeChargee(CONTROLEUR_DONNEES);
     }
 
     @Override

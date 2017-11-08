@@ -13,14 +13,14 @@ import controleur.commande.CommandeChargerPlan;
 public class EtatPlanCharge implements EtatInterface {
 
     /** Le contrôleur de données */
-    private final ControleurDonnees controleurDonnees;
+    private final ControleurDonnees CONTROLEURS_DONNEES;
 
     /**
      * Constructeur de l'état après le chargement du plan
      * @param controleurDonnees Le contrôleur de données
      */
     public EtatPlanCharge(ControleurDonnees controleurDonnees) {
-        this.controleurDonnees = controleurDonnees;
+        this.CONTROLEURS_DONNEES = controleurDonnees;
         //controleurDonnees.notifierObservateursFonctionnalites(false);
         controleurDonnees.notifierObservateursActivation(false);
     }
@@ -32,14 +32,14 @@ public class EtatPlanCharge implements EtatInterface {
 
     @Override
     public EtatInterface chargerPlan(File plan) throws CommandeException {
-        new CommandeChargerPlan(controleurDonnees, plan).executer();
+        new CommandeChargerPlan(CONTROLEURS_DONNEES, plan).executer();
         return this;
     }
 
     @Override
     public EtatInterface chargerLivraisons(File livraisons) throws CommandeException {
-        new CommandeChargerDemande(controleurDonnees, livraisons).executer();
-        return new EtatDemandeChargee(controleurDonnees);
+        new CommandeChargerDemande(CONTROLEURS_DONNEES, livraisons).executer();
+        return new EtatDemandeChargee(CONTROLEURS_DONNEES);
     }
 
     @Override

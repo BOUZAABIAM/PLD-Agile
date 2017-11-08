@@ -12,14 +12,14 @@ import controleur.commande.CommandeException;
 public class EtatAjout implements EtatInterface {
 
     /** Le contrôleur de données */
-    private final ControleurDonnees donnees;
+    private final ControleurDonnees DONNEES;
 
     /**
      * Constructeur du premier état d'ajout
      * @param donnees Le contrôleur de données
      */
     public EtatAjout(ControleurDonnees donnees) {
-        this.donnees = donnees;
+        this.DONNEES = donnees;
         donnees.notifierObservateurOuvrirPlan(false);
         donnees.notifierObservateurOuvrirDemande(false);
         donnees.notifierObservateursMessage("[AJOUT] Où souhaitez-vous ajouter une livraison ? Choisissez l'adresse de livraison en cliquant sur une intersection de le plan. Clic droit pour sortir du mode d'ajout.");
@@ -27,7 +27,7 @@ public class EtatAjout implements EtatInterface {
 
     @Override
     public EtatInterface clicSurLivraison(long livraisonId) {
-        donnees.notifierObservateursMessage("[AJOUT] Veuillez d'abord choisir l'adresse de la livraison en cliquant sur une intersection sur le plan. Clic droit pour sortir du mode d'ajout?");
+        DONNEES.notifierObservateursMessage("[AJOUT] Veuillez d'abord choisir l'adresse de la livraison en cliquant sur une intersection sur le plan. Clic droit pour sortir du mode d'ajout?");
         return this;
     }
 
@@ -43,7 +43,7 @@ public class EtatAjout implements EtatInterface {
 
     @Override
     public EtatInterface clicSurPlan(long intersectionId) {
-        return new EtatAjout2(donnees,intersectionId);
+        return new EtatAjout2(DONNEES,intersectionId);
     }
 
     @Override
@@ -53,8 +53,8 @@ public class EtatAjout implements EtatInterface {
 
     @Override
     public EtatInterface clicDroit() {
-        donnees.notifierObservateursMessage("Choisissez une action à effectuer pour modifier la tournée à votre guise.");
-        return new EtatPrincipal(donnees);
+        DONNEES.notifierObservateursMessage("Choisissez une action à effectuer pour modifier la tournée à votre guise.");
+        return new EtatPrincipal(DONNEES);
     }
 
 }

@@ -24,12 +24,12 @@ public class CommandeChargerDemande extends CommandeNonAnnulable {
     /**
      * Le contrôleur de données
      */
-    private final ControleurDonnees controleurDonnees;
+    private final ControleurDonnees CONTROLEUR_DONNEES;
     
     /**
      * Le fichier de livraion
      */
-    private final File livraisonsFichier;
+    private final File LIVRAISONS_FICHIER;
 
     /**
      * Constructeur de la commande de chargement de la demande
@@ -37,25 +37,25 @@ public class CommandeChargerDemande extends CommandeNonAnnulable {
      * @param livraisons Le fichier de demande de livraisons
      */
     public CommandeChargerDemande(ControleurDonnees controleurDonnees, File livraisons) {
-        this.controleurDonnees = controleurDonnees;
-        livraisonsFichier = livraisons;
+        this.CONTROLEUR_DONNEES = controleurDonnees;
+        LIVRAISONS_FICHIER = livraisons;
     }
 
     @Override
     public void executer() throws CommandeException {
         try {
-            Plan plan = controleurDonnees.getPlan();
-            DemandeLivraison demande = XMLParser.getInstance().getDL(livraisonsFichier, plan);
+            Plan plan = CONTROLEUR_DONNEES.getPlan();
+            DemandeLivraison demande = XMLParser.getInstance().getDL(LIVRAISONS_FICHIER, plan);
            // controleurDonnees.setModele(new Modele(plan, demande));
 
             // Permettre de calculer la tournee
-            controleurDonnees.notifierObservateursCalculTournee(true);
+            CONTROLEUR_DONNEES.notifierObservateursCalculTournee(true);
             
             // Notifier les observeurs que il y a un model maintenant
-            controleurDonnees.notifierObservateursModele();
+            CONTROLEUR_DONNEES.notifierObservateursModele();
 
-            controleurDonnees.notifierObservateursMessage(String.format("Demande de livraisons (%s) chargée avec succès ! Veuillez calculer la tournée maintenant.", livraisonsFichier.getName()));
-            controleurDonnees.effacerHistorique();
+            CONTROLEUR_DONNEES.notifierObservateursMessage(String.format("Demande de livraisons (%s) chargée avec succès ! Veuillez calculer la tournée maintenant.", LIVRAISONS_FICHIER.getName()));
+            CONTROLEUR_DONNEES.effacerHistorique();
         } catch (SAXException | ExceptionXML| JDOMException|ParserConfigurationException| IOException | ParseException ex) {
             throw new CommandeException(ex.getMessage());
         }

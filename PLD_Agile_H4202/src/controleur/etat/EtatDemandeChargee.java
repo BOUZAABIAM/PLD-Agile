@@ -15,7 +15,7 @@ import java.io.File;
 public class EtatDemandeChargee implements EtatInterface {
 
     /** Le contrôleur de données */
-    private final ControleurDonnees controleurDonnees;
+    private final ControleurDonnees CONTROLEUR_DONNEES;
 
     /**
      * Constructeur de l'état demande chargée
@@ -25,7 +25,7 @@ public class EtatDemandeChargee implements EtatInterface {
         // On désactive les fonctionnalités principales
     	//controleurDonnees.notifierObservateursFonctionnalites(false);
         controleurDonnees.notifierObservateursActivation(false);
-        this.controleurDonnees = controleurDonnees;
+        this.CONTROLEUR_DONNEES = controleurDonnees;
     }
 
     @Override
@@ -36,13 +36,13 @@ public class EtatDemandeChargee implements EtatInterface {
 
     @Override
     public EtatInterface chargerPlan(File plan) throws CommandeException {
-        new CommandeChargerPlan(controleurDonnees, plan).executer();
-        return new EtatPlanCharge(controleurDonnees);
+        new CommandeChargerPlan(CONTROLEUR_DONNEES, plan).executer();
+        return new EtatPlanCharge(CONTROLEUR_DONNEES);
     }
 
     @Override
     public EtatInterface chargerLivraisons(File livraisons) throws CommandeException {
-        new CommandeChargerDemande(controleurDonnees, livraisons).executer();
+        new CommandeChargerDemande(CONTROLEUR_DONNEES, livraisons).executer();
         return this;
     }
 
@@ -55,12 +55,12 @@ public class EtatDemandeChargee implements EtatInterface {
     @Override
     public EtatInterface calculerTournee() {
         try {
-            new CommandeCalculerTournee(controleurDonnees).executer();
+            new CommandeCalculerTournee(CONTROLEUR_DONNEES).executer();
         } catch (CommandeException ex) {
             throw new RuntimeException("Un problème est survenu lors du calcul de la tournée");
         }
-        controleurDonnees.notifierObservateursCalculTournee(false);
-        return new EtatPrincipal(controleurDonnees);
+        CONTROLEUR_DONNEES.notifierObservateursCalculTournee(false);
+        return new EtatPrincipal(CONTROLEUR_DONNEES);
     }
 
     @Override

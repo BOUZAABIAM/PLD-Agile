@@ -13,14 +13,14 @@ import controleur.commande.CommandeChargerPlan;
 public class EtatInitial implements EtatInterface {
 	
     /** Le contrôleur de données */
-    private final ControleurDonnees controleurDonnees;
+    private final ControleurDonnees CONTROLEUR_DONNEES;
 
     /**
      * Constructeur de l'état initial
      * @param controleurDonnees Le contrôleur de données
      */
     public EtatInitial(ControleurDonnees controleurDonnees) {
-        this.controleurDonnees = controleurDonnees;
+        this.CONTROLEUR_DONNEES = controleurDonnees;
     }
 
     @Override
@@ -30,8 +30,8 @@ public class EtatInitial implements EtatInterface {
 
     @Override
     public EtatInterface chargerPlan(File plan) throws CommandeException {
-        new CommandeChargerPlan(controleurDonnees, plan).executer();
-        return new EtatPlanCharge(controleurDonnees);
+        new CommandeChargerPlan(CONTROLEUR_DONNEES, plan).executer();
+        return new EtatPlanCharge(CONTROLEUR_DONNEES);
     }
 
     @Override

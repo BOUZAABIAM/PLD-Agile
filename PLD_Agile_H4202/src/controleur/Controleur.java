@@ -41,7 +41,7 @@ import org.xml.sax.SAXException;
 public class Controleur implements ControleurInterface {
     
     private Plan planActuel;
-    private DemandeLivraison DLActuelle;
+    private DemandeLivraison dLActuelle;
     private List<ArrayList<Intersection>> solutionActuelle;
 
     /**
@@ -52,40 +52,40 @@ public class Controleur implements ControleurInterface {
     /**
      * Le contrôleur qui intéragit avec le package modèle
      */
-    private final ControleurDonnees controleurDonnees;
+    private final ControleurDonnees CONTROLEUR_DONNEES;
 
     /**
      * Constructeur public du contrôleur 
      */
     public Controleur() {
-        controleurDonnees = new ControleurDonnees();
-        etat = new EtatInitial(controleurDonnees);
+        CONTROLEUR_DONNEES = new ControleurDonnees();
+        etat = new EtatInitial(CONTROLEUR_DONNEES);
     }
 
     @Override
     public void ajouterActivationFonctionnalitesObservateur(ActivationFonctionnalitesObservateur observer) {
-        controleurDonnees.ajouterActivationObservateur(observer);
+        CONTROLEUR_DONNEES.ajouterActivationObservateur(observer);
     }
 
     @Override
     public void ajouterModeleObservateur(ModeleObservateur observer) {
-        controleurDonnees.ajouterModeleObservateur(observer);
+        CONTROLEUR_DONNEES.ajouterModeleObservateur(observer);
     }
 
     @Override
     public void ajouterActivationOuvrirDemandeObservateur(ActivationOuvrirDemandeObservateur planObserveur) {
-        controleurDonnees.ajouterPlanObservateur(planObserveur);
+        CONTROLEUR_DONNEES.ajouterPlanObservateur(planObserveur);
     }
 
     @Override
     public void clicAnnuler() {
-        controleurDonnees.getHist().annuler();
+        CONTROLEUR_DONNEES.getHist().annuler();
     }
 
     @Override
     public void clicRetablir() {
         try {
-            controleurDonnees.getHist().executer();
+            CONTROLEUR_DONNEES.getHist().executer();
         } catch (CommandeException e) {
             e.printStackTrace();
         }
@@ -116,14 +116,14 @@ public class Controleur implements ControleurInterface {
                 } catch (SAXException | ExceptionXML |JDOMException |ParserConfigurationException| IOException | ParseException ex) {
                     Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
                 }
-        DLActuelle = dl;
+        dLActuelle = dl;
         planActuel.setDL(dl);
         return dl;
     }
 
     @Override
     public void clicOutilAjouter() {
-        etat = new EtatAjout(controleurDonnees);
+        etat = new EtatAjout(CONTROLEUR_DONNEES);
     }
 
    
@@ -174,7 +174,7 @@ public class Controleur implements ControleurInterface {
 
     @Override
     public Plan getPlanDeVille() {
-        Plan plan = controleurDonnees.getPlan();
+        Plan plan = CONTROLEUR_DONNEES.getPlan();
         if (plan == null)
             throw new RuntimeException(
                     "Plan n'existe pas, il faut charger le fichier xml avant d'appeler cette méthode");
@@ -188,42 +188,42 @@ public class Controleur implements ControleurInterface {
 
     @Override
     public void ajouterTourneeObservateur(ActivationFonctionnalitesObservateur tourneeObserveur) {
-        controleurDonnees.ajouterTourneeObservateur(tourneeObserveur);
+        CONTROLEUR_DONNEES.ajouterTourneeObservateur(tourneeObserveur);
     }
 
     @Override
     public void ajouterAnnulerCommandeObservateur(AnnulerCommandeObservateur annulerCommandeObserveur) {
-        controleurDonnees.ajouterAnnulerCommandeObservateur(annulerCommandeObserveur);
+        CONTROLEUR_DONNEES.ajouterAnnulerCommandeObservateur(annulerCommandeObserveur);
     }
 
     @Override
     public void ajouterRetablirCommandeObservateur(RetablirCommandeObservateur retablirCommandeObserveur) {
-        controleurDonnees.ajouterRetablirCommandeObservateur(retablirCommandeObserveur);
+        CONTROLEUR_DONNEES.ajouterRetablirCommandeObservateur(retablirCommandeObserveur);
     }
 
     @Override
     public void ajouterMessageObservateur(MessageObservateur obs) {
-		controleurDonnees.ajouterMessageObservateur(obs);
+		CONTROLEUR_DONNEES.ajouterMessageObservateur(obs);
 	}
 
     @Override
     public void ajouterPlanChargeObserveur(PlanChargeObservateur planChargeObservateur) {
-        controleurDonnees.ajouterPlanChargeObservateur(planChargeObservateur);
+        CONTROLEUR_DONNEES.ajouterPlanChargeObservateur(planChargeObservateur);
     }
 
     @Override
 	public void ajouterActivationOuvrirPlanObservateur(ActivationOuvrirPlanObservateur chargementPlanObserveur) {
-		controleurDonnees.ajouterChargementPlanObservateur(chargementPlanObserveur);
+		CONTROLEUR_DONNEES.ajouterChargementPlanObservateur(chargementPlanObserveur);
 	}
     @Override
         public void annuler(){
-            DLActuelle=null;
+            dLActuelle=null;
             solutionActuelle=null;
         }
         
     @Override
         public Livraison getLivraisonByID(long id){
-            return DLActuelle.getLivraison().get(id);
+            return dLActuelle.getLivraison().get(id);
         }
         
     @Override
@@ -236,7 +236,7 @@ public class Controleur implements ControleurInterface {
             solutionActuelle = planActuel.getSolution2();
             
             Livraison livr = new Livraison(interAdd, 600);
-            DLActuelle.addLivraison(livr);
+            dLActuelle.addLivraison(livr);
             
             return solutionActuelle;
         }
@@ -271,28 +271,24 @@ public class Controleur implements ControleurInterface {
                        inter ++; 
                        String text = "";
                        String nomRue ="";
-                       String nomRueprec ="";
+                       String nomRuePrec ="";
                     for (Intersection j : i) { 
                         nomRue = j.getTroncons().get(0).getNomRue();
-                        if(!(nomRue.equals(nomRueprec)))
+                        if(!(nomRue.equals(nomRuePrec)))
                         { text = text.concat(nomRue + "--->");}
-                        System.out.println("0"+text);
-                        System.out.println("1"+nomRue);
-                        System.out.println("2"+nomRueprec);
-                        nomRueprec = nomRue;
+                        nomRuePrec = nomRue;
                         
                     }
 
-                    Livraison livraison = DLActuelle.getLivraison().get(i.get(0).getId());
-                    System.out.println("liv:"+livraison);
+                    Livraison livraison = dLActuelle.getLivraison().get(i.get(0).getId());
                     if (livraison != null) {
                          List<Time[]> heures = this.calculDuree();
                         String debutPlage = "";
                         String finPlage = "";
-                        
+                      
                         String heureDepart = heures.get(inter)[0].toString();
                         String heureArrive = heures.get(inter)[1].toString();
-                         String dureeFormatee = "";
+                        String dureeFormatee = "";
                 int seconds = livraison.getDuree() % 60;
                 int totalMinutes = livraison.getDuree() / 60;
                 int minutes = totalMinutes % 60;

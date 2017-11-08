@@ -8,7 +8,7 @@ package Modele;
 public class ExceptionXML extends Exception {
 
     /** L'identifiant de sérialisation généré automatiquement */
-	private static final long serialVersionUID = 5195134836250283131L;
+	private static final long SERIAL_VERSION_UID = 5195134836250283131L;
 
 	/**
      * Constructeur de l'exception XML

@@ -10,14 +10,14 @@ public class CommandeCalculerTournee extends CommandeNonAnnulable {
     /**
      * Le contrôleur de données
      */
-    private final ControleurDonnees controleurDonnees;
+    private final ControleurDonnees CONTROLEUR_DONNEES;
 
     /**
      * Constructeur de la commande de calcul de tournée
      * @param controleurDonnees Le contrôleur de données
      */
     public CommandeCalculerTournee(ControleurDonnees controleurDonnees) {
-        this.controleurDonnees = controleurDonnees;
+        this.CONTROLEUR_DONNEES = controleurDonnees;
     }
 
     @Override

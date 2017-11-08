@@ -220,9 +220,9 @@ public class JPanelPlan extends JPanel {
             coordonnees = rotationPoint(x1, y1, xCentre, yCentre);
             x1 = coordonnees[0] - translation[0] + ConstantesGraphique.MARGE_INTERSECTION;
             y1 = coordonnees[1] - translation[1]+ ConstantesGraphique.MARGE_INTERSECTION;
-            Point P =new Point(x1,y1);
+            Point pt =new Point(x1,y1);
             long id =origine.getId();
-            intersections2.put(id, P);
+            intersections2.put(id, pt);
 
             for (Troncon section : origine.getTroncons()) {
                 Intersection destination = section.getDestination();
@@ -254,9 +254,9 @@ public class JPanelPlan extends JPanel {
             //dessine les livraisons
             Map<Long, Livraison> livraisons = laDL.getLivraison();
             Listelivraisons = new HashMap<Integer, Pair<Long, Point>>();
-            Point P=new Point(xEntrepot,yEntrepot);
+            Point point=new Point(xEntrepot,yEntrepot);
             int o =0;
-            Listelivraisons.put(o, new Pair<>(entrepot,P));
+            Listelivraisons.put(o, new Pair<>(entrepot,point));
             o++;
              
             
@@ -270,8 +270,8 @@ public class JPanelPlan extends JPanel {
                 yC = coordonnees[1] - translation[1]+ ConstantesGraphique.MARGE_INTERSECTION;
                 gc.fillOval(xC - 4, yC - 4, 8, 8);
                 gc.drawOval(xC - 6,  yC -6, 12, 12);
-                Point P1=new Point(xC,yC);
-                Listelivraisons.put(o, new Pair<>(livr.getAdresse().getId(),P1));
+                Point point1=new Point(xC,yC);
+                Listelivraisons.put(o, new Pair<>(livr.getAdresse().getId(),point1));
                 o++;
             }
            

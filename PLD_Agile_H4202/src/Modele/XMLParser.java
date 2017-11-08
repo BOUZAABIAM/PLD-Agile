@@ -189,8 +189,8 @@ public class XMLParser {
             Integer duree;
             String debutPlage;
             String finPlage;
-            int DP;
-            int FP;
+            int dP;
+            int fP;
             Element element = (Element) livr.item(i);
 
             id = Long.parseLong(element.getAttribute("adresse"));
@@ -206,9 +206,9 @@ public class XMLParser {
             finPlage = element.getAttribute("finPlage");
             
             if (debutPlage!="" && finPlage != "" ){
-            DP = convertirHeureEnSeconde(element.getAttribute("debutPlage"));
-            FP = convertirHeureEnSeconde (finPlage);
-            if ( DP >= FP) {
+            dP = convertirHeureEnSeconde(element.getAttribute("debutPlage"));
+            fP = convertirHeureEnSeconde (finPlage);
+            if ( dP >= fP) {
             throw new ExceptionXML("Une des livraisons est incorrecte : L'heure de début est supérieure ou égale à l'heure de fin");
             }}
             if(debutPlage.isEmpty()||finPlage.isEmpty()){
