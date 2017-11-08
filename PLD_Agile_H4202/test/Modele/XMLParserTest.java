@@ -54,18 +54,18 @@ public class XMLParserTest {
         Plan plan = this.initiale9point();         
         Map<Long, Livraison> livraisons = new TreeMap<Long, Livraison>(); 
         DemandeLivraison result = instance.getDL(xmlFileDL, plan);
-        Intersection intersection5 = new Intersection(5,1,1,4);
-        Intersection intersection6 = new Intersection(6,2,1,5);
-        Intersection entrepot = new Intersection(1,0,0,0);
-        Livraison livraison5 = new Livraison(intersection5,900);
-        Livraison livraison6 = new Livraison(intersection6,600);
+        //Intersection intersection5 = new Intersection(5,1,1,4);
+        //Intersection intersection6 = new Intersection(6,2,1,5);
+        //Intersection entrepot = new Intersection(1,0,0,0);
+        Livraison livraison5 = new Livraison(plan.getIntersectionsList().get(4),900);
+        Livraison livraison6 = new Livraison(plan.getIntersectionsList().get(5),600);
         livraisons.put((long)5, livraison5);
         livraisons.put((long)6, livraison6);
         Time heureDepart = Time.valueOf("8:0:0");
-        DemandeLivraison expResult = new DemandeLivraison(entrepot,heureDepart,livraisons);
-        if (expResult==result){
-                }
+        DemandeLivraison expResult = new DemandeLivraison(plan.getIntersectionsList().get(0),heureDepart,livraisons); 
+        assertNotNull(expResult); 
         assertEquals(expResult.toString(), result.toString());
+      
         
     }
     	
