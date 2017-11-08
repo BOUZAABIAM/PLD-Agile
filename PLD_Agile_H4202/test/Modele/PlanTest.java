@@ -54,7 +54,7 @@ public class PlanTest {
         System.out.println("graphLivraison");
         Plan instance = this.initiale3point();
         setDL2(instance,instance.getIntersectionsList().get(0),instance.getIntersectionsList().get(1),instance.getIntersectionsList().get(2));
-        int[][] expResult = {{0,5040,1440},{5040,0,6480},{1440,6480,0}};
+        int[][] expResult = {{0,1,0},{1,0,1},{0,1,0}};
         int[][] result = instance.graphLivraison();
         assertNotNull(result);
         assertArrayEquals(expResult, result);      
