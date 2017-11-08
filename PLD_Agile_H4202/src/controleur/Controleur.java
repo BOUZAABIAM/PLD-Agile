@@ -257,6 +257,7 @@ public class Controleur implements ControleurInterface {
     
     @Override 
         public void feuilleDeRoute(Document document) {
+            Font font14 = new Font(FontFamily.TIMES_ROMAN, 14);
             Font font16 = new Font(FontFamily.TIMES_ROMAN, 16);
             Font font18 = new Font(FontFamily.TIMES_ROMAN, 18);
             Font font20 = new Font(FontFamily.TIMES_ROMAN, 20);
@@ -325,10 +326,10 @@ public class Controleur implements ControleurInterface {
                             finPlage = "**";
                         }
                         document.add(new Paragraph("Livraison : " + adresse, font18));
-                        document.add(new Paragraph("Plage horaire : [" + debutPlage + " - " + finPlage + "]\n", font16));
-                        document.add(new Paragraph("Heure de départ : "+heureDepart,font16));
-                        document.add(new Paragraph("Heure d'arrivé : "+heureArrive,font16));
-                        document.add(new Paragraph("Durée : "+dureeFormatee,font16));
+                        document.add(new Paragraph("Plage horaire : [" + debutPlage + " - " + finPlage + "]\n", font14));
+                        document.add(new Paragraph("Heure de départ : "+heureDepart,font14));
+                        document.add(new Paragraph("Heure d'arrivé : "+heureArrive,font14));
+                        document.add(new Paragraph("Durée : "+dureeFormatee,font14));
 
                         document.add(new Paragraph("Trajet vers la livraison suivante", font20));
                     } else {
