@@ -443,7 +443,12 @@ public class IHMLivraisons extends javax.swing.JDialog {
             try {
                 dl = controleur.parserLivraisons(selectedFile);
             } catch (Exception ex) {
-                Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+                String s=ex.getMessage();
+                       jTextAreaMessage.setText(s);
+                       jop = new JOptionPane();
+                       jop.showMessageDialog(null, s, "Attention", JOptionPane.WARNING_MESSAGE);
+                       return;
             }
 
             jPanelPlanMap.setDL(dl);
