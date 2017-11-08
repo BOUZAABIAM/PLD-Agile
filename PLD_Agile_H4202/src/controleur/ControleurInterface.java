@@ -2,11 +2,13 @@ package controleur;
 
 import Modele.DemandeLivraison;
 import Modele.Intersection;
+import Modele.Livraison;
 import java.io.File;
 
 import controleur.commande.CommandeException;
 import controleur.observateur.*;
 import Modele.Plan;
+import com.itextpdf.text.Document;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +107,7 @@ public interface ControleurInterface {
      * @param fichierLivraisons Objet File qui représente le fichier XML
      * @throws Exception Lance une exception s'il y a une erreur lors du chargement des objets
      */
-    DemandeLivraison parserLivraisons(File fichierLivraisons, Plan planActuel) throws Exception;
+    DemandeLivraison parserLivraisons(File fichierLivraisons) throws Exception;
 
     /**
      * Appel lors du clic pour passer dans le mode d'ajout
@@ -129,9 +131,9 @@ public interface ControleurInterface {
      * Appel lors du clic sur le calcul de la tournée
      * @return
      */
-    List<ArrayList<Intersection>> calculTournee(Plan planActuel);
+    List<ArrayList<Intersection>> calculTournee();
     
-    List<Time[]> calculDuree(Plan planActuel);
+    List<Time[]> calculDuree();
     
     /**
      * Génère la feuille de route
@@ -139,4 +141,9 @@ public interface ControleurInterface {
      * @throws CommandeException Une erreur lors de l'exécution de la commande de génération
      */
     void genererFeuilleDeRoute(File fichier) throws CommandeException;
+    void annuler();
+    Livraison getLivraisonByID(long id);
+    List<ArrayList<Intersection>> ajouterLivraison(long idAdd, long idPrec);
+    List<ArrayList<Intersection>> supprimerLivraison(long idSuppr);
+    void feuilleDeRoute(Document document);
 }
