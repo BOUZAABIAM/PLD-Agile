@@ -285,7 +285,7 @@ public class JPanelPlan extends JPanel {
                 for (int i =0; i< inter.size()-1; i++) {
                     gc.setColor(Color.YELLOW);
                     // proporionel
-                    gc.setStroke(new BasicStroke(6));
+                    gc.setStroke(new BasicStroke(4));
                     Intersection origineT = inter.get(i);
                     Intersection destinationT = inter.get(i+1);
 
