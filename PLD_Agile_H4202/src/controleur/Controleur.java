@@ -264,21 +264,33 @@ public class Controleur implements ControleurInterface {
             try {
                 document.add(new Paragraph("FEUILLE DE ROUTE", font30));
                 document.add(new Paragraph("ENTREPOT :" + solutionActuelle.get(0).get(0).getTroncons().get(0).getNomRue(), font20));
-                String text = "";
+                
+                int inter =-1;
                 for (ArrayList<Intersection> i : solutionActuelle) {
-
-                    for (Intersection j : i) {
-
-                        String nomRue = j.getTroncons().get(0).getNomRue();
-                        // String debutPlage=j.
-                        text = text.concat(nomRue + "--->");
+                       inter ++; 
+                       String text = "";
+                       String nomRue ="";
+                       String nomRueprec ="";
+                    for (Intersection j : i) { 
+                        nomRue = j.getTroncons().get(0).getNomRue();
+                        if(!(nomRue.equals(nomRueprec)))
+                        { text = text.concat(nomRue + "--->");}
+                        System.out.println("0"+text);
+                        System.out.println("1"+nomRue);
+                        System.out.println("2"+nomRueprec);
+                        nomRueprec = nomRue;
+                        
                     }
 
                     Livraison livraison = DLActuelle.getLivraison().get(i.get(0).getId());
-                    System.out.println(livraison);
+                    System.out.println("liv:"+livraison);
                     if (livraison != null) {
+                         List<Time[]> heures = this.calculDuree();
                         String debutPlage = "";
                         String finPlage = "";
+                        
+                        String heureDepart = heures.get(inter)[0].toString();
+                        String heureArrive = heures.get(inter)[1].toString();
                         if (livraison.getDebutPlage() == null) {
                             debutPlage = "**";
                         } else {
@@ -298,6 +310,8 @@ public class Controleur implements ControleurInterface {
                         }
                         document.add(new Paragraph("Livraison : " + adresse, font20));
                         document.add(new Paragraph("Plage horaire : [" + debutPlage + " - " + finPlage + "]\n", font20));
+                        document.add(new Paragraph("Heure de départ : "+heureDepart,font20));
+                        document.add(new Paragraph("Heure d'arrivé : "+heureArrive,font20));
                         document.add(new Paragraph("Trajet vers la livraison suivante", font20));
                     } else {
                         document.add(new Paragraph("Trajet de l'entrepot vers 1ére adresse", font20));
