@@ -140,10 +140,10 @@ public interface ControleurInterface {
      * @param fichier Le fichier dans lequel on devra écrire la feuille de route
      * @throws CommandeException Une erreur lors de l'exécution de la commande de génération
      */
-    void genererFeuilleDeRoute(File fichier) throws CommandeException;
+    void feuilleDeRoute(Document document);
     void annuler();
     Livraison getLivraisonByID(long id);
     List<ArrayList<Intersection>> ajouterLivraison(long idAdd, long idPrec);
     List<ArrayList<Intersection>> supprimerLivraison(long idSuppr);
-    void feuilleDeRoute(Document document);
+
 }

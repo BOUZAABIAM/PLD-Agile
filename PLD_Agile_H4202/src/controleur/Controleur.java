@@ -201,11 +201,6 @@ public class Controleur implements ControleurInterface {
         controleurDonnees.ajouterRetablirCommandeObservateur(retablirCommandeObserveur);
     }
 
-	@Override
-	public void genererFeuilleDeRoute(File fichier) throws CommandeException {
-		// A definir ........
-	}
-
     @Override
     public void ajouterMessageObservateur(MessageObservateur obs) {
 		controleurDonnees.ajouterMessageObservateur(obs);
@@ -239,6 +234,10 @@ public class Controleur implements ControleurInterface {
 
             planActuel.addLivraison(interPrec, interAdd);
             solutionActuelle = planActuel.getSolution2();
+            
+            Livraison livr = new Livraison(interAdd, 600);
+            DLActuelle.addLivraison(livr);
+            
             return solutionActuelle;
         }
         

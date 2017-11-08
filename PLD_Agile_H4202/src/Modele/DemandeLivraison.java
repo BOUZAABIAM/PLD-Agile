@@ -34,6 +34,10 @@ public class DemandeLivraison {
     public Map<Long, Livraison> getLivraison() {
         return livraisons;
     }
+    
+    public void addLivraison(Livraison livr){
+        livraisons.put(livr.getAdresse().getId(), livr);
+    }
 
     @Override
     public String toString() {

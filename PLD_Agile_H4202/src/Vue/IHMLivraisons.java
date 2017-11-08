@@ -619,7 +619,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
                 if(livraison == null){
                     //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
-                    if( inter.get(0).getId() == idAdd){
+                    if( inter.get(0).getId() != idAdd){
                         //1er colonne : E pour entrepot
                         jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
                         //2e colonne : adresse
