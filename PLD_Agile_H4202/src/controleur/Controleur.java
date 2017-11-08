@@ -258,7 +258,6 @@ public class Controleur implements ControleurInterface {
     @Override 
         public void feuilleDeRoute(Document document) {
             Font font14 = new Font(FontFamily.TIMES_ROMAN, 14);
-            Font font16 = new Font(FontFamily.TIMES_ROMAN, 16);
             Font font18 = new Font(FontFamily.TIMES_ROMAN, 18);
             Font font20 = new Font(FontFamily.TIMES_ROMAN, 20);
             Font font12 = new Font(FontFamily.TIMES_ROMAN, 12);
@@ -333,7 +332,7 @@ public class Controleur implements ControleurInterface {
 
                         document.add(new Paragraph("Trajet vers la livraison suivante", font20));
                     } else {
-                        document.add(new Paragraph("Trajet de l'entrepot vers 1ére adresse", font20));
+                        document.add(new Paragraph("Trajet de l'entrepôt vers première adresse", font20));
                     }
                     document.add(new Paragraph(text, font12));
 

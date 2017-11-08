@@ -33,6 +33,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
  
 /**
  *
@@ -47,6 +48,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
     public IHMLivraisons(java.awt.Frame parent, boolean modal, Controleur controleur) {
         super(parent, modal);
         initComponents();
+        jTextAreaMessage.setText("Chargez un plan");
         this.controleur = controleur;
     }
 
@@ -80,6 +82,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jTextFieldAjouter = new javax.swing.JTextField();
         jTextFieldSupprimer = new javax.swing.JTextField();
         jButtonFeuilleDeRoute = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Système de livraison");
@@ -260,14 +265,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jLabel2.setText("Messages");
 
         jTextFieldPrecedent.setEnabled(false);
-        jTextFieldPrecedent.setText("ID intersection précédente");
         jTextFieldPrecedent.setPreferredSize(new java.awt.Dimension(200, 26));
 
         jTextFieldAjouter.setEnabled(false);
-        jTextFieldAjouter.setText("ID intersection à ajouter");
 
         jTextFieldSupprimer.setEnabled(false);
-        jTextFieldSupprimer.setText("ID intersection à supprimer");
 
         jButtonFeuilleDeRoute.setText("Generer feuille de route");
         jButtonFeuilleDeRoute.setEnabled(false);
@@ -276,6 +278,12 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 jButtonFeuilleDeRouteActionPerformed(evt);
             }
         });
+
+        jLabel3.setText("ID intersection précédente");
+
+        jLabel4.setText("ID intersection à ajouter");
+
+        jLabel5.setText("ID intersection à supprimer");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -309,13 +317,18 @@ public class IHMLivraisons extends javax.swing.JDialog {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(47, 47, 47)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jTextFieldAjouter, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(55, 55, 55)
-                                                .addComponent(jTextFieldSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextFieldAjouter, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                                            .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(55, 55, 55)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5)
+                                            .addComponent(jTextFieldSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addComponent(jScrollPane4)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
@@ -332,7 +345,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                                 .addComponent(jButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButtonAnnulerModif, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 23, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -359,11 +372,19 @@ public class IHMLivraisons extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jTextFieldPrecedent, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel3))
+                                        .addGap(12, 12, 12))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jTextFieldSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldAjouter))
+                                    .addComponent(jTextFieldAjouter)
+                                    .addComponent(jLabel4))
                                 .addGap(6, 6, 6))
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -418,6 +439,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jPanelPlanMap.setPlan(planDeVille);
         jPanelPlanMap.repaint();
         jButtonChargerLivraison.setEnabled(true);
+        jTextAreaMessage.setText("Choisissez une demande de livraison");
         
         
     }//GEN-LAST:event_jButtonChargerPlanActionPerformed
@@ -502,7 +524,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 indexRow++;
             }
         }  
-
+        jTextAreaMessage.setText("Vous pouvez calculer la tournée");
     }//GEN-LAST:event_jButtonChargerLivraisonActionPerformed
      
     private void jButtonCalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculerTourneeActionPerformed
@@ -582,6 +604,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonValider.setEnabled(false);
         jButtonAnnulerModif.setEnabled(true);
         jButtonAnnulerModif.setEnabled(false);
+        
+        jTextAreaMessage.setText("Vous pouvez modifier la tournée ou générer la feuille de route");
     }//GEN-LAST:event_jButtonCalculerTourneeActionPerformed
 
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
@@ -757,7 +781,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 indexRow++;
             }
         }
-
+        jButtonFeuilleDeRoute.setEnabled(true);
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
     private void annulerDL(){
@@ -819,7 +843,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         } catch (IOException ex) {
             Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("done");
+        jTextAreaMessage.setText("Feuille de route générée, merci !");
 
     }//GEN-LAST:event_jButtonFeuilleDeRouteActionPerformed
 
@@ -871,11 +895,12 @@ public class IHMLivraisons extends javax.swing.JDialog {
        int X= evt.getX();
         int Y= evt.getY();
         long idIntersection = jPanelPlanMap.estSurIntersection(X,Y);
+        Intersection inter = jPanelPlanMap.lePlan.getIntersection(idIntersection);
                 if (idIntersection == -1) {
                     //jTextAreaMessage.setText("!!!!!");
                     return;
                 } else {
-                    jTextAreaMessage.setText("Intersection n° : "+idIntersection+" et de coordonnées : X = "+jPanelPlanMap.lePlan.getIntersection(idIntersection).getX()+" et Y = "+jPanelPlanMap.lePlan.getIntersection(idIntersection).getY());
+                    jTextAreaMessage.setText("Intersection n° : "+idIntersection+", située : "+inter.getTroncons().get(0).getNomRue());
                     jTextFieldAjouter.setText(String.valueOf(idIntersection));
                 }
     }//GEN-LAST:event_jPanelPlanMapMouseClicked
@@ -888,14 +913,16 @@ public class IHMLivraisons extends javax.swing.JDialog {
             if (l == null) {
                 return;
             }
+            
             Intersection inter = jPanelPlanMap.lePlan.getIntersection(l[1]);
             jTableLivraisons.setRowSelectionInterval((int) l[0], (int) l[0]);
+            
             if(l[0]==0)
             {
-                jTextAreaMessage.setText("L'entrepot se trouve dans : X = " + inter.getX()+" et Y = "+inter.getX());
+                jTextAreaMessage.setText("L'entrepot se trouve est situé : " + inter.getTroncons().get(0).getNomRue());
                 jTextFieldPrecedent.setText(String.valueOf(inter.getId()));
             } else {          
-                jTextAreaMessage.setText("Livraison n° : "+l[1]+" et de coordonnées : X = "+inter.getX()+" et Y = "+inter.getX());
+                jTextAreaMessage.setText("Livraison n° : "+l[1]+", située : "+inter.getTroncons().get(0).getNomRue());
                 jTextFieldPrecedent.setText(String.valueOf(l[1]));
                 jTextFieldSupprimer.setText(String.valueOf(l[1]));
             }
@@ -977,8 +1004,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private javax.swing.JButton jButtonViderDL;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelTitre;
-    private JPanelPlan jPanelPlanMap;
+	private JPanelPlan jPanelPlanMap;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTableLivraisons;
