@@ -60,12 +60,8 @@ public class IntersectionTest {
 //        intersections.add(intersection5);
 //        intersections.add(intersection7);      
         assertEquals(intersections, result);
-        fail("The test case is a prototype.");
+       
     }
 
-    /**
-     * Test of toString method, of class Intersection.
-     */
-  
-    
 }
+

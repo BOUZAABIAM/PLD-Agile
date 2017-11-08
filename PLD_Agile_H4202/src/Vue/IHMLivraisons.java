@@ -443,7 +443,12 @@ public class IHMLivraisons extends javax.swing.JDialog {
             try {
                 dl = controleur.parserLivraisons(selectedFile);
             } catch (Exception ex) {
-                Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+                String s=ex.getMessage();
+                       jTextAreaMessage.setText(s);
+                       jop = new JOptionPane();
+                       jop.showMessageDialog(null, s, "Attention", JOptionPane.WARNING_MESSAGE);
+                       return;
             }
 
             jPanelPlanMap.setDL(dl);
@@ -619,7 +624,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
                 if(livraison == null){
                     //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
-                    if( inter.get(0).getId() == idAdd){
+                    if( inter.get(0).getId() != idAdd){
                         //1er colonne : E pour entrepot
                         jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
                         //2e colonne : adresse
@@ -935,15 +940,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(IHMLivraisons.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(IHMLivraisons.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(IHMLivraisons.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(IHMLivraisons.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the dialog */
