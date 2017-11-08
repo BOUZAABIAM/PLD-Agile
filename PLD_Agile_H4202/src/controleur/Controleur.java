@@ -291,6 +291,21 @@ public class Controleur implements ControleurInterface {
                         
                         String heureDepart = heures.get(inter)[0].toString();
                         String heureArrive = heures.get(inter)[1].toString();
+                         String dureeFormatee = "";
+                int seconds = livraison.getDuree() % 60;
+                int totalMinutes = livraison.getDuree() / 60;
+                int minutes = totalMinutes % 60;
+                int hours = totalMinutes / 60;
+
+                if(hours >0){
+                    dureeFormatee += hours + "h ";
+                }
+                if(minutes >0){
+                    dureeFormatee += minutes + "min ";
+                }
+                if(seconds >0){
+                    dureeFormatee += seconds + "s";
+                }
                         if (livraison.getDebutPlage() == null) {
                             debutPlage = "**";
                         } else {
@@ -312,6 +327,8 @@ public class Controleur implements ControleurInterface {
                         document.add(new Paragraph("Plage horaire : [" + debutPlage + " - " + finPlage + "]\n", font20));
                         document.add(new Paragraph("Heure de départ : "+heureDepart,font20));
                         document.add(new Paragraph("Heure d'arrivé : "+heureArrive,font20));
+                        document.add(new Paragraph("Durée : "+dureeFormatee,font20));
+
                         document.add(new Paragraph("Trajet vers la livraison suivante", font20));
                     } else {
                         document.add(new Paragraph("Trajet de l'entrepot vers 1ére adresse", font20));
