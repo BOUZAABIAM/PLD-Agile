@@ -35,6 +35,10 @@ public class DemandeLivraison {
         return livraisons;
     }
     
+    /**
+     * Ajoute une livraison à la liste de livraisons de la demande de livraison
+     * @param livr la livraison à ajouter
+     */
     public void addLivraison(Livraison livr){
         livraisons.put(livr.getAdresse().getId(), livr);
     }

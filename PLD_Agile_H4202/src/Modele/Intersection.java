@@ -18,6 +18,10 @@ public class Intersection {
     private int d;
     private Intersection pred;
     private int predIndex = -1;
+    /* 
+    * La couleur prend les valeurs: 
+    * 0 = blanc, 1 = gris, 2 = noir 
+    */
     private int couleur;
 
     public Intersection(long id, double x, double y, int index) {
@@ -28,6 +32,10 @@ public class Intersection {
         this.troncons = new ArrayList<Troncon>();
     }
 
+    /**
+     * Ajoute un tronçon dans la liste des tronçons
+     * @param troncon 
+     */
     public void addTroncon(Troncon troncon) {
         troncons.add(troncon);
     }
@@ -87,22 +95,26 @@ public class Intersection {
     public int getCouleur() {
         return couleur;
     }    
-        
+    
+    /**
+     * Change les valeurs de d, pred et predIndex si necessaire suite au relanchement. 
+     * Les valeurs sont changés que si le newD est inferieur au d courant.
+     * @param newD la nouvelle durée proposée suite au relanchement
+     * @param pred le nouveau precedesseur si la nouvelle durée est plus petite que l'ancienne
+     */
     public void relacher(int newD, Intersection pred){
         if (newD < d){
-//            System.out.println("relacher");
-//            System.out.println("Element courant " + this);
-//            System.out.println("Duree courante " + d);
-//            System.out.println("Nouvelle duree " + newD);
             this.d = newD;
             this.pred = pred; 
             this.predIndex = this.pred.getIndex();                    
-//            System.out.println("Le predeceseur " + this.pred);
-//            System.out.println("L'index de predecesseur " + this.predIndex);
-//            System.out.println();
         }
     }
     
+    /**
+     * Relache les successeurs de l'intersection courant. 
+     * Suite à ça la couleur de l'intersection courante est changé vers 2
+     * @return 
+     */
     public List<Intersection> relacherSucc(){
         List<Intersection> nouveauGris = new LinkedList<Intersection>();
         this.couleur = 2;
@@ -113,11 +125,6 @@ public class Intersection {
                 arrive.setCouleur(1);
             }
             if (arrive.getCouleur() != 2){
-//                System.out.println("relacherSucc");
-//                System.out.println("duree " + d);
-//                System.out.println("element courant " +this);
-//                System.out.println("element arrive de troncon que n'est pas noir " + arrive);
-//                System.out.println();
                 arrive.relacher(d+troncon.getDuree(), this);
             }
         }
