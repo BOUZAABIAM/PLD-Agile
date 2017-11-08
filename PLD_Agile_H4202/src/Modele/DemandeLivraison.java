@@ -13,9 +13,9 @@ import java.sql.Time;
  */
 public class DemandeLivraison {
     
-    private Intersection entrepot;
-    private Time heureDepart;
-    private Map<Long, Livraison> livraisons;
+    final private Intersection entrepot;
+    final private Time heureDepart;
+    final private Map<Long, Livraison> livraisons;
 
     public DemandeLivraison(Intersection entrepot, Time heureDepart, Map<Long, Livraison> livraison) {
         this.entrepot = entrepot;

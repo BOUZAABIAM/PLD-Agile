@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package Modele;
-import java.util.*;
 import java.sql.Time;
 /**
  *
@@ -20,8 +19,6 @@ public class Livraison {
     public Livraison(Intersection adresse, int duree, String debutPlage, String finPlage) {
         this.adresse = adresse;
         this.duree = duree;
-        //String dPlage = goodTimeForm(debutPlage);
-        //String fPlage = goodTimeForm(finPlage);
         this.debutPlage = Time.valueOf(debutPlage);
         this.finPlage = Time.valueOf(finPlage);
     }
@@ -38,18 +35,6 @@ public class Livraison {
         this.finPlage = finPlage;
     }
         
-    
-     private String goodTimeForm(String time){
-        String newTime = time;
-        int prec = -1;    
-        for (int i = 0; i < newTime.length(); i++){
-            if (newTime.charAt(i) == ':' && ((i - prec) < 3)){
-                    prec = i;
-                    newTime = newTime.substring(0, i-2) + 0 + newTime.substring(i-2, newTime.length());
-            }
-        }
-        return newTime;
-    }
 
     public Intersection getAdresse() {
         return adresse;

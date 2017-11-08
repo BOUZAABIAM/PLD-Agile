@@ -12,9 +12,9 @@ import java.util.LinkedList;
 public class Intersection {
 
     private int index;
-    private long id;
-    private double x, y;
-    private List<Troncon> troncons;
+    final private long id;
+    final private double x, y;
+    final private List<Troncon> troncons;
     private int d;
     private Intersection pred;
     private int predIndex = -1;
@@ -29,7 +29,7 @@ public class Intersection {
         this.x = x;
         this.y = y;
         this.index = index;
-        this.troncons = new ArrayList<Troncon>();
+        this.troncons = new ArrayList<>();
     }
 
     /**
@@ -116,7 +116,7 @@ public class Intersection {
      * @return 
      */
     public List<Intersection> relacherSucc(){
-        List<Intersection> nouveauGris = new LinkedList<Intersection>();
+        List<Intersection> nouveauGris = new LinkedList<>();
         this.couleur = 2;
         for(Troncon troncon: troncons){
             Intersection arrive = troncon.getDestination();
