@@ -151,20 +151,7 @@ public class Controleur implements ControleurInterface {
         
         solutionActuelle = solution;
         return solution;
-//        System.out.println("Solutions : ");
-//        for (int j=0; j<solution.size(); j++){
-//            System.out.println(solution.get(j).get(0).toString());
-//        }
-//        int s1 = solution.size()-1;
-//        int s2 = solution.get(s1).size()-1;
-//        System.out.println(solution.get(s1).get(s2).toString());
-//
-//        System.out.println("Itinéraire : ");
-//        for (int j=0; j<solution.size(); j++){
-//            for (int k=0; k<solution.get(j).size(); k++){
-//                System.out.println(solution.get(j).get(k).toString());
-//            }
-//        }
+
     }
     
     @Override
@@ -257,7 +244,7 @@ public class Controleur implements ControleurInterface {
     
     @Override 
         public void feuilleDeRoute(Document document) {
-            Font font16 = new Font(FontFamily.TIMES_ROMAN, 16);
+            Font font14 = new Font(FontFamily.TIMES_ROMAN, 14);
             Font font18 = new Font(FontFamily.TIMES_ROMAN, 18);
             Font font20 = new Font(FontFamily.TIMES_ROMAN, 20);
             Font font12 = new Font(FontFamily.TIMES_ROMAN, 12);
@@ -321,14 +308,14 @@ public class Controleur implements ControleurInterface {
                             finPlage = "**";
                         }
                         document.add(new Paragraph("Livraison : " + adresse, font18));
-                        document.add(new Paragraph("Plage horaire : [" + debutPlage + " - " + finPlage + "]\n", font16));
-                        document.add(new Paragraph("Heure de départ : "+heureDepart,font16));
-                        document.add(new Paragraph("Heure d'arrivé : "+heureArrive,font16));
-                        document.add(new Paragraph("Durée : "+dureeFormatee,font16));
+                        document.add(new Paragraph("Plage horaire : [" + debutPlage + " - " + finPlage + "]\n", font14));
+                        document.add(new Paragraph("Heure de départ : "+heureDepart,font14));
+                        document.add(new Paragraph("Heure d'arrivé : "+heureArrive,font14));
+                        document.add(new Paragraph("Durée : "+dureeFormatee,font14));
 
                         document.add(new Paragraph("Trajet vers la livraison suivante", font20));
                     } else {
-                        document.add(new Paragraph("Trajet de l'entrepot vers 1ére adresse", font20));
+                        document.add(new Paragraph("Trajet de l'entrepôt vers première adresse", font20));
                     }
                     document.add(new Paragraph(text, font12));
 
