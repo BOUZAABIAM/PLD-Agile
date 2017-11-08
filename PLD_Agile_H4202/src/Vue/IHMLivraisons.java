@@ -888,6 +888,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 return;
             }
             Intersection inter = jPanelPlanMap.lePlan.getIntersection(l[1]);
+            jTableLivraisons.setRowSelectionInterval((int) l[0], (int) l[0]);
             if(l[0]==0)
             {
                 jTextAreaMessage.setText("L'entrepot se trouve dans : X = " + inter.getX()+" et Y = "+inter.getX());
