@@ -68,8 +68,7 @@ public class PlanTest {
     @Test
     public void testGetChemin_int_int() {
         System.out.println("getChemin");        
-        Plan instance = this.initiale3point();
-            
+        Plan instance = this.initiale3point();            
         List<Intersection> expResult = new LinkedList<Intersection>();
         expResult.add(instance.getIntersectionsList().get(2));
         expResult.add(instance.getIntersectionsList().get(1));
@@ -79,9 +78,11 @@ public class PlanTest {
         List<Intersection> result = instance.getChemin(1,2);
         //test le plus court chemin
         assertEquals(expResult.toString(), result.toString());
-        // 
-       // List<Intersection> result2 = instance.getChemin(1,3);
-        
+        // s'il existe pas le chemin            
+        Plan instance2 = this.initiale3point();
+        setDL3(instance2,instance2.getIntersectionsList().get(0),instance2.getIntersectionsList().get(1),instance2.getIntersectionsList().get(2),instance2.getIntersectionsList().get(3));
+        List<Intersection> result2 = instance.getChemin(1,3);
+        assertNull(result2);
     }
     
 
@@ -120,21 +121,31 @@ public class PlanTest {
      */
     @Test
     public void testAddLivraison() {
-        System.out.println("addLivraison");  
-        Plan instance = this.initiale3point(); 		
-	setDL1(instance,instance.getIntersectionsList().get(0),instance.getIntersectionsList().get(2));
-	List<ArrayList<Intersection>> result = instance.addLivraison(instance.getIntersectionsList().get(0),instance.getIntersectionsList().get(1));
-	Plan instance2 = this.initiale3point();
+        System.out.println("addLivraison"); 
+        Plan plan = this.initiale3point();     
+	Plan plan2 = this.initiale3point();         
+        setDL1(plan,plan.getIntersectionsList().get(0),plan.getIntersectionsList().get(1));
+	setDL2(plan2,plan2.getIntersectionsList().get(0),plan2.getIntersectionsList().get(1),plan2.getIntersectionsList().get(2));
+        
+        plan.calculSolutionTSP1();
+        plan2.calculSolutionTSP1();
+        plan.addLivraison(plan.getIntersectionsList().get(1),plan.getIntersectionsList().get(2));
+        plan.calculSolutionTSP1();
+	assertEquals(plan.getSolution2().toString(), plan2.getSolution2().toString());
 		
-	// test ajouter intersection1
-	setDL2(instance2,instance2.getIntersectionsList().get(0),instance2.getIntersectionsList().get(1),instance2.getIntersectionsList().get(2));		
-        instance2.calculSolutionTSP1();
-        List<ArrayList<Intersection>> expResult = instance2.getSolution2();
+	// test ajouter intersection1 qui est deja en Livraison
+        Plan plan3 = this.initiale3point();
+	setDL2(plan3,plan3.getIntersectionsList().get(0),plan3.getIntersectionsList().get(1),plan3.getIntersectionsList().get(2));		
+        plan3.calculSolutionTSP1();
+        plan3.addLivraison(plan3.getIntersectionsList().get(1),plan3.getIntersectionsList().get(2));
+        assertEquals(plan.getSolution2().toString(), plan3.getSolution2().toString());
+        
 	// il y a pas de chemin pour aller a intersection 4
-	setDL2(instance2,instance2.getIntersectionsList().get(0),instance2.getIntersectionsList().get(1),instance2.getIntersectionsList().get(3));	
-        instance2.calculSolutionTSP1();
-        List<ArrayList<Intersection>> expResult2 = instance2.getSolution2();	   
-        assertEquals(expResult, result);
+        Plan plan4 = this.initiale3point();
+	setDL3(plan4,plan4.getIntersectionsList().get(0),plan4.getIntersectionsList().get(1),plan4.getIntersectionsList().get(2),plan4.getIntersectionsList().get(3));	
+        plan4.calculSolutionTSP1();
+        
+        
     }
 	
     /**
@@ -143,51 +154,21 @@ public class PlanTest {
     @Test
     public void testDeleteLivraison() {
         System.out.println("deleteLivraison");
-        Intersection intersection1 = new Intersection(1,0,0,0);
-        Intersection intersection2 = new Intersection(2,1,0,1);
-        Intersection intersection3 = new Intersection(3,2,0,2);
-	Intersection intersection4 = new Intersection(4,2,0,3);
-        Troncon troncon12 = new Troncon("A",intersection1,intersection2,2);
-        Troncon troncon13 = new Troncon("B",intersection1,intersection3,10);
-        Troncon troncon23 = new Troncon("C",intersection2,intersection3,7);
-        Troncon troncon21 = new Troncon("A",intersection2,intersection1,2);
-        Troncon troncon31 = new Troncon("B",intersection3,intersection1,10);
-        Troncon troncon32 = new Troncon("C",intersection3,intersection2,7);
-        intersection1.addTroncon(troncon21);
-        intersection1.addTroncon(troncon31);
-        intersection2.addTroncon(troncon32);
-        intersection2.addTroncon(troncon12);
-        intersection3.addTroncon(troncon13);
-        intersection3.addTroncon(troncon23);
-	ArrayList<ArrayList<Intersection>> expResult = new ArrayList<ArrayList<Intersection>>();
-	ArrayList<Intersection> arraylist1 = new ArrayList<Intersection>();
-        ArrayList<Intersection> arraylist2 = new ArrayList<Intersection>();
-        arraylist1.add(intersection1);
-	arraylist1.add(intersection2);
-        arraylist1.add(intersection3);
-	arraylist2.add(intersection3);
-	arraylist2.add(intersection2);
-	arraylist2.add(intersection1);	
-			
-	expResult.add(arraylist1);
-	expResult.add(arraylist2);
-
-	Plan instance = this.initiale3point(); 
-	setDL2(instance,instance.getIntersectionsList().get(0),instance.getIntersectionsList().get(1),instance.getIntersectionsList().get(2));		
-        instance.calculSolutionTSP1();
-        List<ArrayList<Intersection>> result = instance.deleteLivraison(intersection2);
-	
-	assertEquals(expResult.toString(), result.toString());
-		
+        Plan planexpResult = this.initiale3point();     
+	Plan planResult = this.initiale3point();         
+        setDL1(planexpResult,planexpResult.getIntersectionsList().get(0),planexpResult.getIntersectionsList().get(1));
+	setDL2(planResult,planResult.getIntersectionsList().get(0),planResult.getIntersectionsList().get(1),planResult.getIntersectionsList().get(2));		
+        planResult.calculSolutionTSP1();
+        planexpResult.calculSolutionTSP1();
+        planResult.deleteLivraison(planResult.getIntersectionsList().get(2));
+	assertEquals(planexpResult.getSolution2().toString(), planResult.getSolution2().toString());
+//	 //suprimer intersection qui n'est pas un livraison
+//	planResult.deleteLivraison(planResult.getIntersectionsList().get(3));
+//	assertEquals(planexpResult.getSolution2().toString(), planResult.getSolution2().toString());
 	// suprimer entrepot
-	List<ArrayList<Intersection>> result2 = instance.deleteLivraison(intersection1);	
-	ArrayList<ArrayList<Intersection>> solution2 = this.solution2();
-	assertEquals(solution2.toString(), result2.toString());
-		
-	// suprimer intersection qui n'est pas un adress de livraison
-	List<ArrayList<Intersection>> result3 = instance.deleteLivraison(intersection4);		
-	assertEquals(solution2.toString(), result3.toString());
-       
+	planResult.deleteLivraison(planResult.getIntersectionsList().get(0));
+	assertEquals(planexpResult.getSolution2().toString(), planResult.getSolution2().toString());
+      
     }
 
     /**
@@ -210,12 +191,15 @@ public class PlanTest {
         Time heureDepart = Time.valueOf("8:0:0");
         DemandeLivraison dl = new DemandeLivraison(entrepot,heureDepart,livraisons);
         instance.setDL(dl);
-		
-		
-        int result = instance.getIndiceLivraisonParIntersection(intersection5);
-        
+	// intersection est un livraison
+        int result = instance.getIndiceLivraisonParIntersection(intersection5);        
         assertEquals(expResult, result);
-       
+        // intersection n'est pas un livraison
+        int result2 = instance.getIndiceLivraisonParIntersection(instance.getIntersectionsList().get(2)); 
+        assertEquals(Integer.MAX_VALUE, result2);
+        // intersection est entrepot
+        int result3 = instance.getIndiceLivraisonParIntersection(entrepot); 
+        assertEquals(2, result3);
     }
 
     /**
@@ -236,8 +220,12 @@ public class PlanTest {
         Time heureDepart = Time.valueOf("8:0:0");
         DemandeLivraison dl = new DemandeLivraison(entrepot,heureDepart,livraisons);
         instance.setDL(dl);      
+        // intersention est un livraison
         assertEquals(livraison5, instance.getLivraisonParIntersection(intersection5));
-       
+        // intersection est pas un livraison
+        assertNull(instance.getLivraisonParIntersection(entrepot));
+        //intersection est entrepot
+        assertNull(instance.getLivraisonParIntersection(instance.getIntersectionsList().get(2)));
     }
 	
 	@Test
@@ -272,7 +260,7 @@ public class PlanTest {
         expResult[2]=0;
 	int[] result = null;
         setDL2(instance,instance.getIntersectionsList().get(0),instance.getIntersectionsList().get(1),instance.getIntersectionsList().get(2));
-        //result= instance.calculDuree(intersection2,intersections, Integer.MAX_VALUE);
+        
         result= instance.calculDuree(intersection2,intersections, Integer.MAX_VALUE);
         Assert.assertArrayEquals(expResult,result);
     }
@@ -311,9 +299,9 @@ public class PlanTest {
         Plan instance2 = this.initiale3point();
         
         // il y a pas le chemin pour aller a intersection4
-        setDL3(instance2,instance2.getIntersectionsList().get(0),instance2.getIntersectionsList().get(1),instance2.getIntersectionsList().get(2),instance2.getIntersectionsList().get(3));        
-        instance2.calculSolutionTSP1();  
-        assertEquals(expResult.toString(), instance2.getSolution2().toString());
+       setDL3(instance2,instance2.getIntersectionsList().get(0),instance2.getIntersectionsList().get(1),instance2.getIntersectionsList().get(2),instance2.getIntersectionsList().get(3));        
+       instance2.calculSolutionTSP1();  
+       assertEquals(expResult.toString(), instance2.getSolution2().toString());
     }
     
 
@@ -514,34 +502,5 @@ public class PlanTest {
         Plan plan = new Plan(mapintersections,intersections);
         return plan;
     } 
-
-
-  
-//         Intersection intersection1 = new Intersection(1,0,0,0);
-//        Intersection intersection2 = new Intersection(2,1,0,1);
-//        Intersection intersection3 = new Intersection(3,2,0,2);
-//	Intersection intersection3 = new Intersection(4,2,0,3);
-//        Troncon troncon12 = new Troncon("A",intersection1,intersection2,2);
-//        Troncon troncon13 = new Troncon("B",intersection1,intersection3,10);
-//        Troncon troncon23 = new Troncon("C",intersection2,intersection3,7);
-//        Troncon troncon21 = new Troncon("A",intersection2,intersection1,2);
-//        Troncon troncon31 = new Troncon("B",intersection3,intersection1,10);
-//        Troncon troncon32 = new Troncon("C",intersection3,intersection2,7);
-//        intersection1.addTroncon(troncon21);
-//        intersection1.addTroncon(troncon31);
-//        intersection2.addTroncon(troncon32);
-//        intersection2.addTroncon(troncon12);
-//        intersection3.addTroncon(troncon13);
-//        intersection3.addTroncon(troncon23);
-//		ArrayList<ArrayList<Intersection>> expResult = new ArrayList<ArrayList<Intersection>>();
-//		ArrayList<Intersection> result1 = new ArrayList<Intersection>();
-//		result1.add(intersection1);
-//		result1.add(intersection2);
-//		result1.add(intersection3);
-//		result2.add(intersection3);
-//		result2.add(intersection2);
-//		result2.add(intersection1);		
-//		expResult.add(result1);
-//		expResult.add(result2);
 
 }
