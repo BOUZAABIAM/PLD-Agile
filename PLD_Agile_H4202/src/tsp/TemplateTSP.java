@@ -123,6 +123,11 @@ public abstract class TemplateTSP implements TSP {
 	    }
 	}
          
+        /**
+         * Renvoie le temps d'arrivé et de depart pour la livraison i
+         * @param i
+         * @return un array avec deux valeurs
+         */
         public int[] getTempsPassage(int i){
             int[] tempsPassage = new int[2];
             tempsPassage[0] = this.tempsPassage[i][0];
