@@ -228,42 +228,28 @@ public class PlanTest {
         assertNull(instance.getLivraisonParIntersection(instance.getIntersectionsList().get(2)));
     }
 	
-	@Test
+	@Test 
 	/*
-	 * 
+	 * testcalculDuree
 	 */
     public void testcalculDuree(){
 	Plan instance = this.initiale3point();
-	Intersection intersection1 = new Intersection(1,0,0,0);
-        Intersection intersection2 = new Intersection(2,1,0,1);
-        Intersection intersection3 = new Intersection(3,2,0,2);
-		
-        Troncon troncon12 = new Troncon("A",intersection1,intersection2,2);
-        Troncon troncon13 = new Troncon("B",intersection1,intersection3,10);
-        Troncon troncon23 = new Troncon("C",intersection2,intersection3,7);
-        Troncon troncon21 = new Troncon("A",intersection2,intersection1,2);
-        Troncon troncon31 = new Troncon("B",intersection3,intersection1,10);
-        Troncon troncon32 = new Troncon("C",intersection3,intersection2,7);
-        intersection1.addTroncon(troncon21);
-        intersection1.addTroncon(troncon31);
-        intersection2.addTroncon(troncon32);
-        intersection2.addTroncon(troncon12);
-        intersection3.addTroncon(troncon13);
-        intersection3.addTroncon(troncon23);
+
         Intersection[] intersections = new Intersection[3];
-        intersections[0]=intersection1;
-        intersections[1]=intersection2;
-        intersections[2]=intersection3;
+        intersections[0]=instance.getIntersectionsList().get(0);
+        intersections[1]=instance.getIntersectionsList().get(1);
+        intersections[2]=instance.getIntersectionsList().get(2);
 	int[] expResult = new int[3];
         expResult[0]=0;
         expResult[1]=0;
-        expResult[2]=0;
+        expResult[2]=1;
 	int[] result = null;
         setDL2(instance,instance.getIntersectionsList().get(0),instance.getIntersectionsList().get(1),instance.getIntersectionsList().get(2));
         
-        result= instance.calculDuree(intersection2,intersections, Integer.MAX_VALUE);
+        result= instance.calculDuree(intersections[0],intersections, Integer.MAX_VALUE);
         Assert.assertArrayEquals(expResult,result);
     }
+	
 	
 	
 	
