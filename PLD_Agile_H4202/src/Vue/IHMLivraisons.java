@@ -387,20 +387,20 @@ public class IHMLivraisons extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
    
     private void jButtonChargerPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerPlanActionPerformed
-        JFileChooser xml_map = new JFileChooser();
+        JFileChooser xmlMap = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
         
-        xml_map.setFileFilter(filter);
+        xmlMap.setFileFilter(filter);
         Plan planDeVille = null;
         String exception="";
-        JOptionPane jop; // fenetre d'alerte
-        if (xml_map.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = xml_map.getSelectedFile();
+        JOptionPane jOp; // fenetre d'alerte
+        if (xmlMap.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = xmlMap.getSelectedFile();
             //Vérifier le format du fichier xml ou non
             if(filter.accept(selectedFile)==false){
                 exception = "Format Fichier Plan Incorrect !";
-                jop = new JOptionPane();
-                jop.showMessageDialog(null, exception, "Attention", JOptionPane.WARNING_MESSAGE);
+                jOp = new JOptionPane();
+                jOp.showMessageDialog(null, exception, "Attention", JOptionPane.WARNING_MESSAGE);
                 return;
             }
             try {   
@@ -409,8 +409,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
                // Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
              String s=ex.getMessage();
              jTextAreaMessage.setText(s);
-             jop=new JOptionPane();
-             jop.showMessageDialog(null,s,"Attention",JOptionPane.WARNING_MESSAGE);
+             jOp=new JOptionPane();
+             jOp.showMessageDialog(null,s,"Attention",JOptionPane.WARNING_MESSAGE);
              return;
             }
         }
@@ -425,49 +425,48 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private void jButtonChargerLivraisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerLivraisonActionPerformed
         annulerDL();
         
-        JFileChooser xml_DL = new JFileChooser();
+        JFileChooser xmlDL = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
-        xml_DL.setFileFilter(filter);
-        DemandeLivraison dl = null;
+        xmlDL.setFileFilter(filter);
+        DemandeLivraison dL = null;
         String exception="";
-        JOptionPane jop; // fenetre d'alerte
-        if (xml_DL.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = xml_DL.getSelectedFile();
+        JOptionPane jOp; // fenetre d'alerte
+        if (xmlDL.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = xmlDL.getSelectedFile();
 
             if(filter.accept(selectedFile)==false){
                exception = "Format Fichier Livraison Incorrect !";
-               jop = new JOptionPane();
-               jop.showMessageDialog(null, exception, "Attention", JOptionPane.WARNING_MESSAGE);
+               jOp = new JOptionPane();
+               jOp.showMessageDialog(null, exception, "Attention", JOptionPane.WARNING_MESSAGE);
                return;
             }
             try {
-                dl = controleur.parserLivraisons(selectedFile);
+                dL = controleur.parserLivraisons(selectedFile);
             } catch (Exception ex) {
                 //Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
                 String s=ex.getMessage();
                        jTextAreaMessage.setText(s);
-                       jop = new JOptionPane();
-                       jop.showMessageDialog(null, s, "Attention", JOptionPane.WARNING_MESSAGE);
+                       jOp = new JOptionPane();
+                       jOp.showMessageDialog(null, s, "Attention", JOptionPane.WARNING_MESSAGE);
                        return;
             }
 
-            jPanelPlanMap.setDL(dl);
+            jPanelPlanMap.setDL(dL);
             jPanelPlanMap.repaint();
 
             jButtonCalculerTournee.setEnabled(true);
 
             //Remplissage du tableau
-            Collection<Livraison> livraisoncollection = dl.getLivraison().values();
+            Collection<Livraison> livraisonCollection = dL.getLivraison().values();
 
             //1er ligne 1er colonne : entrepot
             jTableLivraisons.getModel().setValueAt("E", 0, 0);
             //1er ligne 2e colonne : adresse de l'entrepot
-            jTableLivraisons.getModel().setValueAt(
-                    dl.getEntrepot().getTroncons().get(0).getNomRue() + 
-                            " (" + dl.getEntrepot().getId() + ")", 0, 1);
+            jTableLivraisons.getModel().setValueAt(dL.getEntrepot().getTroncons().get(0).getNomRue() + 
+                            " (" + dL.getEntrepot().getId() + ")", 0, 1);
 
             int indexRow=1;
-            for(Livraison livraison :livraisoncollection ){
+            for(Livraison livraison :livraisonCollection ){
                 //1er colonne : n°
                 jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
 
@@ -794,14 +793,14 @@ public class IHMLivraisons extends javax.swing.JDialog {
     private void jButtonFeuilleDeRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFeuilleDeRouteActionPerformed
                                                  
         Document document = new Document();
-        String yourPdfName = "";
+        String nomPdf = "";
         try {
             try {
-                yourPdfName = (String) JOptionPane.showInputDialog("Nom fichier:");
-                if (!(yourPdfName.endsWith(".pdf"))) {
-                    yourPdfName += ".pdf";
+                nomPdf = (String) JOptionPane.showInputDialog("Nom fichier:");
+                if (!(nomPdf.endsWith(".pdf"))) {
+                    nomPdf += ".pdf";
                 }
-                PdfWriter.getInstance(document, new FileOutputStream(yourPdfName));
+                PdfWriter.getInstance(document, new FileOutputStream(nomPdf));
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -815,11 +814,10 @@ public class IHMLivraisons extends javax.swing.JDialog {
         document.close();
 
         try {
-            Desktop.getDesktop().open(new File(yourPdfName));
+            Desktop.getDesktop().open(new File(nomPdf));
         } catch (IOException ex) {
             Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("done");
 
     }//GEN-LAST:event_jButtonFeuilleDeRouteActionPerformed
 
@@ -868,9 +866,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
     private void jPanelPlanMapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelPlanMapMouseClicked
         // TODO add your handling code here:
-       int X= evt.getX();
-        int Y= evt.getY();
-        long idIntersection = jPanelPlanMap.estSurIntersection(X,Y);
+       int x= evt.getX();
+        int y= evt.getY();
+        long idIntersection = jPanelPlanMap.estSurIntersection(x,y);
                 if (idIntersection == -1) {
                     //jTextAreaMessage.setText("!!!!!");
                     return;
@@ -882,9 +880,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
     private void jPanelPlanMapMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelPlanMapMouseMoved
         // TODO add your handling code here:
-        int X= evt.getX();
-        int Y= evt.getY();
-        long l[] = jPanelPlanMap.estSurLivraison(X, Y);
+        int x= evt.getX();
+        int y= evt.getY();
+        long l[] = jPanelPlanMap.estSurLivraison(x, y);
             if (l == null) {
                 return;
             }
