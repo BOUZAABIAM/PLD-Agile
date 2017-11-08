@@ -91,7 +91,7 @@ public class Plan {
      * @param position la position ou il faut ajouter dans le tableau de precedents, si Integer.MAX_VALUE - ajout simple
      * @return un array avec toutes les durees jusqu'au intersections de intersectionLivraison
      */
-    private int[] calculDuree(Intersection depart, Intersection[] intersectionLivraison, int position){
+    public int[] calculDuree(Intersection depart, Intersection[] intersectionLivraison, int position){
         
         Intersection[] gris = new Intersection[intersectionsList.size()];
         int nbGris = 0;
