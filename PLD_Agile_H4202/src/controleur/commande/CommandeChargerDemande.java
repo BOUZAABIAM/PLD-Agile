@@ -18,6 +18,7 @@ import org.jdom2.JDOMException;
 
 /**
  * La commande de chargement de la demande
+ * @author DELL
  */
 public class CommandeChargerDemande extends CommandeNonAnnulable {
 
@@ -46,7 +47,7 @@ public class CommandeChargerDemande extends CommandeNonAnnulable {
         try {
             Plan plan = CONTROLEUR_DONNEES.getPlan();
             DemandeLivraison demande = XMLParser.getInstance().getDL(LIVRAISONS_FICHIER, plan);
-           // controleurDonnees.setModele(new Modele(plan, demande));
+           
 
             // Permettre de calculer la tournee
             CONTROLEUR_DONNEES.notifierObservateursCalculTournee(true);
@@ -61,4 +62,5 @@ public class CommandeChargerDemande extends CommandeNonAnnulable {
         }
     }
 }
+
 
