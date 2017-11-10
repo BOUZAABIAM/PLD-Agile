@@ -9,6 +9,7 @@ import controleur.commande.CommandeException;
 
 /**
  * Etat principal de l'application après avoir calculé la tournée. Les fonctionnalités sont débloqués
+ * @author DELL
  */
 public class EtatPrincipal implements EtatInterface {
 
