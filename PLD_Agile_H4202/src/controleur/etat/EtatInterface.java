@@ -5,7 +5,8 @@ import java.io.File;
 import controleur.commande.CommandeException;
 
 /**
- * L'interface de tous les états contenant chaque action exécutables par une action (qu'elle fasse quelque chose ou non)
+ * L'interface de tous les états contenant chaque action exécutables par une action 
+ * @author DELL
  */
 public interface EtatInterface {
 
