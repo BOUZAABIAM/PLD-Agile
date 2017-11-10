@@ -26,20 +26,22 @@ import org.xml.sax.SAXException;
  */
 public class JPanelPlan extends JPanel {
 
+    /* Plan à utiliser pour l'affichage */
     public Plan lePlan;
+
+    /* DemandeLivraison à utiliser */
     private DemandeLivraison laDL;
+
+    /* Solution (liste d'intersections qui composent la tournée) à utiliser */
     private java.util.List<ArrayList<Intersection>> laSolution;
 
     /**
      * La liste des livraisons
      */
-    public Map<Integer, Pair<Long, Point>> Listelivraisons = null;
+    public Map<Integer, Pair<Long, Point>> listelivraisons;
+
     /**
-     * Le contrôleur de l'application
-     */
-    private ControleurInterface controleurApplication;
-    /**
-     * Contient tous les points graphiques actuellement afficher pour le plan
+     * Contient tous les points graphiques actuellement affichés pour le plan
      * grâce à leur id, et pour chaque intersection, ses arcs graphiques ainsi
      * que l'intersection ciblée
      */
@@ -51,14 +53,16 @@ public class JPanelPlan extends JPanel {
      */
     private long entrepot = -1;
 
-    /*
-    *@param lePlan
+    /**
+     * Assigne la variable lePlan de JPanelPlan
+     * @param lePlan plan à assigner 
      */
     public void setPlan(Plan lePlan) {
         this.lePlan = lePlan;
     }
 
     /**
+     * Assigne la variable laDL de JPanelPlan
      * @param laDL
      */
     public void setDL(DemandeLivraison laDL) {
@@ -66,6 +70,7 @@ public class JPanelPlan extends JPanel {
     }
 
     /**
+     * Assigne la variable laSolution de JPanelPlan
      * @param solution
      */
     public void setSolution(java.util.List<ArrayList<Intersection>> solution) {
@@ -77,16 +82,18 @@ public class JPanelPlan extends JPanel {
      * position de la livraison
      *
      * @param x Coordonnées X
-     * @param y Coordonnées Y du
-     * @return null si les coordonnées ne sont sur aucune livraison
+     * @param y Coordonnées Y 
+     * @return null si les coordonnées ne sont sur aucune livraison, sinon un 
+     * tableau de deux colonnes contenant d'abord la ligne du tableau correspondant
+     * à la livraison ou entrepôt et l'ID de cette livraison ou entrepôt
      */
     public long[] estSurLivraison(int x, int y) {
 
-        if (Listelivraisons == null || Listelivraisons.isEmpty() || intersections == null) {
+        if (listelivraisons == null || listelivraisons.isEmpty() || intersections == null) {
             return null;
         }
 
-        for (Map.Entry<Integer, Pair<Long, Point>> pair : Listelivraisons.entrySet()) {
+        for (Map.Entry<Integer, Pair<Long, Point>> pair : listelivraisons.entrySet()) {
             int xi = pair.getValue().getValue().x;
             int yi = pair.getValue().getValue().y;
             if (estSurRectangle(xi, yi, x, y)) {
@@ -94,7 +101,6 @@ public class JPanelPlan extends JPanel {
                 return t;
             }
         }
-
         return null;
     }
 
@@ -103,7 +109,8 @@ public class JPanelPlan extends JPanel {
      *
      * @param x La position x
      * @param y La position y
-     * @return -1 si les positions ne sont pas sur une intersection
+     * @return -1 si les positions ne sont pas sur une intersection, sinon l'ID de
+     * l'intersection
      */
     public long estSurIntersection(int x, int y) {
         if (intersections == null || intersections.isEmpty() || intersections2 == null || intersections2.isEmpty()) {
@@ -122,11 +129,11 @@ public class JPanelPlan extends JPanel {
     }
 
     /**
-     *
+     * Confirme si la les coordonnée de deux points son dans DIAMETRE_PERMISSION
      * @param xi abscisse d'une intersection de la liste
-     * @param yi oordonée d'une intersection de la liste
+     * @param yi ordonée d'une intersection de la liste
      * @param x abscisse à comparer
-     * @param y oordonée à comparer
+     * @param y ordonée à comparer
      * @return true ou false
      */
     public boolean estSurRectangle(int xi, int yi, int x, int y) {
@@ -134,6 +141,10 @@ public class JPanelPlan extends JPanel {
                 && yi - ConstantesGraphique.DIAMETRE_PERMISSION <= y && y <= yi + ConstantesGraphique.DIAMETRE_PERMISSION;
     }
 
+    /**
+     * Dessine sur le composant
+     * @param g le contexte graphique
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -163,9 +174,9 @@ public class JPanelPlan extends JPanel {
     }
 
     /**
-     *
-     * @param g
-     * @param lePlan
+     * Dessine tout le contenu du plan
+     * @param g le contexte graphique
+     * @param lePlan le plan à dessiner
      * @throws JDOMException
      * @throws IOException
      * @throws SAXException
@@ -260,10 +271,10 @@ public class JPanelPlan extends JPanel {
 
             //dessine les livraisons
             Map<Long, Livraison> livraisons = laDL.getLivraison();
-            Listelivraisons = new HashMap<Integer, Pair<Long, Point>>();
+            listelivraisons = new HashMap<Integer, Pair<Long, Point>>();
             Point point = new Point(xEntrepot, yEntrepot);
             int o = 0;
-            Listelivraisons.put(o, new Pair<>(entrepot, point));
+            listelivraisons.put(o, new Pair<>(entrepot, point));
             o++;
 
             for (Map.Entry<Long, Livraison> entry : livraisons.entrySet()) {
@@ -277,7 +288,7 @@ public class JPanelPlan extends JPanel {
                 gc.fillOval(xC - 4, yC - 4, 8, 8);
                 gc.drawOval(xC - 6, yC - 6, 12, 12);
                 Point point1 = new Point(xC, yC);
-                Listelivraisons.put(o, new Pair<>(livr.getAdresse().getId(), point1));
+                listelivraisons.put(o, new Pair<>(livr.getAdresse().getId(), point1));
                 o++;
             }
 
