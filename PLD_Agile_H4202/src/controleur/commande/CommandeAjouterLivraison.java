@@ -6,8 +6,13 @@ import Vue.IHMLivraisons;
 
 /**
  * Répresente une commande d'ajout de livraison
+ * @author DELL
  */
 public class CommandeAjouterLivraison extends CommandeAnnulable {
+    
+    /**
+     * Notre IHM actuelle
+     */
     IHMLivraisons ihm;
 
     /**
@@ -28,8 +33,10 @@ public class CommandeAjouterLivraison extends CommandeAnnulable {
     /**
      * Crée une nouvelle de commande d'ajout de livraison
      *
-     * @param idLivraisonAvant identifiant de la livraison qui se trouve avant celle qu'on veut ajouter
+     * @param controleurDonnees
      * @param idIntersectionLivraison intersection où on veut ajouter la livraison
+     * @param idLivraisonPrecedent id intersection de livraison qui précede la nouvelle livraison à ajouter
+     * @param ihm notre IHM actuelle
      */
     public CommandeAjouterLivraison(ControleurDonnees controleurDonnees, long idLivraisonPrecedent, long idIntersectionLivraison, IHMLivraisons ihm) {
         this.controleurDonnees = controleurDonnees;
@@ -50,3 +57,4 @@ public class CommandeAjouterLivraison extends CommandeAnnulable {
     }
 
 }
+
