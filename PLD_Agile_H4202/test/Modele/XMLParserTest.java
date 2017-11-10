@@ -32,6 +32,7 @@ public class XMLParserTest {
 
     /**
      * Test of getPlan method, of class XMLParser.
+     * comparer methode getPlan sur fichier planLyon9points.xml avec le plan de 9 points intialisé manuellement 
      */
     @Test
     public void testGetPlan() throws Exception {
@@ -45,6 +46,7 @@ public class XMLParserTest {
 
     /**
      * Test of getDL method, of class XMLParser.
+     * comparer methode getDL sur fichier DLmini3.xml avec le livraison intialisé manuellement
      */
     @Test
     public void testGetDL() throws Exception {
@@ -53,21 +55,22 @@ public class XMLParserTest {
         File xmlFileDL = new File("\\\\servif-home\\homes\\dnguyen1\\Mes documents\\NetBeansProjects\\Nouveau dossier\\PLD_Agile_H4202\\fichiersXML\\DLmini3.xml");
         Plan plan = this.initiale9point();         
         Map<Long, Livraison> livraisons = new TreeMap<Long, Livraison>(); 
-        DemandeLivraison result = instance.getDL(xmlFileDL, plan);
-        //Intersection intersection5 = new Intersection(5,1,1,4);
-        //Intersection intersection6 = new Intersection(6,2,1,5);
-        //Intersection entrepot = new Intersection(1,0,0,0);
+        DemandeLivraison result = instance.getDL(xmlFileDL, plan);   
         Livraison livraison5 = new Livraison(plan.getIntersectionsList().get(4),900);
         Livraison livraison6 = new Livraison(plan.getIntersectionsList().get(5),600);
         livraisons.put((long)5, livraison5);
         livraisons.put((long)6, livraison6);
         Time heureDepart = Time.valueOf("8:0:0");
         DemandeLivraison expResult = new DemandeLivraison(plan.getIntersectionsList().get(0),heureDepart,livraisons); 
-        assertNotNull(expResult); 
+      
         assertEquals(expResult.toString(), result.toString());
       
         
     }
+    /**
+     * initiale le Plan avec 9 intersection de 1 à 9
+     * il n'a pas de intersection isolant
+     */
     	
     private Plan initiale9point(){
         Intersection intersection1 = new Intersection(1,0,0,0);
@@ -157,3 +160,5 @@ public class XMLParserTest {
         return plan;
     } 
 }
+
+
