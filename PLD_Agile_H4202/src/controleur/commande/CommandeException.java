@@ -1,4 +1,4 @@
-ppackage controleur.commande;
+package controleur.commande;
 
 /**
  * Représente une exception lancée lors de l'exécution d'une commande
