@@ -74,13 +74,13 @@ public class Plan {
      *
      * @param dl la demande de livraison
      */
-    public void setDL(DemandeLivraison dl) {
-        this.tempsPassage = new ArrayList<Time[]>();
-        List<Livraison> livraisons = new ArrayList<Livraison>();
+    public void setDL(DemandeLivraison dl){
+        this.tempsPassage = new ArrayList<>();
+        List<Livraison> livraisons  = new ArrayList<>();
         livraisons.addAll(dl.getLivraison().values());
         this.livraisons = livraisons;
         this.entrepot = dl.getEntrepot();
-        this.pred = new ArrayList<int[]>();
+        this.pred = new ArrayList<>();
         Time[] tempsEntrepot = {dl.getHeureDepart(), dl.getHeureDepart()};
         this.tempsPassage.add(tempsEntrepot);
     }
@@ -224,12 +224,11 @@ public class Plan {
             } else {
                 intersectionArrive = livraisons.get(arrive).getAdresse();
             }
-
-            LinkedList<Intersection> trajet = new LinkedList<Intersection>();
-
+                                    
+            LinkedList<Intersection> trajet = new LinkedList<>();
+            
             int indexDepart = intersectionDepart.getIndex();
-            int indexArrive = intersectionArrive.getIndex();
-
+            
             trajet.add(intersectionArrive);
 
             int colonne = trajet.get(0).getIndex();
@@ -239,12 +238,9 @@ public class Plan {
                 trajet.addFirst(intersectionPredecessor);
 
                 colonne = trajet.get(0).getIndex();
-            }
-
-            trajet.addFirst(intersectionsList.get(pred.get(depart)[colonne]));
-            colonne = trajet.get(0).getIndex();
-            for (Intersection intersection : trajet) {
-            }
+            }      
+            
+            trajet.addFirst(intersectionsList.get(pred.get(depart)[colonne]));            
             return trajet;
         } else {
             System.err.println("Attention, les nombres dans le getChemin ne correspondent pas avec les livraisons :");
@@ -276,37 +272,37 @@ public class Plan {
      * @param livraisonAAjouter l'intersection à ajouter comme livraison
      * @return la nouvelle solution pour la tournée
      */
-    public List<ArrayList<Intersection>> addLivraison(Intersection precedent, Intersection livraisonAAjouter) {
-        if (!this.adresseEnLivraison(livraisonAAjouter)) {
+    public List<ArrayList<Intersection>> addLivraison(Intersection precedent, Intersection livraisonAAjouter){
+        if (!this.adresseEnLivraison(livraisonAAjouter)){
             int[] indexes = new int[3];
-
+        
             int positionPrecEnSolution = -1;
-            ArrayList<Intersection> listePrec = new ArrayList<Intersection>();
-            for (ArrayList list : this.solution2) {
-                if (list.get(0) == precedent) {
-                    positionPrecEnSolution = this.solution2.indexOf(list);
-                    listePrec = list;
-                    break;
-                }
+            ArrayList<Intersection> listePrec = new ArrayList<>();
+            for (ArrayList list: this.solution2){
+             if (list.get(0) == precedent){
+                positionPrecEnSolution = this.solution2.indexOf(list);
+                listePrec = list;
+                break;
+             }
+                Intersection suivant = listePrec.get(listePrec.size() - 1);
+
+                Intersection[] intersectionsCalcul = {livraisonAAjouter, precedent, suivant};
+                int[] resultCalcul = this.calculDuree(livraisonAAjouter, intersectionsCalcul, pred.size() - 1);
+                Livraison livraison = new Livraison(livraisonAAjouter, 500);
+                livraisons.add(livraison);
+
+                indexes[0] = livraisons.size() - 1;
+                indexes[1] = this.getIndiceLivraisonParIntersection(precedent);
+                indexes[2] = this.getIndiceLivraisonParIntersection(suivant);
+
+                solution2.remove(positionPrecEnSolution);
+                ArrayList<Intersection> etapes1 = new ArrayList();
+                etapes1.addAll(this.getChemin(indexes[1], indexes[0]));
+                solution2.add(positionPrecEnSolution, etapes1);
+                ArrayList<Intersection> etapes2 = new ArrayList();
+                etapes2.addAll(this.getChemin(indexes[0], indexes[2]));
+                solution2.add(positionPrecEnSolution + 1, etapes2);
             }
-            Intersection suivant = listePrec.get(listePrec.size() - 1);
-
-            Intersection[] intersectionsCalcul = {livraisonAAjouter, precedent, suivant};
-            int[] resultCalcul = this.calculDuree(livraisonAAjouter, intersectionsCalcul, pred.size() - 1);
-            Livraison livraison = new Livraison(livraisonAAjouter, 500);
-            livraisons.add(livraison);
-
-            indexes[0] = livraisons.size() - 1;
-            indexes[1] = this.getIndiceLivraisonParIntersection(precedent);
-            indexes[2] = this.getIndiceLivraisonParIntersection(suivant);
-
-            solution2.remove(positionPrecEnSolution);
-            ArrayList<Intersection> etapes1 = new ArrayList();
-            etapes1.addAll(this.getChemin(indexes[1], indexes[0]));
-            solution2.add(positionPrecEnSolution, etapes1);
-            ArrayList<Intersection> etapes2 = new ArrayList();
-            etapes2.addAll(this.getChemin(indexes[0], indexes[2]));
-            solution2.add(positionPrecEnSolution + 1, etapes2);
 
         } else {
             System.err.println("Adresse deja en livraison");
@@ -370,8 +366,8 @@ public class Plan {
         int i = 0;
 
         boolean found = false;
-
-        if ((livraisons.size() != 0) && (livraisons.get(0).getAdresse() == intersection)) {
+        
+        if((!livraisons.isEmpty()) && (livraisons.get(0).getAdresse() == intersection)){
             found = true;
         }
         while (!found) {
@@ -436,7 +432,7 @@ public class Plan {
             }
         }
         tsp.chercheSolution(tpsLimite, nbSommet, matrice, this.getDuree(), plagesHoraires);
-
+        
         //Obtenir la solution dans solution
         int[] solution = new int[nbSommet];
         for (int j = 0; j < nbSommet; j++) {
@@ -444,14 +440,11 @@ public class Plan {
         }
 
         //Obtenir la solution en intersection
-        Intersection[] sol = new Intersection[nbSommet];
-        sol[0] = entrepot;
-        for (int i = 1; i < nbSommet; i++) {
-            sol[i] = this.getAdresseDeLivraison(solution[i]);
-
+        
+        for (int i = 1; i < nbSommet; i++){
+           
             ArrayList<Intersection> etapes = new ArrayList();
-
-            etapes.addAll(this.getChemin(solution[i - 1], solution[i]));
+            etapes.addAll(this.getChemin(solution[i-1], solution[i]));
             solution2.add(etapes);
 
             Time[] tempsNouvelleDestination = new Time[2];
@@ -471,6 +464,7 @@ public class Plan {
         long tempsChemin = matrice[solution[solution.length - 1]][matrice.length - 1];
         tempsNouvelleDestination[0] = new Time(tempsDepartPred + tempsChemin);
         tempsNouvelleDestination[1] = tempsNouvelleDestination[0];
+        
         this.tempsPassage.add(tempsNouvelleDestination);
         this.solution2 = solution2;
     }
