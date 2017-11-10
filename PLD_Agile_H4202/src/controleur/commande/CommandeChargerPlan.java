@@ -14,6 +14,7 @@ import org.jdom2.JDOMException;
 
 /**
  * La commande de chargement d'un plan
+ * @author DELL
  */
 public class CommandeChargerPlan extends CommandeNonAnnulable {
 
