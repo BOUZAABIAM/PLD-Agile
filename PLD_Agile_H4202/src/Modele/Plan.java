@@ -183,12 +183,11 @@ public class Plan {
         for (int i = 0; i < intersectionLivraison.length; i++) {
             Intersection intersection = intersectionLivraison[i];
             d[i] = intersection.getD();
-            //System.out.print(d[i] + "  ");
+
         }
         int[] pred = new int[intersectionsList.size()];
         for (int i = 0; i < intersectionsList.size(); i++) {
             pred[i] = intersectionsList.get(i).getPredIndex();
-//            System.out.println(intersections.get(i).getPredIndex());
         }
         if (position == Integer.MAX_VALUE) {
             this.pred.add(pred);

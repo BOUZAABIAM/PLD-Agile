@@ -661,11 +661,6 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
             List<ArrayList<Intersection>> solution = controleur.ajouterLivraison(idAdd, idPrec);
 
-            System.out.println("Solutions : ");
-            for (int j = 0; j < solution.size(); j++) {
-                System.out.println(solution.get(j).get(0).toString());
-            }
-
             // Affichage de la solution
             jPanelPlanMap.setSolution(solution);
             jPanelPlanMap.repaint();
@@ -1021,18 +1016,8 @@ public class IHMLivraisons extends javax.swing.JDialog {
      * @param fichier Le nom du fichier qui a généré l'erreur
      */
     private void ouvrirErreurFichier(Exception message, String fichier) {
-
-//        ExceptionDialog exceptionDialog = new ExceptionDialog(message);
-//        exceptionDialog.setTitle("Erreur");
-//        exceptionDialog.setHeaderText("Problème avec le fichier : " + "'" + fichier + "'");
-//        exceptionDialog.setWidth(250);
-//        exceptionDialog.setHeight(450);
-//        exceptionDialog.setResizable(false);
-        //exceptionDialog.initOwner(groupEllipseVueGraphique.getScene().getWindow());
         String title = "Problème avec le fichier : " + "'" + fichier + "'";
         JOptionPane.showMessageDialog(null, message.getMessage(), title, JOptionPane.ERROR_MESSAGE);
-
-        //exceptionDialog.showAndWait();
     }
 
     /**
