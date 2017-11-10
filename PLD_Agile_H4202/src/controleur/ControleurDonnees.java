@@ -13,6 +13,8 @@ import controleur.commande.Historique;
  * pourrait dire qu'elle représente seulement des données et devrait du coup
  * mieux être située dans le package modèle. Par contre elle est liée à une
  * seule IHM, du coup il y a de bonnes raisons de la laisser ici dans le  controleur.
+ *
+ * @author DELL
  */
 public class ControleurDonnees {
 
