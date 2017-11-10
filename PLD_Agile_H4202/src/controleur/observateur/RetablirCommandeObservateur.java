@@ -2,6 +2,7 @@ package controleur.observateur;
 
 /**
  * Interface pour l'observateur qui permet d'activer l'action retablir dans le menu
+ * @author DELL
  */
 public interface RetablirCommandeObservateur {
 

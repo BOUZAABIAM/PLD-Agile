@@ -9,28 +9,32 @@ import controleur.commande.CommandeException;
 import java.io.File;
 
 /**
- * On se retrouve dans cet état après avoir chargé la demande de livraisons mais sans avoir calculé la tournée encore.
+ * On se retrouve dans cet état après avoir chargé la demande de livraisons mais
+ * sans avoir calculé la tournée encore.
  *
+ * @author DELL
  */
 public class EtatDemandeChargee implements EtatInterface {
 
-    /** Le contrôleur de données */
+    /**
+     * Le contrôleur de données
+     */
     private final ControleurDonnees CONTROLEUR_DONNEES;
 
     /**
      * Constructeur de l'état demande chargée
+     *
      * @param controleurDonnees Le contrôleur de données
      */
     public EtatDemandeChargee(ControleurDonnees controleurDonnees) {
         // On désactive les fonctionnalités principales
-    	//controleurDonnees.notifierObservateursFonctionnalites(false);
         controleurDonnees.notifierObservateursActivation(false);
         this.CONTROLEUR_DONNEES = controleurDonnees;
     }
 
     @Override
     public EtatInterface clicSurLivraison(long livraisonId) {
-    	// Ne fait rien
+        // Ne fait rien
         return this;
     }
 
@@ -66,7 +70,7 @@ public class EtatDemandeChargee implements EtatInterface {
     @Override
     public EtatInterface clicDroit() {
         // Ne fait rien
-    	return this;
+        return this;
     }
-    
+
 }

@@ -4,14 +4,18 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
- * Cette classe gère l'historique des commandes pour le undo et le redo.
- * Elle stocke deux piles de commandes : une pile pour les commandes à annuler et une autre pile pour les commandes
- * à retablir c'est-à-dire celles qui ont été annulées par l'utilisateur.
+ * Cette classe gère l'historique des commandes pour le undo et le redo. Elle
+ * stocke deux piles de commandes : une pile pour les commandes à annuler et une
+ * autre pile pour les commandes à retablir c'est-à-dire celles qui ont été
+ * annulées par l'utilisateur.
+ *
+ * @author DELL
  */
 public class Historique {
 
     /**
-     * Pile des commandes qui ont été éxécutées avec succès c'est à dire les commandes à annuler
+     * Pile des commandes qui ont été éxécutées avec succès c'est à dire les
+     * commandes à annuler
      */
     private Deque<Commande> commandesAAnnuler;
 
@@ -30,12 +34,13 @@ public class Historique {
 
     /**
      * Ajoute une commande annulable qui s'est exécutée avec succès
+     *
      * @param commande Une commande qui s'est exécutée avec succès
      */
     public void ajouterCommande(Commande commande) {
         commandesAAnnuler.push(commande);
         if (commandesAAnnuler.size() > 10) {
-        	commandesAAnnuler.removeLast();
+            commandesAAnnuler.removeLast();
         }
     }
 
@@ -43,11 +48,11 @@ public class Historique {
      * Annule la dernière commande annulable executée s'il y'en a (Ctrl+Z)
      */
     public void annuler() {
-        if(!commandesAAnnuler.isEmpty()) {
+        if (!commandesAAnnuler.isEmpty()) {
             Commande commandeAAnnuler = commandesAAnnuler.pop();
             commandesARetablir.push(commandeAAnnuler);
             if (commandesARetablir.size() > 10) {
-            	commandesARetablir.removeLast();
+                commandesARetablir.removeLast();
             }
             commandeAAnnuler.annuler();
         }
@@ -89,14 +94,14 @@ public class Historique {
     /**
      * Renvoie vrai s'il reste des commandes à rétablir, faux sinon
      */
-    public boolean estVideCommandesARetablir(){
+    public boolean estVideCommandesARetablir() {
         return commandesARetablir.isEmpty();
     }
 
     /**
      * Renvoie vrai s'il reste des commandes à annuler, faux sinon
      */
-    public boolean estVideCommandesAAnnuler(){
+    public boolean estVideCommandesAAnnuler() {
         return commandesAAnnuler.isEmpty();
     }
 }

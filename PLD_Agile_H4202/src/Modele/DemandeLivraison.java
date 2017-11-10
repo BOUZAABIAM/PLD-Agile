@@ -7,12 +7,13 @@ package Modele;
 
 import java.util.*;
 import java.sql.Time;
+
 /**
  *
  * @author Elise
  */
 public class DemandeLivraison {
-    
+
     final private Intersection entrepot;
     final private Time heureDepart;
     final private Map<Long, Livraison> livraisons;
@@ -34,12 +35,13 @@ public class DemandeLivraison {
     public Map<Long, Livraison> getLivraison() {
         return livraisons;
     }
-    
+
     /**
      * Ajoute une livraison à la liste de livraisons de la demande de livraison
+     *
      * @param livr la livraison à ajouter
      */
-    public void addLivraison(Livraison livr){
+    public void addLivraison(Livraison livr) {
         livraisons.put(livr.getAdresse().getId(), livr);
     }
 
@@ -47,7 +49,5 @@ public class DemandeLivraison {
     public String toString() {
         return "DemandeLivraison{" + "entrepot=" + entrepot.getId() + ", heureDepart=" + heureDepart + ", " + livraisons + '}';
     }
-    
-    
-    
+
 }

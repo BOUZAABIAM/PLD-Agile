@@ -2,6 +2,7 @@ package controleur.observateur;
 
 /**
  * Interface pour les observateurs de l'état des boutons
+ * @author DELL
  */
 public interface ActivationFonctionnalitesObservateur {
 	

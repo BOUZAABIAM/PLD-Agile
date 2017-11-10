@@ -9,19 +9,23 @@ import controleur.commande.CommandeChargerPlan;
 
 /**
  * Etat après le chargement du plan
+ *
+ * @author DELL
  */
 public class EtatPlanCharge implements EtatInterface {
 
-    /** Le contrôleur de données */
+    /**
+     * Le contrôleur de données
+     */
     private final ControleurDonnees CONTROLEURS_DONNEES;
 
     /**
      * Constructeur de l'état après le chargement du plan
+     *
      * @param controleurDonnees Le contrôleur de données
      */
     public EtatPlanCharge(ControleurDonnees controleurDonnees) {
         this.CONTROLEURS_DONNEES = controleurDonnees;
-        //controleurDonnees.notifierObservateursFonctionnalites(false);
         controleurDonnees.notifierObservateursActivation(false);
     }
 

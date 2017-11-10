@@ -1,4 +1,5 @@
 package Vue;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,8 +18,6 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
 
-
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,12 +28,10 @@ import java.util.ArrayList;
 
 import java.awt.Desktop;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
- 
+
 /**
  *
  * @author carhiliuc
@@ -42,6 +39,7 @@ import javax.swing.table.TableModel;
 public class IHMLivraisons extends javax.swing.JDialog {
 
     Controleur controleur;
+
     /**
      * Creates new form IHMLivraisons
      */
@@ -406,71 +404,88 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-   
+
+    /**
+     * Appelé quand le bouton "Charger Plan" est cliqué. Ouvre un explorateur de
+     * fichier permettant à l'utilisateur de choisir un fichier plan de type xml
+     * valide et de l'afficher dans un jFrame. 
+     * Erreur si le fichier n'est pas valide
+     *
+     * @param evt unused
+     */
     private void jButtonChargerPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerPlanActionPerformed
         JFileChooser xmlMap = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
-        
+
         xmlMap.setFileFilter(filter);
         Plan planDeVille = null;
-        String exception="";
+        String exception = "";
         JOptionPane jOp; // fenetre d'alerte
         if (xmlMap.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File selectedFile = xmlMap.getSelectedFile();
             //Vérifier le format du fichier xml ou non
-            if(filter.accept(selectedFile)==false){
+            if (filter.accept(selectedFile) == false) {
                 exception = "Format Fichier Plan Incorrect !";
                 jOp = new JOptionPane();
                 jOp.showMessageDialog(null, exception, "Attention", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            try {   
+            try {
                 planDeVille = controleur.parserPlan(selectedFile);
             } catch (Exception ex) {
-               // Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
-             String s=ex.getMessage();
-             jTextAreaMessage.setText(s);
-             jOp=new JOptionPane();
-             jOp.showMessageDialog(null,s,"Attention",JOptionPane.WARNING_MESSAGE);
-             return;
+                // Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+                String s = ex.getMessage();
+                jTextAreaMessage.setText(s);
+                jOp = new JOptionPane();
+                jOp.showMessageDialog(null, s, "Attention", JOptionPane.WARNING_MESSAGE);
+                return;
             }
         }
-        annulerDL(); 
+        annulerDL();
         jPanelPlanMap.setPlan(planDeVille);
         jPanelPlanMap.repaint();
         jButtonChargerLivraison.setEnabled(true);
         jTextAreaMessage.setText("Choisissez une demande de livraison");
-        
-        
+
+
     }//GEN-LAST:event_jButtonChargerPlanActionPerformed
-    
+
+    /**
+     * Appelé quand le bouton "Charger Livraison" est cliqué. Ouvre un
+     * explorateur de fichier permettant à l'utilisateur de choisir un fichier
+     * de demande de livraison de type xml valide et de l'afficher sur le plan
+     * et dans un tableau.
+     * Erreur si le fichier n'est pas valide
+     *
+     * @param evt unused
+     */
     private void jButtonChargerLivraisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerLivraisonActionPerformed
         annulerDL();
-        
+
         JFileChooser xmlDL = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
         xmlDL.setFileFilter(filter);
         DemandeLivraison dL = null;
-        String exception="";
+        String exception = "";
         JOptionPane jOp; // fenetre d'alerte
         if (xmlDL.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File selectedFile = xmlDL.getSelectedFile();
 
-            if(filter.accept(selectedFile)==false){
-               exception = "Format Fichier Livraison Incorrect !";
-               jOp = new JOptionPane();
-               jOp.showMessageDialog(null, exception, "Attention", JOptionPane.WARNING_MESSAGE);
-               return;
+            if (filter.accept(selectedFile) == false) {
+                exception = "Format Fichier Livraison Incorrect !";
+                jOp = new JOptionPane();
+                jOp.showMessageDialog(null, exception, "Attention", JOptionPane.WARNING_MESSAGE);
+                return;
             }
             try {
                 dL = controleur.parserLivraisons(selectedFile);
             } catch (Exception ex) {
                 //Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
-                String s=ex.getMessage();
-                       jTextAreaMessage.setText(s);
-                       jOp = new JOptionPane();
-                       jOp.showMessageDialog(null, s, "Attention", JOptionPane.WARNING_MESSAGE);
-                       return;
+                String s = ex.getMessage();
+                jTextAreaMessage.setText(s);
+                jOp = new JOptionPane();
+                jOp.showMessageDialog(null, s, "Attention", JOptionPane.WARNING_MESSAGE);
+                return;
             }
 
             jPanelPlanMap.setDL(dL);
@@ -484,11 +499,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
             //1er ligne 1er colonne : entrepot
             jTableLivraisons.getModel().setValueAt("E", 0, 0);
             //1er ligne 2e colonne : adresse de l'entrepot
-            jTableLivraisons.getModel().setValueAt(dL.getEntrepot().getTroncons().get(0).getNomRue() + 
-                            " (" + dL.getEntrepot().getId() + ")", 0, 1);
+            jTableLivraisons.getModel().setValueAt(dL.getEntrepot().getTroncons().get(0).getNomRue()
+                    + " (" + dL.getEntrepot().getId() + ")", 0, 1);
 
-            int indexRow=1;
-            for(Livraison livraison :livraisonCollection ){
+            int indexRow = 1;
+            for (Livraison livraison : livraisonCollection) {
                 //1er colonne : n°
                 jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
 
@@ -504,32 +519,40 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 int minutes = totalMinutes % 60;
                 int hours = totalMinutes / 60;
 
-                if(hours >0){
+                if (hours > 0) {
                     dureeFormatee += hours + "h ";
                 }
-                if(minutes >0){
+                if (minutes > 0) {
                     dureeFormatee += minutes + "min ";
                 }
-                if(seconds >0){
+                if (seconds > 0) {
                     dureeFormatee += seconds + "s";
                 }
                 jTableLivraisons.getModel().setValueAt(dureeFormatee, indexRow, 2);
 
-                if (livraison.getDebutPlage() != null){
+                if (livraison.getDebutPlage() != null) {
                     //4e et 5e colonne : début et fin de plage
                     jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 3);
                     jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 4);
                 }
                 indexRow++;
             }
-        }  
+        }
         jTextAreaMessage.setText("Vous pouvez calculer la tournée");
     }//GEN-LAST:event_jButtonChargerLivraisonActionPerformed
-     
+
+    /**
+     * Appelé quand le bouton "Calcul Tournée" est cliqué. Génère la solution de
+     * parcour des livraisons, affiche dans le tableau les livraisons dans l'ordre
+     * de passage ainsi que les heures d'arrivés et de départ, affiche sur le plan
+     * l'itinéraire.
+     * 
+     * @param evt unused
+     */
     private void jButtonCalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculerTourneeActionPerformed
-      
+
         List<ArrayList<Intersection>> solution = controleur.calculTournee();
-        
+
         List<Time[]> heures = controleur.calculDuree();
 
         // Affichage de la solution
@@ -537,27 +560,27 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jPanelPlanMap.repaint();
 
         viderTableau();
-        int indexRow=0;
-        
+        int indexRow = 0;
+
         //Affiche le nouveau tableau
-        for(ArrayList<Intersection> inter : solution){
+        for (ArrayList<Intersection> inter : solution) {
             Livraison livraison = controleur.getLivraisonByID(inter.get(0).getId());
-            
+
             //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
-            if(livraison == null){
+            if (livraison == null) {
                 //1er colonne : E pour entrepot
                 jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
                 //2e colonne : adresse
                 jTableLivraisons.getModel().setValueAt(
-                        inter.get(0).getTroncons().get(0).getNomRue() + 
-                                " (" + inter.get(0).getId() + ")", 0, 1);
+                        inter.get(0).getTroncons().get(0).getNomRue()
+                        + " (" + inter.get(0).getId() + ")", 0, 1);
                 //6e et 7e colonne : heure arrivé et départ
                 jTableLivraisons.getModel().setValueAt(heures.get(indexRow)[0].toString(), indexRow, 5);
                 jTableLivraisons.getModel().setValueAt(heures.get(indexRow)[1].toString(), indexRow, 6);
-            }else{
+            } else {
                 //1er colonne : n°
                 jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
-                
+
                 //2e colonne : adresse
                 String nomRue = livraison.getAdresse().getTroncons().get(0).getNomRue();
                 Long idAdresse = livraison.getAdresse().getId();
@@ -570,18 +593,18 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 int minutes = totalMinutes % 60;
                 int hours = totalMinutes / 60;
 
-                if(hours >0){
+                if (hours > 0) {
                     dureeFormatee += hours + "h ";
                 }
-                if(minutes >0){
+                if (minutes > 0) {
                     dureeFormatee += minutes + "min ";
                 }
-                if(seconds >0){
+                if (seconds > 0) {
                     dureeFormatee += seconds + "s";
                 }
                 jTableLivraisons.getModel().setValueAt(dureeFormatee, indexRow, 2);
 
-                if (livraison.getDebutPlage() != null){
+                if (livraison.getDebutPlage() != null) {
                     //4e et 5e colonne : début et fin de plage
                     jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 3);
                     jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 4);
@@ -592,7 +615,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
             }
             indexRow++;
         }
-        
+
         jButtonFeuilleDeRoute.setEnabled(true);
         jButtonModifier.setEnabled(true);
         jButtonAjouter.setEnabled(true);
@@ -603,24 +626,34 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonValider.setEnabled(false);
         jButtonAnnulerModif.setEnabled(true);
         jButtonAnnulerModif.setEnabled(false);
-        
+
         jTextAreaMessage.setText("Vous pouvez modifier la tournée ou générer la feuille de route");
     }//GEN-LAST:event_jButtonCalculerTourneeActionPerformed
 
+    /**
+     * Appelé quand le bouton "Valider" est cliqué.
+     * Activé uniquement si modifier puis ajouté ou supprimé a été cliqué.
+     * Dans le cas d'un ajout, va lire la valeur de jTextFieldAjouter et de
+     * jTextFieldPrecedent puis ajoute une livraison, change l'affichage du plan
+     * et du tableau.
+     * Dans le cas d'une suppression, va lire la valeur de jTextFieldSupprimer et
+     * supprime une livraison, change l'affichage du plan et du tableau.
+     * @param evt unused
+     */
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
-        if(ajoutOuSuppr){
+        if (ajoutOuSuppr) {
             long idAdd;
             long idPrec;
 
             String sAdd = jTextFieldAjouter.getText();
-            if(!sAdd.contains("ID intersection à ajouter") && !sAdd.isEmpty()){
-                idAdd = Long.valueOf(sAdd);            
+            if (!sAdd.contains("ID intersection à ajouter") && !sAdd.isEmpty()) {
+                idAdd = Long.valueOf(sAdd);
             } else {
                 return;
             }
 
             String sPrec = jTextFieldPrecedent.getText();
-            if(!sPrec.contains("ID intersection précédente") && !sPrec.isEmpty()){
+            if (!sPrec.contains("ID intersection précédente") && !sPrec.isEmpty()) {
                 idPrec = Long.valueOf(sPrec);
             } else {
                 return;
@@ -629,33 +662,33 @@ public class IHMLivraisons extends javax.swing.JDialog {
             List<ArrayList<Intersection>> solution = controleur.ajouterLivraison(idAdd, idPrec);
 
             System.out.println("Solutions : ");
-            for (int j=0; j<solution.size(); j++){
+            for (int j = 0; j < solution.size(); j++) {
                 System.out.println(solution.get(j).get(0).toString());
             }
 
             // Affichage de la solution
             jPanelPlanMap.setSolution(solution);
-            jPanelPlanMap.repaint();   
+            jPanelPlanMap.repaint();
 
             viderTableau();
 
-            int indexRow=0;
+            int indexRow = 0;
 
             //Affiche le nouveau tableau
-            for(ArrayList<Intersection> inter : solution){
+            for (ArrayList<Intersection> inter : solution) {
                 Livraison livraison = controleur.getLivraisonByID(inter.get(0).getId());
 
-                if(livraison == null){
+                if (livraison == null) {
                     //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
-                    if( inter.get(0).getId() != idAdd){
+                    if (inter.get(0).getId() != idAdd) {
                         //1er colonne : E pour entrepot
                         jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
                         //2e colonne : adresse
                         jTableLivraisons.getModel().setValueAt(
-                                inter.get(0).getTroncons().get(0).getNomRue() + 
-                                " (" + inter.get(0).getId() + ")", 0, 1); 
-                    }else{//ou la nouvelle intersection
-                       //1er colonne : n°
+                                inter.get(0).getTroncons().get(0).getNomRue()
+                                + " (" + inter.get(0).getId() + ")", 0, 1);
+                    } else {//ou la nouvelle intersection
+                        //1er colonne : n°
                         jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
 
                         //2e colonne : adresse
@@ -666,7 +699,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
                         //3e colonne : durée fixe
                         jTableLivraisons.getModel().setValueAt("10min", indexRow, 2);
                     }
-                }else{
+                } else {
                     //1er colonne : n°
                     jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
 
@@ -682,18 +715,18 @@ public class IHMLivraisons extends javax.swing.JDialog {
                     int minutes = totalMinutes % 60;
                     int hours = totalMinutes / 60;
 
-                    if(hours >0){
+                    if (hours > 0) {
                         dureeFormatee += hours + "h ";
                     }
-                    if(minutes >0){
+                    if (minutes > 0) {
                         dureeFormatee += minutes + "min ";
                     }
-                    if(seconds >0){
+                    if (seconds > 0) {
                         dureeFormatee += seconds + "s";
                     }
                     jTableLivraisons.getModel().setValueAt(dureeFormatee, indexRow, 2);
 
-                    if (livraison.getDebutPlage() != null){
+                    if (livraison.getDebutPlage() != null) {
                         //4e et 5e colonne : début et fin de plage
                         jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 3);
                         jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 4);
@@ -712,39 +745,39 @@ public class IHMLivraisons extends javax.swing.JDialog {
             jTextFieldSupprimer.setEnabled(false);
         } else {
             long idSuppr;
-        
+
             String sSuppr = jTextFieldSupprimer.getText();
-            if(!sSuppr.contains("ID intersection à supprimer") && !sSuppr.isEmpty()){
-                idSuppr = Long.valueOf(sSuppr);            
+            if (!sSuppr.contains("ID intersection à supprimer") && !sSuppr.isEmpty()) {
+                idSuppr = Long.valueOf(sSuppr);
             } else {
                 return;
             }
             List<ArrayList<Intersection>> solution = controleur.supprimerLivraison(idSuppr);
-            if(solution == null){
+            if (solution == null) {
                 jTextAreaMessage.setText("Plus aucune livraison à supprimer");
                 return;
             }
             // Affichage de la solution
             jPanelPlanMap.setSolution(solution);
-            jPanelPlanMap.repaint();   
+            jPanelPlanMap.repaint();
 
             viderTableau();
 
-            int indexRow=0;
+            int indexRow = 0;
 
             //Affiche le nouveau tableau
-            for(ArrayList<Intersection> inter : solution){
+            for (ArrayList<Intersection> inter : solution) {
                 Livraison livraison = controleur.getLivraisonByID(inter.get(0).getId());
 
                 //Si l'intersection dans solution n'est pas une livraison, alors c'est l'entrepot
-                if(livraison == null){
+                if (livraison == null) {
                     //1er colonne : E pour entrepot
                     jTableLivraisons.getModel().setValueAt("E", indexRow, 0);
                     //2e colonne : adresse
                     jTableLivraisons.getModel().setValueAt(
-                            inter.get(0).getTroncons().get(0).getNomRue() + 
-                                    " (" + inter.get(0).getId() + ")", 0, 1);
-                }else{
+                            inter.get(0).getTroncons().get(0).getNomRue()
+                            + " (" + inter.get(0).getId() + ")", 0, 1);
+                } else {
                     //1er colonne : n°
                     jTableLivraisons.getModel().setValueAt(indexRow, indexRow, 0);
 
@@ -760,18 +793,18 @@ public class IHMLivraisons extends javax.swing.JDialog {
                     int minutes = totalMinutes % 60;
                     int hours = totalMinutes / 60;
 
-                    if(hours >0){
+                    if (hours > 0) {
                         dureeFormatee += hours + "h ";
                     }
-                    if(minutes >0){
+                    if (minutes > 0) {
                         dureeFormatee += minutes + "min ";
                     }
-                    if(seconds >0){
+                    if (seconds > 0) {
                         dureeFormatee += seconds + "s";
                     }
                     jTableLivraisons.getModel().setValueAt(dureeFormatee, indexRow, 2);
 
-                    if (livraison.getDebutPlage() != null){
+                    if (livraison.getDebutPlage() != null) {
                         //4e et 5e colonne : début et fin de plage
                         jTableLivraisons.getModel().setValueAt(livraison.getDebutPlage().toString(), indexRow, 3);
                         jTableLivraisons.getModel().setValueAt(livraison.getFinPlage().toString(), indexRow, 4);
@@ -783,22 +816,28 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonFeuilleDeRoute.setEnabled(true);
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
-    private void annulerDL(){
+    /**
+     * Permet de supprimer une demande de livraison
+     */
+    private void annulerDL() {
         controleur.annuler();
         jPanelPlanMap.setDL(null);
         jPanelPlanMap.setSolution(null);
-        
+
         viderTableau();
-        
+
         jButtonCalculerTournee.setEnabled(false);
         jButtonFeuilleDeRoute.setEnabled(false);
     }
-    
-    private void viderTableau(){
+
+    /**
+     * Vide le tableau d'affichage des livraisons.
+     */
+    private void viderTableau() {
         DefaultTableModel model = (DefaultTableModel) jTableLivraisons.getModel();
         int rowCount = model.getRowCount();
-        String vide="";
-        for (int i = 0; i < rowCount ; i++){
+        String vide = "";
+        for (int i = 0; i < rowCount; i++) {
             jTableLivraisons.getModel().setValueAt(vide, i, 0);
             jTableLivraisons.getModel().setValueAt(vide, i, 1);
             jTableLivraisons.getModel().setValueAt(vide, i, 2);
@@ -808,14 +847,25 @@ public class IHMLivraisons extends javax.swing.JDialog {
             jTableLivraisons.getModel().setValueAt(vide, i, 6);
         }
     }
-    
+
+    /**
+     * Appelé quand le bouton "Vider Demande de Livraison" est cliqué.
+     * Supprime la demande de livraison courante et redessine le plan.
+     * @param evt unused
+     */
     private void jButtonViderDLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViderDLActionPerformed
         annulerDL();
         jPanelPlanMap.repaint();
     }//GEN-LAST:event_jButtonViderDLActionPerformed
 
+    /**
+     * Appelé quand le bouton "Générer feuille de route" est cliqué.
+     * Créé une feuille de route au format PDF, demande à l'utilisateur de la 
+     * nommer, l'enregistre et l'ouvre.
+     * @param evt unused
+     */
     private void jButtonFeuilleDeRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFeuilleDeRouteActionPerformed
-                                                 
+
         Document document = new Document();
         String nomPdf = "";
         try {
@@ -832,24 +882,31 @@ public class IHMLivraisons extends javax.swing.JDialog {
             Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
         }
         document.open();
-        
+
         controleur.feuilleDeRoute(document);
-        
+
         document.close();
 
         try {
             Desktop.getDesktop().open(new File(nomPdf));
         } catch (IOException ex) {
-            Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);}
-      
+            Logger.getLogger(IHMLivraisons.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         jTextAreaMessage.setText("Feuille de route générée, merci !");
-        
+
     }//GEN-LAST:event_jButtonFeuilleDeRouteActionPerformed
 
+    /**
+     * Appelé quand le bouton "Ajouter" est cliqué.
+     * Permet d'activer jTextFieldAjouter et jTextFieldPrecedent pour pouvoir 
+     * ajouter une livraison.
+     * @param evt unused
+     */
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
         jTextAreaMessage.setText("Passez la souris sur la livraison précédente, cliquez sur l'intersection à ajouter ou entrez leur ID et cliquez sur Valider");
         ajoutOuSuppr = true;
-        
+
         jButtonAjouter.setEnabled(false);
         jButtonSupprimer.setEnabled(false);
         jTextFieldPrecedent.setEnabled(true);
@@ -860,10 +917,15 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jButtonAjouterActionPerformed
 
+    /**
+     * Appelé quand le bouton "Suprimer" est cliqué. 
+     * Permet d'activer jTextFieldSupprimer pour pouvoir supprimer une livraison
+     * @param evt unused
+     */
     private void jButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerActionPerformed
         jTextAreaMessage.setText("Passez la souris sur la livraison à supprimer ou entrez son ID et cliquez sur Valider");
         ajoutOuSuppr = false;
-        
+
         jButtonAjouter.setEnabled(false);
         jButtonSupprimer.setEnabled(false);
         jTextFieldPrecedent.setEnabled(true);
@@ -873,14 +935,24 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonAnnulerModif.setEnabled(true);
     }//GEN-LAST:event_jButtonSupprimerActionPerformed
 
+    /**
+     * Appelé quand le bouton "Modifier" est cliqué. 
+     * Permet de choisir ajouter ou supprimer
+     * @param evt unused
+     */
     private void jButtonModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifierActionPerformed
         jButtonAjouter.setEnabled(true);
         jButtonSupprimer.setEnabled(true);
         jButtonAnnulerModif.setEnabled(false);
         jButtonFeuilleDeRoute.setEnabled(false);
-        
+
     }//GEN-LAST:event_jButtonModifierActionPerformed
 
+    /**
+     * Appelé quand le bouton "Annuler" est cliqué. 
+     * Ne fait pas de modifications
+     * @param evt unused
+     */
     private void jButtonAnnulerModifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerModifActionPerformed
         jButtonAjouter.setEnabled(false);
         jButtonSupprimer.setEnabled(false);
@@ -889,47 +961,59 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonFeuilleDeRoute.setEnabled(true);
     }//GEN-LAST:event_jButtonAnnulerModifActionPerformed
 
+    /**
+     * Reconnait si l'utilisateur a cliqué sur une intersection et affiche ses
+     * informations dans la zone de message, remplit le champ "intersection à 
+     * ajouter"
+     * @param evt unused
+     */
     private void jPanelPlanMapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelPlanMapMouseClicked
         // TODO add your handling code here:
-       int x= evt.getX();
-        int y= evt.getY();
-        long idIntersection = jPanelPlanMap.estSurIntersection(x,y);
+        int x = evt.getX();
+        int y = evt.getY();
+        long idIntersection = jPanelPlanMap.estSurIntersection(x, y);
 
         Intersection inter = jPanelPlanMap.lePlan.getIntersection(idIntersection);
-                if (idIntersection == -1) {
-                    //jTextAreaMessage.setText("!!!!!");
-                    return;
-                } else {
-                    jTextAreaMessage.setText("Intersection n° : "+idIntersection+", située : "+inter.getTroncons().get(0).getNomRue());
-                    jTextFieldAjouter.setText(String.valueOf(idIntersection));
-                }
+        if (idIntersection == -1) {
+            //jTextAreaMessage.setText("!!!!!");
+            return;
+        } else {
+            jTextAreaMessage.setText("Intersection n° : " + idIntersection + ", située : " + inter.getTroncons().get(0).getNomRue());
+            jTextFieldAjouter.setText(String.valueOf(idIntersection));
+        }
     }//GEN-LAST:event_jPanelPlanMapMouseClicked
 
+    /**
+     * Reconnait si l'utilisateur a passé la souris sur une livraison ou un
+     * entrepôt et affiche ses informations dans la zone de message, remplit le
+     * champ "intersection précédente"
+     *
+     * @param evt unused
+     */
     private void jPanelPlanMapMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelPlanMapMouseMoved
         // TODO add your handling code here:
-        int x= evt.getX();
-        int y= evt.getY();
+        int x = evt.getX();
+        int y = evt.getY();
         long l[] = jPanelPlanMap.estSurLivraison(x, y);
-            if (l == null) {
-                return;
-            }
-            
-            Intersection inter = jPanelPlanMap.lePlan.getIntersection(l[1]);
-            jTableLivraisons.setRowSelectionInterval((int) l[0], (int) l[0]);
-            
-            if(l[0]==0)
-            {
-                jTextAreaMessage.setText("L'entrepot se trouve est situé : " + inter.getTroncons().get(0).getNomRue());
-                jTextFieldPrecedent.setText(String.valueOf(inter.getId()));
-            } else {          
-                jTextAreaMessage.setText("Livraison n° : "+l[1]+", située : "+inter.getTroncons().get(0).getNomRue());
-                jTextFieldPrecedent.setText(String.valueOf(l[1]));
-                jTextFieldSupprimer.setText(String.valueOf(l[1]));
-            }
-           
+        if (l == null) {
+            return;
+        }
+
+        Intersection inter = jPanelPlanMap.lePlan.getIntersection(l[1]);
+        jTableLivraisons.setRowSelectionInterval((int) l[0], (int) l[0]);
+
+        if (l[0] == 0) {
+            jTextAreaMessage.setText("L'entrepot est situé : " + inter.getTroncons().get(0).getNomRue());
+            jTextFieldPrecedent.setText(String.valueOf(inter.getId()));
+        } else {
+            jTextAreaMessage.setText("Livraison n° : " + l[1] + ", située : " + inter.getTroncons().get(0).getNomRue());
+            jTextFieldPrecedent.setText(String.valueOf(l[1]));
+            jTextFieldSupprimer.setText(String.valueOf(l[1]));
+        }
+
     }//GEN-LAST:event_jPanelPlanMapMouseMoved
 
- /**
+    /**
      * Ouvre une boîte de dialogue d'exception modale afin de signalier à
      * l'utilisateur une erreur avec un fichier XML
      *
@@ -945,12 +1029,12 @@ public class IHMLivraisons extends javax.swing.JDialog {
 //        exceptionDialog.setHeight(450);
 //        exceptionDialog.setResizable(false);
         //exceptionDialog.initOwner(groupEllipseVueGraphique.getScene().getWindow());
-         String title ="Problème avec le fichier : " + "'" + fichier + "'";
+        String title = "Problème avec le fichier : " + "'" + fichier + "'";
         JOptionPane.showMessageDialog(null, message.getMessage(), title, JOptionPane.ERROR_MESSAGE);
-        
 
         //exceptionDialog.showAndWait();
     }
+
     /**
      * @param args the command line arguments
      */
@@ -971,7 +1055,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(IHMLivraisons.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the dialog */
@@ -987,10 +1071,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
-    } 
+    }
     private boolean ajoutOuSuppr;
-    // /!\ IMPORTANT : changer private javax.swing.JPanel jPanelPlanMap; en private JPanelPlan jPanelPlanMap;
-    // netBeans va essayer de le changer
+    // IMPORTANT : changer private javax.swing.JPanel jPanelPlanMap; en private JPanelPlan jPanelPlanMap;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAjouter;
     private javax.swing.JButton jButtonAnnulerModif;

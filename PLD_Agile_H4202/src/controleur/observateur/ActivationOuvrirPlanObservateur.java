@@ -2,6 +2,7 @@ package controleur.observateur;
 
 /**
  * Interface pour l'observateur de l'action qui permet d'ouvrir un plan.
+ * @author DELL
  */
 public interface ActivationOuvrirPlanObservateur {
 	

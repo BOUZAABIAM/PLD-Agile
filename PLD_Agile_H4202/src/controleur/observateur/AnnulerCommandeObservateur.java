@@ -2,6 +2,7 @@ package controleur.observateur;
 
 /**
  * Interface pour l'observateur qui permet d'activer l'action annuler 
+ * @author DELL
  */
 public interface AnnulerCommandeObservateur {
 

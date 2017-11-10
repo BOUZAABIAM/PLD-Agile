@@ -8,15 +8,21 @@ import controleur.commande.CommandeChargerPlan;
 import controleur.commande.CommandeException;
 
 /**
- * Etat principal de l'application après avoir calculé la tournée. Les fonctionnalités sont débloqués
+ * Etat principal de l'application après avoir calculé la tournée. Les
+ * fonctionnalités sont débloqués
+ *
+ * @author DELL
  */
 public class EtatPrincipal implements EtatInterface {
 
-    /** Le contrôleur de données */
+    /**
+     * Le contrôleur de données
+     */
     private final ControleurDonnees CONTROLEUR_DONNEES;
 
     /**
      * Constructeur de l'état principal
+     *
      * @param controleurDonnees Le contrôleur de données
      */
     public EtatPrincipal(ControleurDonnees controleurDonnees) {
@@ -50,13 +56,13 @@ public class EtatPrincipal implements EtatInterface {
 
     @Override
     public EtatInterface calculerTournee() {
-    	// Ne fait rien
+        // Ne fait rien
         return this;
     }
 
     @Override
     public EtatInterface clicDroit() {
-    	// Ne fait rien
+        // Ne fait rien
         return this;
     }
 

@@ -2,6 +2,7 @@ package controleur.observateur;
 
 /**
  * Interface pour les observateurs qui affichent un message dans la vue.
+ * @author DELL
  */
 public interface MessageObservateur {
 	

@@ -1,31 +1,31 @@
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="reseau">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="noeud" maxOccurs="unbounded" minOccurs="0">
-          <xs:complexType>
-            <xs:simpleContent>
-              <xs:extension base="xs:string">
-                <xs:attribute type="xs:long" name="id" use="optional"/>
-                <xs:attribute type="xs:int" name="x" use="optional"/>
-                <xs:attribute type="xs:int" name="y" use="optional"/>
-              </xs:extension>
-            </xs:simpleContent>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="troncon" maxOccurs="unbounded" minOccurs="0">
-          <xs:complexType>
-            <xs:simpleContent>
-              <xs:extension base="xs:string">
-                <xs:attribute type="xs:long" name="destination" use="optional"/>
-                <xs:attribute type="xs:float" name="longueur" use="optional"/>
-                <xs:attribute type="xs:string" name="nomRue" use="optional"/>
-                <xs:attribute type="xs:long" name="origine" use="optional"/>
-              </xs:extension>
-            </xs:simpleContent>
-          </xs:complexType>
-        </xs:element>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+    <xs:element name="reseau">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="noeud" maxOccurs="unbounded" minOccurs="0">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute type="xs:long" name="id" use="optional"/>
+                                <xs:attribute type="xs:int" name="x" use="optional"/>
+                                <xs:attribute type="xs:int" name="y" use="optional"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="troncon" maxOccurs="unbounded" minOccurs="0">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute type="xs:long" name="destination" use="optional"/>
+                                <xs:attribute type="xs:float" name="longueur" use="optional"/>
+                                <xs:attribute type="xs:string" name="nomRue" use="optional"/>
+                                <xs:attribute type="xs:long" name="origine" use="optional"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

@@ -4,18 +4,20 @@
  * and open the template in the editor.
  */
 package Modele;
+
 import java.sql.Time;
+
 /**
  *
  * @author carhiliuc
  */
 public class Livraison {
+
     private Intersection adresse;
     private int duree;
     private Time debutPlage;
     private Time finPlage;
 
-   
     public Livraison(Intersection adresse, int duree, String debutPlage, String finPlage) {
         this.adresse = adresse;
         this.duree = duree;
@@ -34,7 +36,6 @@ public class Livraison {
         this.debutPlage = debutPlage;
         this.finPlage = finPlage;
     }
-        
 
     public Intersection getAdresse() {
         return adresse;
@@ -72,5 +73,5 @@ public class Livraison {
     public String toString() {
         return "Livraison{" + "adresse=" + adresse.getTroncons().get(0).getNomRue() + ", duree=" + duree + ", debutPlage=" + debutPlage + ", finPlage=" + finPlage + '}';
     }
-    
+
 }

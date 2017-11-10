@@ -3,6 +3,7 @@ package controleur.commande;
 
 /**
  * Représente les commandes non annulables
+ * @author DELL
  */
 public abstract class CommandeNonAnnulable implements Commande {
     @Override
