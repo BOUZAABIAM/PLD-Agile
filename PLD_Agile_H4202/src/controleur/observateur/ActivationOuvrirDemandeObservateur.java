@@ -2,7 +2,7 @@ package controleur.observateur;
 
 /**
  * Interface pour l'observateur de l'action qui permet d'ouvrir une demande de livraison.
-
+ * @author DELL
  */
 public interface ActivationOuvrirDemandeObservateur {
 	
