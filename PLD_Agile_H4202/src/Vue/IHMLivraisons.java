@@ -405,6 +405,14 @@ public class IHMLivraisons extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Appelé quand le bouton "Charger Plan" est cliqué. Ouvre un explorateur de
+     * fichier permettant à l'utilisateur de choisir un fichier plan de type xml
+     * valide et de l'afficher dans un jFrame. 
+     * Erreur si le fichier n'est pas valide
+     *
+     * @param evt unused
+     */
     private void jButtonChargerPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerPlanActionPerformed
         JFileChooser xmlMap = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
@@ -442,6 +450,15 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jButtonChargerPlanActionPerformed
 
+    /**
+     * Appelé quand le bouton "Charger Livraison" est cliqué. Ouvre un
+     * explorateur de fichier permettant à l'utilisateur de choisir un fichier
+     * de demande de livraison de type xml valide et de l'afficher sur le plan
+     * et dans un tableau.
+     * Erreur si le fichier n'est pas valide
+     *
+     * @param evt unused
+     */
     private void jButtonChargerLivraisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChargerLivraisonActionPerformed
         annulerDL();
 
@@ -524,6 +541,14 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jTextAreaMessage.setText("Vous pouvez calculer la tournée");
     }//GEN-LAST:event_jButtonChargerLivraisonActionPerformed
 
+    /**
+     * Appelé quand le bouton "Calcul Tournée" est cliqué. Génère la solution de
+     * parcour des livraisons, affiche dans le tableau les livraisons dans l'ordre
+     * de passage ainsi que les heures d'arrivés et de départ, affiche sur le plan
+     * l'itinéraire.
+     * 
+     * @param evt unused
+     */
     private void jButtonCalculerTourneeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalculerTourneeActionPerformed
 
         List<ArrayList<Intersection>> solution = controleur.calculTournee();
@@ -605,6 +630,16 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jTextAreaMessage.setText("Vous pouvez modifier la tournée ou générer la feuille de route");
     }//GEN-LAST:event_jButtonCalculerTourneeActionPerformed
 
+    /**
+     * Appelé quand le bouton "Valider" est cliqué.
+     * Activé uniquement si modifier puis ajouté ou supprimé a été cliqué.
+     * Dans le cas d'un ajout, va lire la valeur de jTextFieldAjouter et de
+     * jTextFieldPrecedent puis ajoute une livraison, change l'affichage du plan
+     * et du tableau.
+     * Dans le cas d'une suppression, va lire la valeur de jTextFieldSupprimer et
+     * supprime une livraison, change l'affichage du plan et du tableau.
+     * @param evt unused
+     */
     private void jButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonValiderActionPerformed
         if (ajoutOuSuppr) {
             long idAdd;
@@ -781,6 +816,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonFeuilleDeRoute.setEnabled(true);
     }//GEN-LAST:event_jButtonValiderActionPerformed
 
+    /**
+     * Permet de supprimer une demande de livraison
+     */
     private void annulerDL() {
         controleur.annuler();
         jPanelPlanMap.setDL(null);
@@ -792,6 +830,9 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonFeuilleDeRoute.setEnabled(false);
     }
 
+    /**
+     * Vide le tableau d'affichage des livraisons.
+     */
     private void viderTableau() {
         DefaultTableModel model = (DefaultTableModel) jTableLivraisons.getModel();
         int rowCount = model.getRowCount();
@@ -807,11 +848,22 @@ public class IHMLivraisons extends javax.swing.JDialog {
         }
     }
 
+    /**
+     * Appelé quand le bouton "Vider Demande de Livraison" est cliqué.
+     * Supprime la demande de livraison courante et redessine le plan.
+     * @param evt unused
+     */
     private void jButtonViderDLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViderDLActionPerformed
         annulerDL();
         jPanelPlanMap.repaint();
     }//GEN-LAST:event_jButtonViderDLActionPerformed
 
+    /**
+     * Appelé quand le bouton "Générer feuille de route" est cliqué.
+     * Créé une feuille de route au format PDF, demande à l'utilisateur de la 
+     * nommer, l'enregistre et l'ouvre.
+     * @param evt unused
+     */
     private void jButtonFeuilleDeRouteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFeuilleDeRouteActionPerformed
 
         Document document = new Document();
@@ -845,6 +897,12 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jButtonFeuilleDeRouteActionPerformed
 
+    /**
+     * Appelé quand le bouton "Ajouter" est cliqué.
+     * Permet d'activer jTextFieldAjouter et jTextFieldPrecedent pour pouvoir 
+     * ajouter une livraison.
+     * @param evt unused
+     */
     private void jButtonAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjouterActionPerformed
         jTextAreaMessage.setText("Passez la souris sur la livraison précédente, cliquez sur l'intersection à ajouter ou entrez leur ID et cliquez sur Valider");
         ajoutOuSuppr = true;
@@ -859,6 +917,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jButtonAjouterActionPerformed
 
+    /**
+     * Appelé quand le bouton "Suprimer" est cliqué. 
+     * Permet d'activer jTextFieldSupprimer pour pouvoir supprimer une livraison
+     * @param evt unused
+     */
     private void jButtonSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSupprimerActionPerformed
         jTextAreaMessage.setText("Passez la souris sur la livraison à supprimer ou entrez son ID et cliquez sur Valider");
         ajoutOuSuppr = false;
@@ -872,6 +935,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonAnnulerModif.setEnabled(true);
     }//GEN-LAST:event_jButtonSupprimerActionPerformed
 
+    /**
+     * Appelé quand le bouton "Modifier" est cliqué. 
+     * Permet de choisir ajouter ou supprimer
+     * @param evt unused
+     */
     private void jButtonModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifierActionPerformed
         jButtonAjouter.setEnabled(true);
         jButtonSupprimer.setEnabled(true);
@@ -880,6 +948,11 @@ public class IHMLivraisons extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jButtonModifierActionPerformed
 
+    /**
+     * Appelé quand le bouton "Annuler" est cliqué. 
+     * Ne fait pas de modifications
+     * @param evt unused
+     */
     private void jButtonAnnulerModifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnulerModifActionPerformed
         jButtonAjouter.setEnabled(false);
         jButtonSupprimer.setEnabled(false);
@@ -888,6 +961,12 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jButtonFeuilleDeRoute.setEnabled(true);
     }//GEN-LAST:event_jButtonAnnulerModifActionPerformed
 
+    /**
+     * Reconnait si l'utilisateur a cliqué sur une intersection et affiche ses
+     * informations dans la zone de message, remplit le champ "intersection à 
+     * ajouter"
+     * @param evt unused
+     */
     private void jPanelPlanMapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelPlanMapMouseClicked
         // TODO add your handling code here:
         int x = evt.getX();
@@ -904,6 +983,13 @@ public class IHMLivraisons extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jPanelPlanMapMouseClicked
 
+    /**
+     * Reconnait si l'utilisateur a passé la souris sur une livraison ou un
+     * entrepôt et affiche ses informations dans la zone de message, remplit le
+     * champ "intersection précédente"
+     *
+     * @param evt unused
+     */
     private void jPanelPlanMapMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelPlanMapMouseMoved
         // TODO add your handling code here:
         int x = evt.getX();
@@ -917,7 +1003,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         jTableLivraisons.setRowSelectionInterval((int) l[0], (int) l[0]);
 
         if (l[0] == 0) {
-            jTextAreaMessage.setText("L'entrepot se trouve est situé : " + inter.getTroncons().get(0).getNomRue());
+            jTextAreaMessage.setText("L'entrepot est situé : " + inter.getTroncons().get(0).getNomRue());
             jTextFieldPrecedent.setText(String.valueOf(inter.getId()));
         } else {
             jTextAreaMessage.setText("Livraison n° : " + l[1] + ", située : " + inter.getTroncons().get(0).getNomRue());
@@ -987,8 +1073,7 @@ public class IHMLivraisons extends javax.swing.JDialog {
         });
     }
     private boolean ajoutOuSuppr;
-    // /!\ IMPORTANT : changer private javax.swing.JPanel jPanelPlanMap; en private JPanelPlan jPanelPlanMap;
-    // netBeans va essayer de le changer
+    // IMPORTANT : changer private javax.swing.JPanel jPanelPlanMap; en private JPanelPlan jPanelPlanMap;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAjouter;
     private javax.swing.JButton jButtonAnnulerModif;
