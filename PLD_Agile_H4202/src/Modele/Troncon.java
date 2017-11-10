@@ -33,12 +33,13 @@ public class Troncon {
 
     /**
      * Renvoie la durée en seconds pour parcurir le tronçon
+     *
      * @return la durée en seconds pour parcurir le tronçon
      */
     public int getDuree() {
         // vitesse en m par s
-        double vitesse  = 15.0*1000/3600;
-        int resultat = (int)(longueur/vitesse);
+        double vitesse = 15.0 * 1000 / 3600;
+        int resultat = (int) (longueur / vitesse);
         return resultat;
     }
 

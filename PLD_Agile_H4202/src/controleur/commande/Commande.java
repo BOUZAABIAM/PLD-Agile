@@ -1,23 +1,24 @@
 package controleur.commande;
 
-
 /**
  * L'interface définissant les méthodes des commandes
- * @author DELL 
+ *
+ * @author DELL
  */
 public interface Commande {
 
     /**
      * La création d'une commande ne déclenche pas automatiquement son exécution
-     * (ce qui est notamment utile pour l'historique, quand on veut ré-exécuter une
-     * commande)
+     * (ce qui est notamment utile pour l'historique, quand on veut ré-exécuter
+     * une commande)
+     *
      * @throws controleur.commande.CommandeException
      */
     void executer() throws CommandeException;
 
     /**
-     * Si une commande est annulable, on peut revenir dans un ancien etat du modèle
-     * en appelant cette methode et annulant la commande.
+     * Si une commande est annulable, on peut revenir dans un ancien etat du
+     * modèle en appelant cette methode et annulant la commande.
      */
     void annuler();
 }

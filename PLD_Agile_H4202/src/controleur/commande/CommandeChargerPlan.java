@@ -14,6 +14,7 @@ import org.jdom2.JDOMException;
 
 /**
  * La commande de chargement d'un plan
+ *
  * @author DELL
  */
 public class CommandeChargerPlan extends CommandeNonAnnulable {
@@ -22,7 +23,7 @@ public class CommandeChargerPlan extends CommandeNonAnnulable {
      * Le contrôleur de données
      */
     private final ControleurDonnees CONTROLEUR_DONNEES;
-    
+
     /**
      * Le fichier de plan
      */
@@ -30,6 +31,7 @@ public class CommandeChargerPlan extends CommandeNonAnnulable {
 
     /**
      * Le constructeur du chargement du plan
+     *
      * @param controleurDonnees Le contrôleur de données
      * @param plan Le fichier de plan
      */
@@ -50,10 +52,9 @@ public class CommandeChargerPlan extends CommandeNonAnnulable {
             CONTROLEUR_DONNEES.notifierPlanChargeObservateur();
             CONTROLEUR_DONNEES.notifierObservateursMessage(String.format("Plan de la ville (%s) chargé avec succès ! Veuillez charger la demande de livraison maintenant.", PLAN_FICHIER.getName()));
             CONTROLEUR_DONNEES.effacerHistorique();
-        } catch (SAXException | JDOMException|ExceptionXML |ParserConfigurationException| IOException | ParseException ex) {
+        } catch (SAXException | JDOMException | ExceptionXML | ParserConfigurationException | IOException | ParseException ex) {
             throw new CommandeException(ex.getMessage());
         }
     }
 
 }
-

@@ -21,7 +21,7 @@ public class Intersection {
     /* 
     * La couleur prend les valeurs: 
     * 0 = blanc, 1 = gris, 2 = noir 
-    */
+     */
     private int couleur;
 
     public Intersection(long id, double x, double y, int index) {
@@ -34,7 +34,8 @@ public class Intersection {
 
     /**
      * Ajoute un tronçon dans la liste des tronçons
-     * @param troncon 
+     *
+     * @param troncon
      */
     public void addTroncon(Troncon troncon) {
         troncons.add(troncon);
@@ -91,48 +92,52 @@ public class Intersection {
     public void setPredIndex(int predIndex) {
         this.predIndex = predIndex;
     }
-      
+
     public int getCouleur() {
         return couleur;
-    }    
-    
+    }
+
     /**
-     * Change les valeurs de d, pred et predIndex si necessaire suite au relanchement. 
-     * Les valeurs sont changés que si le newD est inferieur au d courant.
+     * Change les valeurs de d, pred et predIndex si necessaire suite au
+     * relanchement. Les valeurs sont changés que si le newD est inferieur au d
+     * courant.
+     *
      * @param newD la nouvelle durée proposée suite au relanchement
-     * @param pred le nouveau precedesseur si la nouvelle durée est plus petite que l'ancienne
+     * @param pred le nouveau precedesseur si la nouvelle durée est plus petite
+     * que l'ancienne
      */
-    public void relacher(int newD, Intersection pred){
-        if (newD < d){
+    public void relacher(int newD, Intersection pred) {
+        if (newD < d) {
             this.d = newD;
-            this.pred = pred; 
-            this.predIndex = this.pred.getIndex();                    
+            this.pred = pred;
+            this.predIndex = this.pred.getIndex();
         }
     }
-    
+
     /**
-     * Relache les successeurs de l'intersection courant. 
-     * Suite à ça la couleur de l'intersection courante est changé vers 2
-     * @return 
+     * Relache les successeurs de l'intersection courant. Suite à ça la couleur
+     * de l'intersection courante est changé vers 2
+     *
+     * @return
      */
-    public List<Intersection> relacherSucc(){
+    public List<Intersection> relacherSucc() {
         List<Intersection> nouveauGris = new LinkedList<>();
         this.couleur = 2;
-        for(Troncon troncon: troncons){
+        for (Troncon troncon : troncons) {
             Intersection arrive = troncon.getDestination();
-            if (arrive.getCouleur() == 0){
+            if (arrive.getCouleur() == 0) {
                 nouveauGris.add(arrive);
                 arrive.setCouleur(1);
             }
-            if (arrive.getCouleur() != 2){
-                arrive.relacher(d+troncon.getDuree(), this);
+            if (arrive.getCouleur() != 2) {
+                arrive.relacher(d + troncon.getDuree(), this);
             }
         }
         return nouveauGris;
     }
-      
+
     @Override
     public String toString() {
         return "Intersection{" + "id=" + id + ", x=" + x + ", y=" + y + ", troncons=" + troncons + '}';
-    } 
+    }
 }

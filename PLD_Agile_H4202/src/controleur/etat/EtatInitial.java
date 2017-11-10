@@ -7,16 +7,21 @@ import controleur.commande.CommandeException;
 import controleur.commande.CommandeChargerPlan;
 
 /**
- * Premier état de l'application au lancement. A partir de cet état on ne peut que charger un plan.
+ * Premier état de l'application au lancement. A partir de cet état on ne peut
+ * que charger un plan.
+ *
  * @author DELL
  */
 public class EtatInitial implements EtatInterface {
-	
-    /** Le contrôleur de données */
+
+    /**
+     * Le contrôleur de données
+     */
     private final ControleurDonnees CONTROLEUR_DONNEES;
 
     /**
      * Constructeur de l'état initial
+     *
      * @param controleurDonnees Le contrôleur de données
      */
     public EtatInitial(ControleurDonnees controleurDonnees) {
@@ -35,7 +40,7 @@ public class EtatInitial implements EtatInterface {
     }
 
     @Override
-    public EtatInterface chargerLivraisons(File livraisons)  throws CommandeException {
+    public EtatInterface chargerLivraisons(File livraisons) throws CommandeException {
         throw new RuntimeException("Cet état ne permet pas de charger un fichier de livraison");
     }
 

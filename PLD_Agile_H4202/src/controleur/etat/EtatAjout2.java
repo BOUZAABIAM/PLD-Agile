@@ -9,21 +9,29 @@ import java.io.File;
 
 /**
  * Cet état correspond à l'état où l'on doit choisir la livraison qui se trouve
- * avant la livraison que l'on souhaite ajouter Cet état exécutera ensuite réellement l'ajout
+ * avant la livraison que l'on souhaite ajouter Cet état exécutera ensuite
+ * réellement l'ajout
+ *
  * @author DELL
  */
 public class EtatAjout2 implements EtatInterface {
 
-    /** Le contrôleur de donénes */
+    /**
+     * Le contrôleur de donénes
+     */
     private ControleurDonnees controleurDonnees;
-    
-    /** L'identifiant de l'intersection où sera la nouvelle livraison */
+
+    /**
+     * L'identifiant de l'intersection où sera la nouvelle livraison
+     */
     private long idIntersectionLivraison;
 
     /**
      * Constructeur du deuxième état d'ajout
+     *
      * @param controleurDonnees Le contrôleur de données
-     * @param idIntersectionLivraison L'identifiant venant du premier état d'ajout
+     * @param idIntersectionLivraison L'identifiant venant du premier état
+     * d'ajout
      */
     public EtatAjout2(ControleurDonnees controleurDonnees, long idIntersectionLivraison) {
         this.controleurDonnees = controleurDonnees;
@@ -33,7 +41,7 @@ public class EtatAjout2 implements EtatInterface {
 
     @Override
     public EtatInterface clicSurLivraison(long idLivraisonAvant) {
-       
+
         return this;
     }
 
@@ -62,5 +70,5 @@ public class EtatAjout2 implements EtatInterface {
     public EtatInterface clicDroit() {
         return new EtatAjout(controleurDonnees);
     }
-    
+
 }
