@@ -10,7 +10,7 @@ import java.io.File;
 
 /**
  * On se retrouve dans cet état après avoir chargé la demande de livraisons mais sans avoir calculé la tournée encore.
- *
+ * @author DELL
  */
 public class EtatDemandeChargee implements EtatInterface {
 
@@ -23,7 +23,6 @@ public class EtatDemandeChargee implements EtatInterface {
      */
     public EtatDemandeChargee(ControleurDonnees controleurDonnees) {
         // On désactive les fonctionnalités principales
-    	//controleurDonnees.notifierObservateursFonctionnalites(false);
         controleurDonnees.notifierObservateursActivation(false);
         this.CONTROLEUR_DONNEES = controleurDonnees;
     }
