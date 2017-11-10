@@ -3,7 +3,7 @@ package controleur.commande;
 
 /**
  * L'interface définissant les méthodes des commandes
-
+ * @author DELL 
  */
 public interface Commande {
 
@@ -11,6 +11,7 @@ public interface Commande {
      * La création d'une commande ne déclenche pas automatiquement son exécution
      * (ce qui est notamment utile pour l'historique, quand on veut ré-exécuter une
      * commande)
+     * @throws controleur.commande.CommandeException
      */
     void executer() throws CommandeException;
 
