@@ -52,11 +52,10 @@ public class PlanTest {
     @Test
     public void testGraphLivraison() {
         System.out.println("graphLivraison");
-        Plan instance = this.initiale3point();
+        Plan instance = this.initiale4point();
         setDL2(instance,instance.getIntersectionsList().get(0),instance.getIntersectionsList().get(1),instance.getIntersectionsList().get(2));
         int[][] expResult = {{0,1,0},{1,0,1},{0,1,0}};
-        int[][] result = instance.graphLivraison();
-        assertNotNull(result);
+        int[][] result = instance.graphLivraison();        
         assertArrayEquals(expResult, result);      
     }
 
@@ -68,7 +67,10 @@ public class PlanTest {
     @Test
     public void testGetChemin_int_int() {
         System.out.println("getChemin");        
-        Plan instance = this.initiale3point();            
+        
+        //test le plus court chemin entre 2 intersection1 et intersection3 de plan de 4 point
+        // il passe selon chemin intersection3 intersection2 intersection1 
+        Plan instance = this.initiale4point();            
         List<Intersection> expResult = new LinkedList<Intersection>();
         expResult.add(instance.getIntersectionsList().get(2));
         expResult.add(instance.getIntersectionsList().get(1));
@@ -76,10 +78,11 @@ public class PlanTest {
         setDL2(instance,instance.getIntersectionsList().get(0),instance.getIntersectionsList().get(1),instance.getIntersectionsList().get(2));
         instance.calculSolutionTSP1();
         List<Intersection> result = instance.getChemin(1,2);
-        //test le plus court chemin
+
         assertEquals(expResult.toString(), result.toString());
-        // s'il existe pas le chemin            
-        Plan instance2 = this.initiale3point();
+        // test le plus court chemin entre 2 intersection1 et intersection4 de plan de 4 point
+        // il n'y a pas de chemin entre intersection1 et intersection4 donc renvoyer'nul'
+        Plan instance2 = this.initiale4point();
         setDL3(instance2,instance2.getIntersectionsList().get(0),instance2.getIntersectionsList().get(1),instance2.getIntersectionsList().get(2),instance2.getIntersectionsList().get(3));
         List<Intersection> result2 = instance.getChemin(1,3);
         assertNull(result2);
@@ -110,41 +113,32 @@ public class PlanTest {
         instance.setDL(dl);
         int[] result = instance.getDuree();
         assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-       // fail("The test case is a prototype.");
     }
 
     /**
      * Test of addLivraison method, of class Plan.
-	 *A faire avec le chemin null(il y a pas de chemin)
-	 *
      */
     @Test
     public void testAddLivraison() {
         System.out.println("addLivraison"); 
-        Plan plan = this.initiale3point();     
-	Plan plan2 = this.initiale3point();         
+        Plan plan = this.initiale4point();     
+	Plan plan2 = this.initiale4point();         
         setDL1(plan,plan.getIntersectionsList().get(0),plan.getIntersectionsList().get(1));
 	setDL2(plan2,plan2.getIntersectionsList().get(0),plan2.getIntersectionsList().get(1),plan2.getIntersectionsList().get(2));
-        
+        // ajouter intersection1 qui n'est pas un livraison
         plan.calculSolutionTSP1();
         plan2.calculSolutionTSP1();
         plan.addLivraison(plan.getIntersectionsList().get(1),plan.getIntersectionsList().get(2));
         plan.calculSolutionTSP1();
 	assertEquals(plan.getSolution2().toString(), plan2.getSolution2().toString());
 		
-	// test ajouter intersection1 qui est deja en Livraison
-        Plan plan3 = this.initiale3point();
+	// ajouter intersection1 qui est deja en Livraison
+        Plan plan3 = this.initiale4point();
 	setDL2(plan3,plan3.getIntersectionsList().get(0),plan3.getIntersectionsList().get(1),plan3.getIntersectionsList().get(2));		
         plan3.calculSolutionTSP1();
         plan3.addLivraison(plan3.getIntersectionsList().get(1),plan3.getIntersectionsList().get(2));
-        assertEquals(plan.getSolution2().toString(), plan3.getSolution2().toString());
-        
-	// il y a pas de chemin pour aller a intersection 4
-        Plan plan4 = this.initiale3point();
-	setDL3(plan4,plan4.getIntersectionsList().get(0),plan4.getIntersectionsList().get(1),plan4.getIntersectionsList().get(2),plan4.getIntersectionsList().get(3));	
-        plan4.calculSolutionTSP1();
-        
+        assertEquals(plan.getSolution2().toString(), plan3.getSolution2().toString());      
+	
         
     }
 	
@@ -154,17 +148,18 @@ public class PlanTest {
     @Test
     public void testDeleteLivraison() {
         System.out.println("deleteLivraison");
-        Plan planexpResult = this.initiale3point();     
-	Plan planResult = this.initiale3point();         
+        Plan planexpResult = this.initiale4point();     
+	Plan planResult = this.initiale4point();         
         setDL1(planexpResult,planexpResult.getIntersectionsList().get(0),planexpResult.getIntersectionsList().get(1));
 	setDL2(planResult,planResult.getIntersectionsList().get(0),planResult.getIntersectionsList().get(1),planResult.getIntersectionsList().get(2));		
         planResult.calculSolutionTSP1();
         planexpResult.calculSolutionTSP1();
+        // supprimer intersection 3 qui est adress d'un livraison
         planResult.deleteLivraison(planResult.getIntersectionsList().get(2));
 	assertEquals(planexpResult.getSolution2().toString(), planResult.getSolution2().toString());
-//	 //suprimer intersection qui n'est pas un livraison
-//	planResult.deleteLivraison(planResult.getIntersectionsList().get(3));
-//	assertEquals(planexpResult.getSolution2().toString(), planResult.getSolution2().toString());
+	 //suprimer intersection qui n'est pas un livraison
+	planResult.deleteLivraison(planResult.getIntersectionsList().get(3));
+	assertEquals(planexpResult.getSolution2().toString(), planResult.getSolution2().toString());
 	// suprimer entrepot
 	planResult.deleteLivraison(planResult.getIntersectionsList().get(0));
 	assertEquals(planexpResult.getSolution2().toString(), planResult.getSolution2().toString());
@@ -191,10 +186,10 @@ public class PlanTest {
         Time heureDepart = Time.valueOf("8:0:0");
         DemandeLivraison dl = new DemandeLivraison(entrepot,heureDepart,livraisons);
         instance.setDL(dl);
-	// intersection est un livraison
+	// intersection est une adrsse de livraison
         int result = instance.getIndiceLivraisonParIntersection(intersection5);        
         assertEquals(expResult, result);
-        // intersection n'est pas un livraison
+        // intersection n'est pas une adresse de livraison
         int result2 = instance.getIndiceLivraisonParIntersection(instance.getIntersectionsList().get(2)); 
         assertEquals(Integer.MAX_VALUE, result2);
         // intersection est entrepot
@@ -233,8 +228,7 @@ public class PlanTest {
 	 * testcalculDuree
 	 */
     public void testcalculDuree(){
-	Plan instance = this.initiale3point();
-
+	Plan instance = this.initiale4point();
         Intersection[] intersections = new Intersection[3];
         intersections[0]=instance.getIntersectionsList().get(0);
         intersections[1]=instance.getIntersectionsList().get(1);
@@ -244,8 +238,7 @@ public class PlanTest {
         expResult[1]=0;
         expResult[2]=1;
 	int[] result = null;
-        setDL2(instance,instance.getIntersectionsList().get(0),instance.getIntersectionsList().get(1),instance.getIntersectionsList().get(2));
-        
+        setDL2(instance,instance.getIntersectionsList().get(0),instance.getIntersectionsList().get(1),instance.getIntersectionsList().get(2));        
         result= instance.calculDuree(intersections[0],intersections, Integer.MAX_VALUE);
         Assert.assertArrayEquals(expResult,result);
     }
@@ -253,19 +246,18 @@ public class PlanTest {
 	
 	
 	
-	/**
+    /**
      * Test of adresseEnLivraison method, of class Plan.
-	 * 
+     * 
      */
     @Test
     public void testAdresseEnLivraison() {
         System.out.println("adresseEnLivraison");        
-        Plan instance = this.initiale3point();
+        Plan instance = this.initiale4point();
 	setDL2(instance,instance.getIntersectionsList().get(0),instance.getIntersectionsList().get(1),instance.getIntersectionsList().get(2));
-        // existe pas
-	assertEquals(false, instance.adresseEnLivraison(instance.getIntersectionsList().get(3)));
-        
-         // existe
+        // intersection n'est pas en livraion renvoyer 'false'
+	assertEquals(false, instance.adresseEnLivraison(instance.getIntersectionsList().get(3)));        
+         // intersection est en livraion renvoyer 'true'
         assertEquals(true, instance.adresseEnLivraison(instance.getIntersectionsList().get(1)));
     }
 	
@@ -276,15 +268,17 @@ public class PlanTest {
     @Test
     public void testCalculSolutionTSP1() {
         System.out.println("calculSolutionTSP1");
-        Plan instance = this.initiale3point();
-        Map<Long, Livraison> livraisons = new TreeMap<Long, Livraison>();
+        
+        // test en cas normal 
+        Plan instance = this.initiale4point();       
 	setDL2(instance,instance.getIntersectionsList().get(0),instance.getIntersectionsList().get(1),instance.getIntersectionsList().get(2));
 	ArrayList<ArrayList<Intersection>> expResult = this.solution2();
         instance.calculSolutionTSP1();  
         assertEquals(expResult.toString(), instance.getSolution2().toString());
-        Plan instance2 = this.initiale3point();
         
-        // il y a pas le chemin pour aller a intersection4
+        
+        // en cas de il n'y a pas le chemin pour aller a intersection4
+       Plan instance2 = this.initiale4point();
        setDL3(instance2,instance2.getIntersectionsList().get(0),instance2.getIntersectionsList().get(1),instance2.getIntersectionsList().get(2),instance2.getIntersectionsList().get(3));        
        instance2.calculSolutionTSP1();  
        assertEquals(expResult.toString(), instance2.getSolution2().toString());
@@ -292,8 +286,16 @@ public class PlanTest {
     
 
    
-
-    private Plan initiale3point(){
+     /**
+     * initiale le Plan avec 4 intersection de 1 à 4
+     * intersection 1,2,3 sont liés:
+     * intersection1 <-> intersection2 = 2
+     * intersection2 <-> intersection3 = 7
+     * intersection3 <-> intersection1 = 10
+     * intersection 4 est isolé , il y a de chemin pour aller à intersection 4
+     */
+    
+    private Plan initiale4point(){
         Intersection intersection1 = new Intersection(1,0,0,0);
         Intersection intersection2 = new Intersection(2,1,0,1);
         Intersection intersection3 = new Intersection(3,2,0,2);
@@ -324,47 +326,71 @@ public class PlanTest {
        
         return plan;
     }
-	// 1 entrepot 3 livraison
-    private void setDL3(Plan plan,Intersection intersection1, Intersection intersection2,Intersection intersection3,Intersection intersection4){
+     /**
+     * @Param plan 
+     * @Param entrepot  
+     * @Param intersection1: adresse de livraison 1
+     * @Param intersection2: adresse de livraison 2
+     * @Param intersection3: adresse de livraison 3
+     * charger sur plan liste de livraisons qui contient entrepot 3 livraisons 
+     */
+    private void setDL3(Plan plan,Intersection entrepot, Intersection intersection1,Intersection intersection2,Intersection intersection3){
 		Map<Long, Livraison> livraisons = new TreeMap<Long, Livraison>();
       
-                Livraison livraison2 = new Livraison(intersection2,900);
-                Livraison livraison3 = new Livraison(intersection3,600);
-                Livraison livraison4 = new Livraison(intersection4,500);
-                livraisons.put((long)2, livraison2);
-                livraisons.put((long)3, livraison3);
-                livraisons.put((long)4, livraison4);
+                Livraison livraison1 = new Livraison(intersection1,900);
+                Livraison livraison2 = new Livraison(intersection2,600);
+                Livraison livraison3 = new Livraison(intersection3,500);
+                livraisons.put((long)2, livraison1);
+                livraisons.put((long)3, livraison2);
+                livraisons.put((long)4, livraison3);
                 Time heureDepart = Time.valueOf("8:0:0");
-                DemandeLivraison dl = new DemandeLivraison(intersection1,heureDepart,livraisons);
+                DemandeLivraison dl = new DemandeLivraison(entrepot,heureDepart,livraisons);
 		plan.setDL(dl);
 		 
 	}
-    // 1 entrepot + 2 livraison
-	private void setDL2(Plan plan,Intersection intersection1, Intersection intersection2,Intersection intersection3){
+      /**
+     * @Param plan 
+     * @Param entrepot  
+     * @Param intersection1: adresse de livraison 1
+     * @Param intersection2: adresse de livraison 2    
+     * charger sur plan liste de livraisons qui contient entrepot 2 livraisons 
+     */
+	private void setDL2(Plan plan,Intersection entrepot, Intersection intersection1,Intersection intersection2){
 		Map<Long, Livraison> livraisons = new TreeMap<Long, Livraison>();
       
-                Livraison livraison2 = new Livraison(intersection2,900);
-                Livraison livraison3 = new Livraison(intersection3,600);
+                Livraison livraison1 = new Livraison(intersection1,900);
+                Livraison livraison2 = new Livraison(intersection2,600);
   
-                livraisons.put((long)2, livraison2);
-                livraisons.put((long)3, livraison3);
+                livraisons.put((long)2, livraison1);
+                livraisons.put((long)3, livraison2);
                 Time heureDepart = Time.valueOf("8:0:0");
-                DemandeLivraison dl = new DemandeLivraison(intersection1,heureDepart,livraisons);
+                DemandeLivraison dl = new DemandeLivraison(entrepot,heureDepart,livraisons);
 		plan.setDL(dl);
 		 
 	}
-// 1 entrepot + 1 livraison
-	private void setDL1(Plan plan,Intersection intersection1, Intersection intersection3){
+    /**
+     * @Param plan 
+     * @Param entrepot  
+     * @Param intersection1: adresse de livraison 1     
+     * charger sur plan liste de livraisons qui contient entrepot 2 livraisons 
+     */
+	private void setDL1(Plan plan,Intersection entrepot, Intersection intersection1){
 		Map<Long, Livraison> livraisons = new TreeMap<Long, Livraison>();      
-                Livraison livraison3 = new Livraison(intersection3,600);       
-                livraisons.put((long)1, livraison3);
+                Livraison livraison1 = new Livraison(intersection1,600);       
+                livraisons.put((long)1, livraison1);
                 Time heureDepart = Time.valueOf("8:0:0");
-                DemandeLivraison dl = new DemandeLivraison(intersection1,heureDepart,livraisons);
+                DemandeLivraison dl = new DemandeLivraison(entrepot,heureDepart,livraisons);
 		plan.setDL(dl);		 
 	}
 	
-	
     
+    /**
+     * chemin de livraison pour le plan de 4 point 
+     * Avec:
+     * intersection1: entrêpot 
+     * intersection2: livraison 0
+     * intersection3: livraison 1
+     */
 	private ArrayList<ArrayList<Intersection>> solution2(){
 	
             Intersection intersection1 = new Intersection(1,0,0,0);
@@ -400,7 +426,10 @@ public class PlanTest {
 		
 	}
 	
-	
+    /**
+     * initiale le Plan avec 9 intersection de 1 à 9
+     * il n'a pas de intersection isolant
+     */
     private Plan initiale9point(){
         Intersection intersection1 = new Intersection(1,0,0,0);
         Intersection intersection2 = new Intersection(2,1,0,1);
