@@ -275,34 +275,35 @@ public class Plan {
      */
     public List<ArrayList<Intersection>> addLivraison(Intersection precedent, Intersection livraisonAAjouter){
         if (!this.adresseEnLivraison(livraisonAAjouter)){
-        int[] indexes = new int[3];
+            int[] indexes = new int[3];
         
-        int positionPrecEnSolution = -1;
-        ArrayList<Intersection> listePrec = new ArrayList<>();
-        for (ArrayList list: this.solution2){
-            if (list.get(0) == precedent){
+            int positionPrecEnSolution = -1;
+            ArrayList<Intersection> listePrec = new ArrayList<>();
+            for (ArrayList list: this.solution2){
+             if (list.get(0) == precedent){
                 positionPrecEnSolution = this.solution2.indexOf(list);
                 listePrec = list;
                 break;
+             }
+                Intersection suivant = listePrec.get(listePrec.size() - 1);
+
+                Intersection[] intersectionsCalcul = {livraisonAAjouter, precedent, suivant};
+                int[] resultCalcul = this.calculDuree(livraisonAAjouter, intersectionsCalcul, pred.size() - 1);
+                Livraison livraison = new Livraison(livraisonAAjouter, 500);
+                livraisons.add(livraison);
+
+                indexes[0] = livraisons.size() - 1;
+                indexes[1] = this.getIndiceLivraisonParIntersection(precedent);
+                indexes[2] = this.getIndiceLivraisonParIntersection(suivant);
+
+                solution2.remove(positionPrecEnSolution);
+                ArrayList<Intersection> etapes1 = new ArrayList();
+                etapes1.addAll(this.getChemin(indexes[1], indexes[0]));
+                solution2.add(positionPrecEnSolution, etapes1);
+                ArrayList<Intersection> etapes2 = new ArrayList();
+                etapes2.addAll(this.getChemin(indexes[0], indexes[2]));
+                solution2.add(positionPrecEnSolution + 1, etapes2);
             }
-            Intersection suivant = listePrec.get(listePrec.size() - 1);
-
-            Intersection[] intersectionsCalcul = {livraisonAAjouter, precedent, suivant};
-            int[] resultCalcul = this.calculDuree(livraisonAAjouter, intersectionsCalcul, pred.size() - 1);
-            Livraison livraison = new Livraison(livraisonAAjouter, 500);
-            livraisons.add(livraison);
-
-            indexes[0] = livraisons.size() - 1;
-            indexes[1] = this.getIndiceLivraisonParIntersection(precedent);
-            indexes[2] = this.getIndiceLivraisonParIntersection(suivant);
-
-            solution2.remove(positionPrecEnSolution);
-            ArrayList<Intersection> etapes1 = new ArrayList();
-            etapes1.addAll(this.getChemin(indexes[1], indexes[0]));
-            solution2.add(positionPrecEnSolution, etapes1);
-            ArrayList<Intersection> etapes2 = new ArrayList();
-            etapes2.addAll(this.getChemin(indexes[0], indexes[2]));
-            solution2.add(positionPrecEnSolution + 1, etapes2);
 
         } else {
             System.err.println("Adresse deja en livraison");
