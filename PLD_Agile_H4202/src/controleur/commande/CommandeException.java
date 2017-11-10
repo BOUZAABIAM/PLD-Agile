@@ -1,7 +1,8 @@
-package controleur.commande;
+ppackage controleur.commande;
 
 /**
  * Représente une exception lancée lors de l'exécution d'une commande
+ * @author DELL
  */
 public class CommandeException extends Exception
 {
