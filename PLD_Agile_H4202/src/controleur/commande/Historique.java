@@ -7,6 +7,7 @@ import java.util.Deque;
  * Cette classe gère l'historique des commandes pour le undo et le redo.
  * Elle stocke deux piles de commandes : une pile pour les commandes à annuler et une autre pile pour les commandes
  * à retablir c'est-à-dire celles qui ont été annulées par l'utilisateur.
+ * @author DELL
  */
 public class Historique {
 
