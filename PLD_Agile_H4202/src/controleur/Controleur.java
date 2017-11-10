@@ -37,6 +37,7 @@ import org.xml.sax.SAXException;
 
 /**
  * Implémente l'interface contrôleur. Point d'entrée principal pour toutes les intéractions avec le package vue.
+ * @author DELL
  */
 public class Controleur implements ControleurInterface {
     
