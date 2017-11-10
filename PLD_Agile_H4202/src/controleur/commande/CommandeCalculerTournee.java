@@ -4,6 +4,7 @@ import controleur.ControleurDonnees;
 
 /**
  * La commande de calcul de tournée
+ * @author DELL
  */
 public class CommandeCalculerTournee extends CommandeNonAnnulable {
 
