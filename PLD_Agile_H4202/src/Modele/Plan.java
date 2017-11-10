@@ -183,12 +183,11 @@ public class Plan {
         for (int i = 0; i < intersectionLivraison.length; i++) {
             Intersection intersection = intersectionLivraison[i];
             d[i] = intersection.getD();
-            //System.out.print(d[i] + "  ");
+
         }
         int[] pred = new int[intersectionsList.size()];
         for (int i = 0; i < intersectionsList.size(); i++) {
             pred[i] = intersectionsList.get(i).getPredIndex();
-//            System.out.println(intersections.get(i).getPredIndex());
         }
         if (position == Integer.MAX_VALUE) {
             this.pred.add(pred);
@@ -244,11 +243,8 @@ public class Plan {
 
             trajet.addFirst(intersectionsList.get(pred.get(depart)[colonne]));
             colonne = trajet.get(0).getIndex();
-//            System.out.println("Le chemin de " + indexDepart + "a " + indexArrive + " :");
             for (Intersection intersection : trajet) {
-//                System.out.print(intersection.getIndex() + "   ");
             }
-//            System.out.println();
             return trajet;
         } else {
             System.err.println("Attention, les nombres dans le getChemin ne correspondent pas avec les livraisons :");
