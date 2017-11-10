@@ -29,15 +29,7 @@ public class JPanelPlan extends JPanel {
     public Plan lePlan;
     private DemandeLivraison laDL;
     private java.util.List<ArrayList<Intersection>> laSolution;
-    public static int t1;
-    public static int t2;
-    public static int xR;
-    public static int yR;
-    public static double paramLargeur;
-    public static double paramHauteur;
-    public static double minX;
-    public static double minY;
-    public Graphics2D gc;
+
     /**
      * La liste des livraisons
      */
@@ -59,14 +51,23 @@ public class JPanelPlan extends JPanel {
      */
     private long entrepot = -1;
 
+    /*
+    *@param lePlan
+     */
     public void setPlan(Plan lePlan) {
         this.lePlan = lePlan;
     }
 
+    /**
+     * @param laDL
+     */
     public void setDL(DemandeLivraison laDL) {
         this.laDL = laDL;
     }
 
+    /**
+     * @param solution
+     */
     public void setSolution(java.util.List<ArrayList<Intersection>> solution) {
         this.laSolution = solution;
     }
@@ -75,8 +76,8 @@ public class JPanelPlan extends JPanel {
      * Retourne la livraison si les coordonnées paramètres correspondent à la
      * position de la livraison
      *
-     * @param x Coordonnées X du canvas graphique
-     * @param y Coordonnées Y du canvas graphique
+     * @param x Coordonnées X
+     * @param y Coordonnées Y du
      * @return null si les coordonnées ne sont sur aucune livraison
      */
     public long[] estSurLivraison(int x, int y) {
@@ -89,7 +90,6 @@ public class JPanelPlan extends JPanel {
             int xi = pair.getValue().getValue().x;
             int yi = pair.getValue().getValue().y;
             if (estSurRectangle(xi, yi, x, y)) {
-                //gc.fillOval(x-8, y-8, 16, 16);
                 long t[] = {(long) pair.getKey(), pair.getValue().getKey()};
                 return t;
             }
@@ -101,8 +101,8 @@ public class JPanelPlan extends JPanel {
     /**
      * Renvoie l'id de l'intersection sur laquelle on a cliqué
      *
-     * @param x La position x sur le canvas graphique
-     * @param y La position y sur le canvas graphique
+     * @param x La position x
+     * @param y La position y
      * @return -1 si les positions ne sont pas sur une intersection
      */
     public long estSurIntersection(int x, int y) {
@@ -121,6 +121,14 @@ public class JPanelPlan extends JPanel {
         return -1;
     }
 
+    /**
+     *
+     * @param xi abscisse d'une intersection de la liste
+     * @param yi oordonée d'une intersection de la liste
+     * @param x abscisse à comparer
+     * @param y oordonée à comparer
+     * @return true ou false
+     */
     public boolean estSurRectangle(int xi, int yi, int x, int y) {
         return xi - ConstantesGraphique.DIAMETRE_PERMISSION <= x && x <= xi + ConstantesGraphique.DIAMETRE_PERMISSION
                 && yi - ConstantesGraphique.DIAMETRE_PERMISSION <= y && y <= yi + ConstantesGraphique.DIAMETRE_PERMISSION;
@@ -129,17 +137,24 @@ public class JPanelPlan extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-//        JOptionPane jop;
         try {
             drawPlan(g, lePlan);
         } catch (SAXException | ExceptionXML | JDOMException | IOException ex) {
-//            jop = new JOptionPane();
-//                jop.showMessageDialog(null, ex, "Attention", JOptionPane.WARNING_MESSAGE);
+
         }
 
     }
 
-    //fait la rotation d'un point(x,y) d'une angle de -Pi/2 autour de centre de coordonnees (xc,yc)
+    /**
+     * fait la rotation d'un point(x,y) d'une angle de -Pi/2 autour de centre de
+     * coordonnees (xc,yc)
+     *
+     * @param x
+     * @param y
+     * @param xc
+     * @param yc
+     * @return
+     */
     public int[] rotationPoint(int x, int y, int xc, int yc) {
         int coordonnees[] = {x, y};
         coordonnees[0] = y - yc + xc;
@@ -147,26 +162,27 @@ public class JPanelPlan extends JPanel {
         return coordonnees;
     }
 
-    //fait la rotation d'un point(x,y) d'une angle de Pi/2 autour de centre de coordonnees (xc,yc)
-    public int[] rotationInverse(int x, int y, int xc, int yc) {
-        int coordonnees[] = {x, y};
-        coordonnees[0] = xc - y + yc;
-        coordonnees[1] = yc + x - xc;
-        return coordonnees;
-    }
-
+    /**
+     *
+     * @param g
+     * @param lePlan
+     * @throws JDOMException
+     * @throws IOException
+     * @throws SAXException
+     * @throws Modele.ExceptionXML
+     */
     public void drawPlan(Graphics g, Plan lePlan) throws JDOMException, IOException, SAXException, Modele.ExceptionXML {
         if (lePlan == null) {
             return;
         }
 
-        gc = (Graphics2D) g;
+        Graphics2D gc = (Graphics2D) g;
         intersections = lePlan.getIntersectionsMap();
         intersections2 = new HashMap<>();
         Map.Entry<Long, Intersection> first = intersections.entrySet().iterator().next();
         Intersection value = first.getValue();
-        minX = value.getX();
-        minY = value.getY();
+        double minX = value.getX();
+        double minY = value.getY();
         double maxX = value.getX();
         double maxY = value.getY();
 
@@ -190,19 +206,17 @@ public class JPanelPlan extends JPanel {
         }
 
         //trouver taille effective du jPanel à la place de 500 530, ou cacher les valeurs
-        paramLargeur = (maxX - minX) / 500;
-        paramHauteur = (maxY - minY) / 530;
+        double paramLargeur = (maxX - minX) / ConstantesGraphique.TAILLE_FENETRE_X;
+        double paramHauteur = (maxY - minY) / ConstantesGraphique.TAILLE_FENETRE_Y;
 
         //Coordonnees du centre de rotation
         int coordonnees[];
         int xCentre = (int) Math.round((((maxX / 2 + minX / 2) - minX) / (paramLargeur)));
         int yCentre = (int) Math.round((((maxY / 2 + minY / 2) - minY) / (paramHauteur)));
-        xR = xCentre;
-        yR = yCentre;
+
         // Vecteur de translation OT : O(0,0) et T(xT,yT)
         int translation[] = rotationPoint((int) Math.round((maxX - minX) / paramLargeur), 0, xCentre, yCentre);
-        t1 = translation[0];
-        t2 = translation[1];
+
         //dessine les tronçons
         for (Map.Entry<Long, Intersection> entry : intersections.entrySet()) {
             Intersection origine = entry.getValue();
@@ -325,7 +339,9 @@ public class JPanelPlan extends JPanel {
 
         private final static double DIAMETRE_PERMISSION = 1;
 
-        private final static double MAX_ZOOM = 15;
+        private final static double TAILLE_FENETRE_X = 500;
+
+        private final static double TAILLE_FENETRE_Y = 530;
 
         /**
          * La marge à laisser sur les côté du canvas graphique afin d'avoir plus
@@ -333,25 +349,5 @@ public class JPanelPlan extends JPanel {
          */
         public final static int MARGE_INTERSECTION = 10;
 
-        /**
-         * Coefficient mutliplicateur des ellipse pour les livraisons
-         */
-        private final static double COEFFICIENT_INTERSECTION_SURBRILLANCE = 3;
-
-        private final static javafx.scene.paint.Paint COULEUR_INTERSECTION = javafx.scene.paint.Color.BLACK;
-        private final static javafx.scene.paint.Paint COULEUR_LIVRAISON = javafx.scene.paint.Color.BLUE;
-        private final static javafx.scene.paint.Paint COULEUR_TRONCON = javafx.scene.paint.Color.WHITE;
-
-        private final static javafx.scene.paint.Paint COULEUR_ENTREPOT = javafx.scene.paint.Color.RED;
-
-        private final static javafx.scene.paint.Paint[] COULEURS_FENETRES = new javafx.scene.paint.Paint[]{
-            javafx.scene.paint.Color.LIGHTSEAGREEN,
-            javafx.scene.paint.Color.BLUE,
-            javafx.scene.paint.Color.GREEN,
-            javafx.scene.paint.Color.VIOLET,
-            javafx.scene.paint.Color.ORANGE,
-            javafx.scene.paint.Color.CHARTREUSE,
-            javafx.scene.paint.Color.DARKSLATEBLUE
-        };
     }
 }
