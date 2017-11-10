@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * Joue le rôle de façade pour le controleur. La vue ne vera que cette façade pour appeler les méthodes du controleur
+ * @author BOUZAABIA DELL
  */
 public interface ControleurInterface {
 
@@ -67,6 +68,10 @@ public interface ControleurInterface {
      */
     void ajouterMessageObservateur(MessageObservateur obs);
 
+    /**
+     *
+     * @param planChargeObservateur
+     */
     void ajouterPlanChargeObserveur(PlanChargeObservateur planChargeObservateur);
 
     /**
@@ -96,6 +101,7 @@ public interface ControleurInterface {
      * d'objets.
      *
      * @param fichierPlan Objet File qui représente le fichier XML
+     * @return 
      * @throws Exception Lance une exception s'il y a une erreur lors du chargement des objets
      */
     Plan parserPlan(File fichierPlan) throws Exception;
@@ -105,6 +111,7 @@ public interface ControleurInterface {
      * d'objets.
      *
      * @param fichierLivraisons Objet File qui représente le fichier XML
+     * @return 
      * @throws Exception Lance une exception s'il y a une erreur lors du chargement des objets
      */
     DemandeLivraison parserLivraisons(File fichierLivraisons) throws Exception;
@@ -129,21 +136,48 @@ public interface ControleurInterface {
 
     /**
      * Appel lors du clic sur le calcul de la tournée
-     * @return
+     * @return Liste des intersections qui appartiennet à la tournée
      */
     List<ArrayList<Intersection>> calculTournee();
     
+    /**
+     *
+     * @return Liste de duree
+     */
     List<Time[]> calculDuree();
     
     /**
      * Génère la feuille de route
-     * @param fichier Le fichier dans lequel on devra écrire la feuille de route
-     * @throws CommandeException Une erreur lors de l'exécution de la commande de génération
+     * @param document Le fichier dans lequel on devra écrire la feuille de route
      */
     void feuilleDeRoute(Document document);
+    
+    /**
+     * annuler
+     */
     void annuler();
+
+    /**
+     *
+     * @param id id de livraison 
+     * @return la livraison cherchée
+     */
     Livraison getLivraisonByID(long id);
+
+    /**
+     *
+     * @param idAdd id de livraison à ajouter
+     * @param idPrec id de livraison précedente
+     * @return la liste des nouveaux intersections qui appartiennet à la tournée après l'ajout 
+     */
     List<ArrayList<Intersection>> ajouterLivraison(long idAdd, long idPrec);
+    
+    /**
+     *
+     * @param idSuppr id de livraison à ajouter
+     * @return la liste des nouveaux intersections qui appartiennet à la tournée après le changement après la suppression
+     */
     List<ArrayList<Intersection>> supprimerLivraison(long idSuppr);
 
 }
+
