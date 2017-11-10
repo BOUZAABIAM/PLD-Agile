@@ -332,7 +332,7 @@ public class PlanTest {
      * @Param intersection1: adresse de livraison 1
      * @Param intersection2: adresse de livraison 2
      * @Param intersection3: adresse de livraison 3
-     * charger sur plan liste de livraisons qui contient entrepot 3 livraisons 
+     * charger sur plan liste de livraisons qui contient entrêpot et 3 livraisons 
      */
     private void setDL3(Plan plan,Intersection entrepot, Intersection intersection1,Intersection intersection2,Intersection intersection3){
 		Map<Long, Livraison> livraisons = new TreeMap<Long, Livraison>();
@@ -353,7 +353,7 @@ public class PlanTest {
      * @Param entrepot  
      * @Param intersection1: adresse de livraison 1
      * @Param intersection2: adresse de livraison 2    
-     * charger sur plan liste de livraisons qui contient entrepot 2 livraisons 
+     * charger sur plan liste de livraisons qui contient entrêpot et 2 livraisons 
      */
 	private void setDL2(Plan plan,Intersection entrepot, Intersection intersection1,Intersection intersection2){
 		Map<Long, Livraison> livraisons = new TreeMap<Long, Livraison>();
@@ -372,7 +372,7 @@ public class PlanTest {
      * @Param plan 
      * @Param entrepot  
      * @Param intersection1: adresse de livraison 1     
-     * charger sur plan liste de livraisons qui contient entrepot 2 livraisons 
+     * charger sur plan liste de livraisons qui contient entrêpot et 1 livraisons 
      */
 	private void setDL1(Plan plan,Intersection entrepot, Intersection intersection1){
 		Map<Long, Livraison> livraisons = new TreeMap<Long, Livraison>();      
